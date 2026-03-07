@@ -13,7 +13,7 @@
   ],
   "routes": [
     { "src": "/uploads/(.*)", "dest": "ssv-react/api/server.js" },
-    { "src": "/api/(.*)", "dest": "ssv-react/api/server.js" },
+    { "src": "/api/(.*)",     "dest": "ssv-react/api/server.js" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
