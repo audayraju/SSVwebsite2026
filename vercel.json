@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd ssv-react && npm install && npm run build",
+  "outputDirectory": "ssv-react/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
