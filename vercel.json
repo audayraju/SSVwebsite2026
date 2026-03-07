@@ -1,14 +1,9 @@
 {
   "buildCommand": "cd ssv-react && npm install && npm run build",
   "outputDirectory": "ssv-react/dist",
-  "functions": {
-    "ssv-react/api/server.js": {
-      "includeFiles": "ssv-react/api/data/**"
-    }
-  },
   "rewrites": [
-    { "source": "/api/:path*",     "destination": "/ssv-react/api/server" },
-    { "source": "/uploads/:path*", "destination": "/ssv-react/api/server" },
+    { "source": "/api/:path*",     "destination": "/api/server" },
+    { "source": "/uploads/:path*", "destination": "/api/server" },
     { "source": "/(.*)",           "destination": "/index.html" }
   ]
 }
