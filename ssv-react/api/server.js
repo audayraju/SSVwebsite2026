@@ -20,15 +20,23 @@ const PORT = process.env.PORT ?? 3001
 // ---------------------------------------------------------------------------
 // Data store — flat JSON file (no external DB required)
 // ---------------------------------------------------------------------------
-const DATA_DIR      = path.join(__dirname, 'data')
+const IS_VERCEL     = !!process.env.VERCEL
+const DATA_DIR      = IS_VERCEL ? '/tmp/ssv-data'    : path.join(__dirname, 'data')
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json')
-const UPLOADS_DIR   = path.join(__dirname, 'uploads')
+const UPLOADS_DIR   = IS_VERCEL ? '/tmp/ssv-uploads' : path.join(__dirname, 'uploads')
 
 ;[DATA_DIR, UPLOADS_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 })
 
 function readProducts() {
+  if (!fs.existsSync(PRODUCTS_FILE)) {
+    // On Vercel first cold-start, seed from the committed data file
+    const seed = path.join(__dirname, 'data', 'products.json')
+    if (fs.existsSync(seed)) {
+      try { fs.copyFileSync(seed, PRODUCTS_FILE) } catch { /* ignore */ }
+    }
+  }
   if (!fs.existsSync(PRODUCTS_FILE)) return []
   try {
     return JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'))
@@ -109,13 +117,12 @@ const upload = multer({
 // ---------------------------------------------------------------------------
 app.use(cors({
   origin: (origin, cb) => {
-    const allowed = [
-      process.env.CLIENT_ORIGIN ?? 'http://localhost:5173',
-      'http://localhost:5173',
-      'http://localhost:4173',
-    ]
-    // Allow requests with no origin (server-to-server, curl, etc.)
-    if (!origin || allowed.includes(origin)) return cb(null, true)
+    if (
+      !origin ||
+      /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
+      /\.vercel\.app$/.test(origin) ||
+      (process.env.CLIENT_ORIGIN && origin === process.env.CLIENT_ORIGIN)
+    ) return cb(null, true)
     cb(new Error(`CORS: origin ${origin} not allowed`))
   },
   credentials: true,
@@ -300,6 +307,10 @@ app.use((err, _req, res, _next) => {
 // ---------------------------------------------------------------------------
 // Start
 // ---------------------------------------------------------------------------
-app.listen(PORT, () => {
-  console.log(`SSV API running on http://localhost:${PORT}`)
-})
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`SSV API running on http://localhost:${PORT}`)
+  })
+}
+
+module.exports = app
