@@ -1,0 +1,370 @@
+/* =========================================
+   SHARED MEDIA QUERIES (ALL PAGES)
+   Keep common responsive navbar behavior here.
+========================================= */
+
+@media (max-width: 1100px) {
+    .navbar {
+        padding: 10px 28px;
+        gap: 10px;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    .menu-dropdown {
+        width: min(82vw, 320px);
+        min-width: 0;
+    }
+}
+
+/* Central design tokens for glass/card effects */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: 8px;
+    --glass-radius: 12px;
+    --glass-shadow: 0 10px 30px rgba(16, 10, 16, 0.12);
+
+    --glass-bg-dark: rgba(0, 0, 0, 0.28);
+    --glass-border-dark: rgba(255, 255, 255, 0.04);
+
+    --shine-alpha: 0.45;
+    --shine-duration: 0.9s;
+
+    --float-translate: -10px;
+    --float-shadow: 0 22px 48px rgba(16, 10, 16, 0.22);
+}
+
+/* Apply glassmorphism to common card components across the site
+   This makes cards look consistent without editing HTML on every page.
+*/
+.service-card,
+.product-card,
+.footer-col,
+.services-intro,
+.view-three__item,
+.home-product-grid .product-card {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--glass-radius);
+    box-shadow: var(--glass-shadow);
+}
+
+/* Keep interactive hover/shine behaviors available for cards */
+.service-card.shine-hover,
+.product-card.shine-hover {
+    position: relative;
+    overflow: visible;
+}
+
+/* Footer columns should clip the shine to their bounds */
+.footer-col.shine-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .shine-hover::before,
+    .float-card {
+        transition: none !important;
+    }
+}
+
+@media (max-width: 780px) {
+    .navbar {
+        padding: 10px 16px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .search-box {
+        width: 130px;
+        flex: 0 0 130px;
+        transition: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        padding: 10px 10px;
+        gap: 6px;
+        overflow: visible;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        height: auto !important;
+        min-height: 74px;
+        align-content: flex-start;
+        row-gap: 6px;
+    }
+
+    .logo {
+        display: inline;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .menu-wrap,
+    .logo-wrapper {
+        order: 1;
+    }
+
+    .navbar-logo {
+        height: 36px;
+    }
+
+    .search-box {
+        display: block;
+        width: 92px;
+        flex: 0 0 92px;
+        order: 2;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-start;
+        flex: 1 1 auto;
+        min-width: 0;
+        flex-wrap: nowrap;
+        order: 2;
+        margin-top: 0;
+    }
+
+    .nav-links a {
+        font-size: 10.5px;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+    }
+
+    .search-box input,
+    .search-box input:focus {
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 10.5px;
+    }
+
+    .tool-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .nav-tools {
+        order: 2;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    .navbar {
+        gap: 5px;
+        padding: 8px 6px;
+        height: auto !important;
+        min-height: 70px;
+        flex-wrap: wrap;
+        overflow: visible;
+        row-gap: 5px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 5px;
+        flex-wrap: nowrap;
+        flex: 1 1 auto;
+        order: 2;
+    }
+
+    .logo {
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .menu-wrap,
+    .logo-wrapper {
+        order: 1;
+    }
+
+    .search-box {
+        width: 80px;
+        flex: 0 0 80px;
+        order: 2;
+    }
+
+    .nav-links a {
+        font-size: 9.5px;
+        white-space: nowrap;
+    }
+
+    .search-box input,
+    .search-box input:focus {
+        padding: 5px 8px;
+        font-size: 9.5px;
+    }
+
+    .nav-tools {
+        order: 2;
+        margin-left: 0;
+    }
+}
+
+
+/* =========================================
+   GLOBAL CARD EFFECTS: glassmorphism, shine sweep and float hover
+   Apply classes: .glass-card, .shine-hover, .float-card
+   Example: <article class="glass-card shine-hover float-card">...</article>
+========================================= */
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 6px 18px rgba(16, 10, 16, 0.12);
+    transition: transform 0.36s ease, box-shadow 0.36s ease, border-color 0.36s ease;
+}
+
+.glass-card.dark {
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* floating lift effect */
+.float-card {
+    transition: transform 0.36s cubic-bezier(.2, .9, .3, 1), box-shadow 0.36s ease;
+}
+
+.float-card:hover,
+.float-card:focus-within {
+    transform: translateY(-10px);
+    box-shadow: 0 22px 48px rgba(16, 10, 16, 0.22);
+}
+
+/* light sweep / shine */
+.shine-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.shine-hover::before {
+    content: '';
+    position: absolute;
+    top: -55%;
+    left: -35%;
+    width: 42%;
+    height: 210%;
+    background: linear-gradient(120deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, var(--shine-alpha, 0.45)) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: translateX(-120%) rotate(25deg);
+    transition: transform var(--shine-duration, 0.9s) cubic-bezier(.2, .8, .2, 1), opacity var(--shine-duration, 0.9s);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+}
+
+.shine-hover:hover::before,
+.shine-hover:focus-within::before,
+.shine-hover:focus::before {
+    transform: translateX(220%) rotate(25deg);
+    opacity: 1;
+}
+
+/* Ensure the shine resets when not hovered/focused to avoid a "stuck" visible strip */
+.shine-hover:not(:hover):not(:focus-within)::before {
+    transform: translateX(-120%) rotate(25deg);
+    opacity: 0;
+}
+
+/* Keep content above the shine element so text remains readable and interactive */
+.shine-hover>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Make footer column shines more subtle and smaller to avoid large overlaps */
+.footer-col.shine-hover::before {
+    width: 24%;
+    height: 150%;
+    left: -10%;
+    top: -30%;
+    background: linear-gradient(120deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.22) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: translateX(-60%) rotate(20deg);
+}
+
+/* If the footer effect is undesired, disable the shine entirely for footer columns */
+.footer-col.shine-hover::before {
+    display: none !important;
+}
+
+/* Disable visual shine on touch devices where hover isn't available */
+@media (hover: none) {
+    .shine-hover::before {
+        display: none;
+    }
+}
+
+/* small responsive tweak for cards */
+@media (max-width: 700px) {
+    .glass-card {
+        padding: 14px;
+        border-radius: 12px;
+    }
+}
+
+/* Footer social icons styling (uses Bootstrap Icons) */
+.footer-col .social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    align-items: center;
+}
+
+.footer-col .social-icons a {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(16, 10, 16, 0.12);
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.footer-col .social-icons a .bi {
+    font-size: 18px;
+}
+
+.footer-col .social-icons a:hover {
+    transform: translateY(-4px);
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/* Make icons slightly smaller on very small screens */
+@media (max-width: 520px) {
+    .footer-col .social-icons a {
+        width: 36px;
+        height: 36px;
+    }
+
+    .footer-col .social-icons a .bi {
+        font-size: 16px;
+    }
+}

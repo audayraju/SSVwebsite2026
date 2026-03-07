@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSV Jeweller | Policies</title>
+    <link rel="stylesheet" href="policies.css">
+    <link rel="stylesheet" href="shared-navbar.css">
+    <link rel="stylesheet" href="shared-media.css">
+    <link rel="stylesheet" href="shared-media-mobile.css">
+    <link rel="stylesheet" href="shared-footer.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="menu-wrap">
+            <button type="button" class="menu-btn" id="navMenuBtn" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="navMenuDropdown">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="menu-dropdown" id="navMenuDropdown" role="menu" aria-hidden="true">
+                <button type="button" class="menu-close-btn" id="navMenuCloseBtn"
+                    aria-label="Close navigation menu">×</button>
+                <a href="about.html" role="menuitem">About</a>
+                <a href="services.html" role="menuitem">Services</a>
+            </div>
+        </div>
+
+        <a class="logo-wrapper" href="indexpage.html" aria-label="Go to home page">
+            <img src="slides/pictures/logo-removebg-preview.png" alt="SSV Logo" class="navbar-logo">
+            <span class="logo">SSV JEWELLERS</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="indexpage.html">Home</a>
+            <a href="products.html?openFilter=1">Collections</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="nav-tools" aria-label="Favourites tools">
+            <a href="products.html" class="tool-btn" aria-label="Open favourites">
+                <i class="bi bi-heart" aria-hidden="true"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+    <main class="policy-wrap" aria-live="polite">
+        <section class="policy-card">
+            <img src="slides/pictures/logo-removebg-preview.png" alt="SSV Jeweller Logo" class="policy-logo">
+            <h1>Oops! Something has been missed.</h1>
+            <p>
+                We don’t have a full policies page yet.<br>
+                Please contact us for complete details.
+            </p>
+            <div class="policy-actions">
+                <a href="indexpage.html">Go to Home</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-root" aria-live="polite"></div>
+
+    <script src="nav-menu.js"></script>
+    <script src="nav-search.js"></script>
+    <script src="shared-footer.js"></script>
+</body>
+
+</html>

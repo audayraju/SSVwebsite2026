@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SSV Jewellers - Luxury Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="indexpage.css">
+    <link rel="stylesheet" href="shared-navbar.css">
+    <link rel="stylesheet" href="shared-media.css">
+    <link rel="stylesheet" href="shared-media-mobile.css">
+    <link rel="stylesheet" href="shared-footer.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <!-- GLASS NAVBAR -->
+    <nav class="navbar">
+        <div class="menu-wrap">
+            <button type="button" class="menu-btn" id="navMenuBtn" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="navMenuDropdown">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="menu-dropdown" id="navMenuDropdown" role="menu" aria-hidden="true">
+                <button type="button" class="menu-close-btn" id="navMenuCloseBtn"
+                    aria-label="Close navigation menu">×</button>
+                <a href="about.html" role="menuitem">About</a>
+                <a href="services.html" role="menuitem">Services</a>
+            </div>
+        </div>
+
+        <a class="logo-wrapper" href="indexpage.html" aria-label="Go to home page">
+            <img src="slides/pictures/logo-removebg-preview.png" alt="SSV Logo" class="navbar-logo">
+            <span class="logo">SSV JEWELLERS</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="indexpage.html">Home</a>
+            <a href="products.html?openFilter=1">Collections</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="nav-tools" aria-label="Favourites tools">
+            <a href="products.html" class="tool-btn" aria-label="Open favourites">
+                <i class="bi bi-heart" aria-hidden="true"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+    <br>
+
+
+    <!-- THREE LAYER CAROUSEL -->
+    <section class="triple-carousel" aria-label="Featured jewellery carousel">
+        <div class="triple-carousel__viewport">
+            <div class="triple-carousel__track" id="tripleCarouselTrack">
+                <article class="triple-carousel__slide is-active" aria-hidden="false">
+                    <img src="slides/pictures/01.jpeg" alt="Premium Gold Jewellery">
+                    <div class="triple-carousel__caption">
+                        <h2>Gold Heritage Collection</h2>
+                        <p>Timeless handcrafted jewellery for every celebration.</p>
+                        <a href="products.html?search=gold" class="triple-carousel__btn">View details »</a>
+                    </div>
+                </article>
+
+                <article class="triple-carousel__slide" aria-hidden="true">
+                    <img src="slides/pictures/01.jpeg" alt="Elegant Silver Jewellery">
+                    <div class="triple-carousel__caption">
+                        <h2>Silver Signature Collection</h2>
+                        <p>Classic shine crafted for modern elegance.</p>
+                        <a href="products.html?search=silver" class="triple-carousel__btn">View details »</a>
+                    </div>
+                </article>
+
+                <article class="triple-carousel__slide" aria-hidden="true">
+                    <img src="slides/pictures/01.jpeg" alt="Premium Diamond Jewellery">
+                    <div class="triple-carousel__caption">
+                        <h2>Diamond Prestige Collection</h2>
+                        <p>Brilliance that elevates every special moment.</p>
+                        <a href="products.html?search=diamond" class="triple-carousel__btn">View details »</a>
+                    </div>
+                </article>
+            </div>
+
+            <button class="triple-carousel__control prev" id="carouselPrev" aria-label="Previous slide">‹</button>
+            <button class="triple-carousel__control next" id="carouselNext" aria-label="Next slide">›</button>
+        </div>
+
+        <div class="triple-carousel__dots" id="carouselDots" aria-label="Carousel indicators">
+            <button class="dot is-active" data-index="0" aria-label="Go to slide 1"></button>
+            <button class="dot" data-index="1" aria-label="Go to slide 2"></button>
+            <button class="dot" data-index="2" aria-label="Go to slide 3"></button>
+        </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- THREE COLUMN VIEW SECTION -->
+    <section class="view-three" aria-label="Three feature cards">
+        <div class="view-three__grid">
+            <article class="view-three__item">
+                <img src="slides/pictures/01.jpeg" alt="Gold feature" class="view-three__avatar">
+                <h3>Trending #1</h3>
+                <p>Some representative placeholder content for the three columns of text below the carousel.
+                    This is the first column.</p>
+                <a href="products.html?search=gold" class="view-three__btn">View details »</a>
+            </article>
+
+            <article class="view-three__item">
+                <img src="slides/pictures/01.jpeg" alt="Silver feature" class="view-three__avatar">
+                <h3>Trending #2</h3>
+                <p>Another exciting bit of representative placeholder content. This time, we've moved on to the
+                    second column.</p>
+                <a href="products.html?search=silver" class="view-three__btn">View details »</a>
+            </article>
+
+            <article class="view-three__item">
+                <img src="slides/pictures/01.jpeg" alt="Diamond feature" class="view-three__avatar">
+                <h3>Trending #3</h3>
+                <p>And lastly this, the third column of representative placeholder content.</p>
+                <a href="products.html?search=diamond" class="view-three__btn">View details »</a>
+            </article>
+        </div>
+    </section>
+
+
+
+    <!-- SECTION 1 -->
+    <section class="section section-one">
+        <div class="container">
+            <div class="image-box">
+                <img src="file:///E:/ssv%20folder/28-02-2026/slides/pictures/02.jpeg" alt="Featured Image">
+            </div>
+            <div class="content-box">
+                <h2>Beautiful Nature Bird</h2>
+                <p>
+                    Discover handcrafted gold, silver, and diamond designs made to
+                    celebrate your most special moments with timeless elegance.
+                </p>
+                <button>Read More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="section section-two">
+        <div class="container reverse">
+            <div class="content-box">
+                <h2>Pure Fresh Water</h2>
+                <p>
+                    This is the second section where content is on the left
+                    and image is on the right side.
+                </p>
+                <button>Explore</button>
+            </div>
+            <div class="image-box">
+                <img src="file:///E:/ssv%20folder/28-02-2026/slides/pictures/02.jpeg" alt="Featured Image">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- PRODUCTS -->
+    <section class="products">
+
+
+
+        <div class="home-product-grid">
+
+
+            <div class="product-card">
+                <img src="slides/pictures/01.jpeg">
+                <div class="overlay">
+                    <h3>Gold Collection</h3>
+                    <div class="card-actions">
+                        <a href="products.html?search=gold" class="know-btn">Know more</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="slides/pictures/01.jpeg">
+                <div class="overlay">
+                    <h3>Silver Collection</h3>
+                    <div class="card-actions">
+                        <a href="products.html?search=silver" class="know-btn">Know Now</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="slides/pictures/01.jpeg">
+                <div class="overlay">
+                    <h3>Diamond Collection</h3>
+                    <div class="card-actions">
+                        <a href="products.html?search=diamond" class="know-btn">Know Now</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Buttons -->
+        <div class="floating-buttons">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/916281049201" target="_blank" class="float-btn whatsapp" aria-label="WhatsApp chat">
+                <i class="bi bi-whatsapp" aria-hidden="true"></i>
+            </a>
+
+        </div>
+
+
+
+    </section>
+
+    <div id="footer-root" aria-live="polite"></div>
+
+    <script src="nav-menu.js"></script>
+    <script src="nav-search.js"></script>
+    <script src="index-carousel.js"></script>
+    <script src="index-scroll-slide.js"></script>
+    <script src="shared-footer.js"></script>
+</body>
+
+</html>

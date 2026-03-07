@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jewelry Collection | SSV JEWELLER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="products.css">
+    <link rel="stylesheet" href="shared-navbar.css">
+    <link rel="stylesheet" href="shared-media.css">
+    <link rel="stylesheet" href="shared-media-mobile.css">
+    <link rel="stylesheet" href="shared-footer.css">
+
+</head>
+
+<body>
+
+    <!-- GLASS NAVBAR -->
+    <nav class="navbar">
+        <div class="menu-wrap">
+            <button type="button" class="menu-btn" id="navMenuBtn" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="navMenuDropdown">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="menu-dropdown" id="navMenuDropdown" role="menu" aria-hidden="true">
+                <button type="button" class="menu-close-btn" id="navMenuCloseBtn"
+                    aria-label="Close navigation menu">×</button>
+                <a href="about.html" role="menuitem">About</a>
+                <a href="services.html" role="menuitem">Services</a>
+            </div>
+        </div>
+
+        <a class="logo-wrapper" href="indexpage.html" aria-label="Go to home page">
+            <img src="slides/pictures/logo-removebg-preview.png" alt="SSV Logo" class="navbar-logo">
+            <span class="logo">SSV JEWELLERS</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="indexpage.html">Home</a>
+            <a href="products.html?openFilter=1">Collections</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="nav-tools" aria-label="Favourites tools">
+            <button type="button" class="tool-btn" id="navCartBtn" aria-label="Liked collections">
+                <i class="bi bi-heart" aria-hidden="true"></i>
+                <span class="tool-count" id="favCountBadge" hidden>0</span>
+            </button>
+            <div class="nav-fav-panel" id="navFavPanel" aria-hidden="true">
+                <div class="nav-fav-header">
+                    <h4>Liked Collections</h4>
+                    <button type="button" class="nav-fav-close" id="navFavCloseBtn"
+                        aria-label="Close liked collections">×</button>
+                </div>
+                <p class="nav-fav-empty" id="navFavEmpty">No liked collections yet.</p>
+                <ul class="nav-fav-list" id="navFavList"></ul>
+            </div>
+        </div>
+
+    </nav>
+
+
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="modalTitle">
+
+        <div class="modal-content">
+
+            <button class="close-btn" id="closeProductBtn" type="button"
+                aria-label="Close collection details">×</button>
+
+            <div class="modal-left">
+                <img id="modalImage" alt="Selected collection image">
+            </div>
+
+            <div class="modal-right">
+                <h2 id="modalTitle"></h2>
+                <p class="sku" id="modalSku"></p>
+
+                <div class="modal-price-wrap">
+                    <p class="price" id="modalPrice"></p>
+                    <a id="modalWhatsappBtn" class="whatsapp-btn" href="#" target="_blank"
+                        rel="noopener noreferrer">WhatsApp</a>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-head">
+                        <span>Description</span>
+                        <button type="button" class="arrow-toggle-btn" id="descToggleBtn" aria-expanded="false"
+                            aria-controls="descPanel" aria-label="Toggle description">
+                            <span class="arrow" id="descArrow">▼</span>
+                        </button>
+                    </div>
+                    <div class="detail-panel" id="descPanel">
+                        <p class="desc" id="modalDesc"></p>
+                    </div>
+                </div>
+
+                <div class="detail-section specs">
+                    <div class="detail-head">
+                        <span>Specification</span>
+                        <button type="button" class="arrow-toggle-btn" id="specToggleBtn" aria-expanded="false"
+                            aria-controls="specPanel" aria-label="Toggle specification">
+                            <span class="arrow" id="specArrow">▼</span>
+                        </button>
+                    </div>
+                    <div class="detail-panel" id="specPanel">
+                        <p class="type-line"><strong>Type:</strong> <span id="modalType">Gold Necklace Set</span></p>
+                        <h4>Collection Details</h4>
+                        <ul id="modalSpecs"></ul>
+                    </div>
+                </div>
+
+                <div class="additional-info">
+                    <h4>Additional Information</h4>
+                    <p id="modalExtra"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- IMAGE VIEWER OVERLAY -->
+    <div class="image-viewer" id="imageViewer" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-label="Collection image viewer">
+        <div class="image-viewer-content">
+            <button class="viewer-close-btn" id="closeImageViewerBtn" type="button"
+                aria-label="Close image viewer">×</button>
+            <img id="viewerImage" alt="Enlarged collection image">
+        </div>
+    </div>
+
+    <!-- Category Filter Bar -->
+    <div class="category-bar">
+
+        <div class="category-item active" onclick="filterProducts('all', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="All">
+            </div>
+            <span class="cat-label">All</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('ring', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="Rings">
+            </div>
+            <span class="cat-label">Rings</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('necklace', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="Necklaces">
+            </div>
+            <span class="cat-label">Necklaces</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('chain', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="Chains">
+            </div>
+            <span class="cat-label">Chains</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('bracelet', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="Bracelets">
+            </div>
+            <span class="cat-label">Bracelets</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('earring', this)">
+            <div class="cat-icon-wrap">
+                <img src="slides/pictures/logo.jpeg" alt="Earrings">
+            </div>
+            <span class="cat-label">Earrings</span>
+        </div>
+
+    </div>
+
+    <div class="content">
+        <div class="text-bg">
+            <h2>Our Jewelry Collections</h2>
+            <p>Explore a curated selection of jewellery designed to complement every style and occasion.</p>
+        </div>
+
+        <div class="products-grid">
+
+            <div class="product-card" data-category="necklace" data-sku="SSV-HRM-001"
+                data-desc="Traditional temple haram with intricate Radha Krishna motif work, handcrafted for bridal and festive wear."
+                data-price="₹ 1,89,000" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="22K Gold|Approx. 52 g|Temple Craft Detailing|Handcrafted Finish"
+                data-extra="Hallmark certified. Customization available on request.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg" alt="Radha Krishna Haram"
+                    tabindex="0" role="button" aria-label="Open Radha Krishna Haram details">
+                <h3>Radha Krishna Haram</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav" aria-label="Add Radha Krishna Haram to favourites">♡</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="ring" data-sku="SSV-RNG-018"
+                data-desc="Classic polished gold ring with balanced profile suitable for daily and occasion wear."
+                data-price="₹ 38,500" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="22K Gold|Approx. 9 g|Comfort Fit|Gloss Finish"
+                data-extra="Available in multiple sizes. Free first resize within 30 days.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg" alt="Classic Gold Ring" tabindex="0"
+                    role="button" aria-label="Open Classic Gold Ring details">
+                <h3>Classic Gold Ring</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav" aria-label="Add Classic Gold Ring to favourites">♡</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="earring" data-sku="SSV-EAR-024"
+                data-desc="Elegant drop-style earrings with diamond accents designed for graceful evening looks."
+                data-price="Price on Request" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="18K Gold Base|Diamond Studded|Lightweight Build|Secure Lock"
+                data-extra="Natural diamonds with quality certification available on request.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg" alt="Diamond Earrings" tabindex="0"
+                    role="button" aria-label="Open Diamond Earrings details">
+                <h3>Diamond Earrings</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav" aria-label="Add Diamond Earrings to favourites">♡</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="chain" data-sku="SSV-CHN-012"
+                data-desc="Refined gold chain with durable links and smooth finish for daily premium styling."
+                data-price="₹ 72,000" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="22K Gold|Approx. 20 g|Durable Link Design|Mirror Polish"
+                data-extra="Can be paired with customized pendants.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg" alt="Gold Chain" tabindex="0"
+                    role="button" aria-label="Open Gold Chain details">
+                <h3>Gold Chain</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav" aria-label="Add Gold Chain to favourites">♡</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="bracelet" data-sku="SSV-BRC-009"
+                data-desc="Contemporary bracelet with premium finish and secure clasp for everyday luxury."
+                data-price="₹ 54,900" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="22K Gold|Approx. 14 g|Secure Clasp|Contemporary Design"
+                data-extra="Gift-ready premium box included with every order.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg" alt="Gold Bracelet" tabindex="0"
+                    role="button" aria-label="Open Gold Bracelet details">
+                <h3>Gold Bracelet</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav" aria-label="Add Gold Bracelet to favourites">♡</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="necklace" data-sku="SSV-LMH-022"
+                data-desc="A stunning 22K gold bridal set featuring a classic mango haram and jhumkas adorned with Lakshmi motifs, diamonds, ruby–emerald pota, pearls and emerald beads—perfect for the bride who embodies heritage and timeless grace."
+                data-price="Price on Request" data-type="Gold Necklace Set" data-large-image="slides/pictures/logo.jpeg"
+                data-specs="22K Gold Finish|Lakshmi Motif Work|Diamond Accents|Ruby-Emerald Pota|Pearl Detailing|Emerald Bead Drops|Includes Matching Jhumkas"
+                data-extra="Bridal premium collection. WhatsApp us for weight, making charges, and availability.">
+                <img class="product-image-trigger" src="slides/pictures/logo.jpeg"
+                    alt="22K Gold Lakshmi Mango Haram Bridal Set with Jhumkas" tabindex="0" role="button"
+                    aria-label="Open 22K Gold Lakshmi Mango Haram Bridal Set with Jhumkas details">
+                <h3>22K Gold Lakshmi Mango Haram Bridal Set with Jhumkas</h3>
+                <div class="card-actions">
+                    <button type="button" class="know-btn">Know more</button>
+                    <button type="button" class="card-fav"
+                        aria-label="Add 22K Gold Lakshmi Mango Haram Bridal Set with Jhumkas to favourites">♡</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="search-empty-state" id="searchEmptyState" hidden aria-live="polite">
+            <h3>We couldn’t find matching designs</h3>
+            <p id="searchEmptyText">Try another keyword or check the spelling.</p>
+        </div>
+    </div>
+
+    <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/916281049201" target="_blank" class="float-btn whatsapp">
+            <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
+        </a>
+        <a href="tel:+919876543210" class="float-btn call">
+            <img src="https://img.icons8.com/color/48/phone.png" alt="Call">
+        </a>
+    </div>
+
+    <div id="footer-root" aria-live="polite"></div>
+
+    <script src="products.js"></script>
+    <script src="shared-footer.js"></script>
+
+</body>
+
+</html>

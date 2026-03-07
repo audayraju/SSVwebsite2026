@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Add Product</title>
+    <link rel="stylesheet" href="admin-add-product.css">
+    <link rel="stylesheet" href="shared-navbar.css">
+    <link rel="stylesheet" href="shared-media.css">
+    <link rel="stylesheet" href="shared-footer.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar" aria-label="Admin navigation">
+            <div class="brand-wrap">
+                <h1 class="brand">SSV Admin</h1>
+                <p class="brand-sub">Dashboard Panel</p>
+            </div>
+
+            <nav class="menu" aria-label="Sidebar menu">
+                <ul>
+                    <li><a href="#" class="menu-link active" aria-current="page">Add Items</a></li>
+                    <li><a href="#savedProductsHeading" class="menu-link">Delete Products</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section class="form-card" aria-labelledby="addProductHeading">
+                <header class="card-head">
+                    <div class="card-head-top">
+                        <h2 id="addProductHeading">Add Product</h2>
+                        <p class="saved-count" aria-live="polite">Saved: <strong id="savedProductsCount">0</strong></p>
+                    </div>
+                    <p>Add a new item to your catalog quickly.</p>
+                </header>
+
+                <form class="product-form" id="adminAddProductForm" action="#" method="post">
+                    <div class="field-group full-width">
+                        <label for="productImage">Product Image</label>
+                        <input type="file" id="productImage" name="productImage" class="hidden-file-input"
+                            accept="image/png,image/jpeg,image/webp">
+                        <label for="productImage" class="upload-box">
+                            <img id="uploadPreview" class="upload-preview" alt="Selected product preview" hidden>
+                            <span class="upload-icon" aria-hidden="true">⬆</span>
+                            <span class="upload-text" id="uploadText">Click to upload product image</span>
+                            <span class="upload-note" id="uploadNote">PNG, JPG, WEBP</span>
+                            <span class="upload-path" id="uploadPath" hidden></span>
+                        </label>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" name="productName" placeholder="Enter product name"
+                            required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="productCategory">Category</label>
+                        <select id="productCategory" name="productCategory" required>
+                            <option value="" selected disabled>Select category</option>
+                            <option value="ring">Rings</option>
+                            <option value="necklace">Necklaces</option>
+                            <option value="bracelet">Bracelets</option>
+                            <option value="earring">Earrings</option>
+                            <option value="chain">Chains</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group full-width">
+                        <label for="productPrice">Price</label>
+                        <input type="number" id="productPrice" name="productPrice" placeholder="Enter product price"
+                            min="0" step="0.01" required>
+                    </div>
+
+                    <div class="field-group full-width">
+                        <label for="productDescription">Description</label>
+                        <textarea id="productDescription" name="productDescription" rows="5"
+                            placeholder="Write a short product description..."></textarea>
+                    </div>
+
+                    <div class="field-group full-width">
+                        <label for="productAdditionalInfo">Additional Information</label>
+                        <textarea id="productAdditionalInfo" name="productAdditionalInfo" rows="3"
+                            placeholder="Add extra details (making charges, availability, etc.)"></textarea>
+                    </div>
+
+                    <div class="field-group full-width">
+                        <label for="productType">Product Type</label>
+                        <input type="text" id="productType" name="productType" placeholder="Gold Necklace Set">
+                    </div>
+
+                    <div class="field-group full-width">
+                        <label for="productSpecs">Specification / Product Details (one per line)</label>
+                        <textarea id="productSpecs" name="productSpecs" rows="4"
+                            placeholder="Hallmark Certified&#10;Handcrafted Finish"></textarea>
+                    </div>
+
+                    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+
+                    <div class="form-actions full-width">
+                        <button type="submit" class="save-btn" id="saveProductBtn">Save / Add Product</button>
+                        <button type="button" class="cancel-btn" id="cancelEditBtn" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+
+                <div id="footer-root" aria-live="polite"></div>
+
+                <script src="nav-menu.js"></script>
+                <script src="shared-footer.js"></script>
+                <section class="saved-products" aria-labelledby="savedProductsHeading">
+                    <div class="saved-products-head">
+                        <h3 id="savedProductsHeading">Saved Products</h3>
+                        <p>Delete products from admin panel when needed.</p>
+                    </div>
+                    <div id="savedProductsList" class="saved-products-list"></div>
+                </section>
+            </section>
+        </main>
+    </div>
+    <script src="admin-add-product.js"></script>
+</body>
+
+</html>
