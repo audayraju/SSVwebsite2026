@@ -1,0 +1,79 @@
+import React, { Suspense, lazy } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import FloatingButtons from './components/FloatingButtons'
+import PageLoader from './components/PageLoader'
+
+/* ── Lazy-loaded pages ── */
+const Home        = lazy(() => import('./pages/Home'))
+const Products    = lazy(() => import('./pages/Products'))
+const ProductDetails = lazy(() => import('./pages/ProductDetails'))
+const About       = lazy(() => import('./pages/About'))
+const Contact     = lazy(() => import('./pages/Contact'))
+const Services    = lazy(() => import('./pages/Services'))
+const Policies    = lazy(() => import('./pages/Policies'))
+
+/* ── Admin pages ── */
+const AdminLogin     = lazy(() => import('./admin/AdminLogin'))
+const AdminDashboard = lazy(() => import('./admin/AdminDashboard'))
+const UploadProduct  = lazy(() => import('./admin/UploadProduct'))
+const ProductList    = lazy(() => import('./admin/ProductList'))
+
+/* ── Simple admin auth guard ── */
+function RequireAdmin({ children }) {
+  const token = sessionStorage.getItem('ssv_admin_token')
+  return token ? children : <Navigate to="/admin" replace />
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* ── Public routes with shared layout ── */}
+          <Route element={<PublicLayout />}>
+            <Route path="/"          element={<Home />} />
+            <Route path="/products"  element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/about"     element={<About />} />
+            <Route path="/contact"   element={<Contact />} />
+            <Route path="/services"  element={<Services />} />
+            <Route path="/policies"  element={<Policies />} />
+          </Route>
+
+          {/* ── Admin routes ── */}
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={
+            <RequireAdmin><AdminDashboard /></RequireAdmin>
+          } />
+          <Route path="/admin/upload" element={
+            <RequireAdmin><UploadProduct /></RequireAdmin>
+          } />
+          <Route path="/admin/products" element={
+            <RequireAdmin><ProductList /></RequireAdmin>
+          } />
+
+          {/* ── Fallback ── */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  )
+}
+
+/* Shared layout wrapper (Outlet lives inside each page) */
+import { Outlet } from 'react-router-dom'
+
+function PublicLayout() {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <FloatingButtons />
+      <Footer />
+    </>
+  )
+}

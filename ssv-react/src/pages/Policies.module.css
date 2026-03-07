@@ -1,0 +1,47 @@
+.wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 50px 24px 70px;
+}
+
+.wrapper h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.4rem;
+  color: #1a1a1a;
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 32px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 26px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-left: 3px solid #c9a84c;
+}
+
+.section h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.section p {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.homeLink {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #560537;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.homeLink:hover { color: #c9a84c; }

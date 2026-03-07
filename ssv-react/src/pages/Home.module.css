@@ -1,0 +1,329 @@
+/* ── CAROUSEL ── */
+.carousel {
+  width: min(100%, 1280px);
+  margin: 2px auto;
+  padding: 0;
+}
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(10,10,10,0.16);
+}
+
+.track {
+  display: flex;
+  transition: transform 1.1s ease;
+  will-change: transform;
+}
+
+.slide {
+  min-width: 100%;
+  position: relative;
+  height: clamp(290px, 50vw, 540px);
+  isolation: isolate;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05);
+}
+
+.slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,8,12,0.72), rgba(5,8,12,0.22));
+  z-index: 1;
+}
+
+.caption {
+  position: absolute;
+  left: clamp(16px, 5vw, 44px);
+  bottom: clamp(16px, 4vw, 38px);
+  z-index: 2;
+  max-width: min(82%, 560px);
+  color: #fff;
+}
+
+.caption h2 {
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+}
+
+.caption p {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.carouselBtn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  color: #ffffff;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.carouselBtn:hover { transform: translateY(-2px); }
+
+.control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255,255,255,0.85);
+  color: #23252a;
+  font-size: 30px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+
+.prev { left: 12px; }
+.next { right: 12px; }
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  background: #c0b6bf;
+  cursor: pointer;
+}
+
+.dotActive { background: #3b2f3e; }
+
+/* ── THREE COLUMN VIEW ── */
+.viewThree {
+  width: min(100%, 900px);
+  margin: 0 auto 34px;
+  padding: 0 16px;
+}
+
+.viewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.viewItem {
+  text-align: center;
+  color: #1d242d;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 12px;
+  filter: grayscale(38%) brightness(0.62);
+  transition: transform 2s cubic-bezier(0.22,0.9,0.28,1), box-shadow 2s;
+}
+
+.viewItem:hover .avatar {
+  transform: scale(1.06);
+  box-shadow: 0 16px 36px rgba(30,22,32,0.12);
+  filter: grayscale(0%) brightness(1);
+}
+
+.viewItem h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.viewItem p {
+  font-size: 0.88rem;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.viewBtn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: transform 0.25s;
+}
+
+.viewBtn:hover { transform: translateY(-2px); }
+
+/* ── ALT SECTIONS ── */
+.section {
+  padding: 60px 24px;
+  background: var(--bg);
+}
+
+.section + .section { background: #f2ede8; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.reverse { flex-direction: row-reverse; }
+
+.imageBox {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.imageBox img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.imageBox:hover img { transform: scale(1.03); }
+
+.contentBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contentBox h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  color: var(--dark);
+  line-height: 1.2;
+}
+
+.contentBox p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.readMoreBtn {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 12px 28px;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.readMoreBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(155,104,30,0.35);
+}
+
+/* ── PRODUCT SECTION ── */
+.productsSection { padding: 20px 16px 40px; }
+
+.homeProductGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.productCard {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+
+.productCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.productCard:hover img { transform: scale(1.08); }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,5,15,0.80), transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px 16px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.productCard:hover .overlay { opacity: 1; }
+
+.overlay h3 {
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.cardActions { display: flex; gap: 10px; }
+
+.knowBtn {
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .viewGrid { grid-template-columns: 1fr; gap: 28px; }
+  .viewThree { padding: 0 20px; }
+  .container { flex-direction: column; gap: 28px; }
+  .reverse { flex-direction: column; }
+  .imageBox img { height: 240px; }
+  .homeProductGrid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .homeProductGrid { grid-template-columns: repeat(2, 1fr); }
+}

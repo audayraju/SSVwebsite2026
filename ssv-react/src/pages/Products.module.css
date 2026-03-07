@@ -1,0 +1,128 @@
+/* Category bar */
+.categoryBar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 16px 0;
+}
+
+.catItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 8px 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.catItem:hover { background: rgba(201,168,76,0.08); }
+
+.catActive {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.12);
+}
+
+.catIconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(201,168,76,0.3);
+}
+
+.catIconWrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.catLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--dark);
+  text-transform: capitalize;
+}
+
+/* Page content */
+.content {
+  padding: 8px 16px 40px;
+}
+
+.textBg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 880px;
+  width: calc(100% - 24px);
+  background: linear-gradient(90deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04));
+  padding: 22px 24px;
+  min-height: 120px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 0 auto 20px;
+  border: 1px solid rgba(201,168,76,0.12);
+}
+
+.textBg h2 {
+  margin: 0 0 8px;
+  color: var(--dark);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.textBg p {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--mid);
+  max-width: 760px;
+  line-height: 1.8;
+}
+
+.searchNote {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clearSearch {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cardWrapper { cursor: pointer; }
+
+.loadingWrap {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.noResults {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .productsGrid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .catIconWrap { width: 40px; height: 40px; }
+}

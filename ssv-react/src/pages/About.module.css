@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+:root {
+  --sapphire: #1B4F72;
+  --brass: #9b681e;
+  --brass-light: #f4dd62;
+  --navy: #1A2332;
+  --text: #4A5568;
+  --text-light: #718096;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 6px 18px rgba(0,0,0,0.06);
+  --shadow-md: 0 15px 35px rgba(0,0,0,0.08);
+  --shadow-lg: 0 25px 55px rgba(0,0,0,0.12);
+  --font-display-about: 'Playfair Display', serif;
+  --font-body-about: 'Montserrat', sans-serif;
+}
+
+.aboutPanel {
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #faf8f4, #f2efe9);
+}
+
+.specializationsSection { margin: 2rem 0; }
+
+.specialHeader {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.specialHeader h2 {
+  font-family: var(--font-display-about);
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+
+.para {
+  font-family: var(--font-body-about);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.specializationsPanel {
+  background: linear-gradient(180deg, rgba(250,248,244,0.98), rgba(245,243,240,0.98));
+  border-radius: 20px;
+  padding: 28px 20px;
+  box-shadow: 0 20px 40px rgba(10,10,10,0.06);
+}
+
+.specializationsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.specializationCard {
+  background: #fff;
+  padding: 1.4rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: transform 0.4s, box-shadow 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.specializationCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brass), var(--brass-light));
+}
+
+.specializationCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.specTitle {
+  font-family: var(--font-display-about);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.specDescription {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.specFeatures ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.specFeatures li {
+  font-size: 0.83rem;
+  color: var(--text);
+  padding: 5px 0;
+  padding-left: 18px;
+  position: relative;
+}
+
+.specFeatures li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--brass);
+  font-weight: 700;
+}
+
+/* Why choose us */
+.whyChooseUs {
+  padding: 50px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.whyChooseUs h2 {
+  font-family: var(--font-display-about);
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 32px;
+}
+
+.featuresList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.featureItem {
+  background: linear-gradient(180deg, #faf8f4, #f2efe9);
+  border-radius: 12px;
+  padding: 20px 18px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.featureItem:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.featureText h3 {
+  font-family: var(--font-display-about);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.featureText p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Mission / Vision */
+.missionVision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+.missionBox,
+.visionBox {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--brass);
+}
+
+.missionBox h3,
+.visionBox h3 {
+  font-family: var(--font-display-about);
+  font-size: 1.3rem;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.missionBox p,
+.visionBox p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .specializationsGrid { grid-template-columns: 1fr; }
+  .featuresList { grid-template-columns: 1fr 1fr; }
+  .missionVision { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .featuresList { grid-template-columns: 1fr; }
+}

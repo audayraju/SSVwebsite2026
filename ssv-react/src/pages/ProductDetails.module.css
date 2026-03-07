@@ -1,0 +1,147 @@
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+.backBtn {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backBtn:hover { color: var(--gold); }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.galleryCol {}
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(86,5,55,0.08);
+  color: #560537;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: capitalize;
+  align-self: flex-start;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.15;
+}
+
+.sku {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.desc {
+  font-size: 0.95rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+.specBox {
+  background: var(--off-white);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.specBox h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.specBox ul {
+  padding-left: 18px;
+}
+
+.specBox li {
+  font-size: 0.88rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+.extra {
+  background: rgba(201,168,76,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+}
+
+.extra p {
+  font-size: 0.85rem;
+  color: var(--mid);
+}
+
+.waBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 30px;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+.waBtn:hover {
+  background: #1ebe5c;
+  transform: translateY(-2px);
+}
+
+.notFound {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.notFound h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
