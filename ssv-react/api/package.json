@@ -2,6 +2,7 @@
   "name": "ssv-api",
   "version": "1.0.0",
   "description": "SSV Jewellers REST API",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
