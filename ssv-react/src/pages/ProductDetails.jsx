@@ -46,8 +46,9 @@ export default function ProductDetails() {
     </div>
   )
 
-  const imgSrc = product.product_image
-    ? (product.product_image.startsWith('http') ? product.product_image : `/uploads/${product.product_image}`)
+  const _img = product.image || product.product_image
+  const imgSrc = _img
+    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
     : '/slides/pictures/logo.jpeg'
 
   const images = [imgSrc]
