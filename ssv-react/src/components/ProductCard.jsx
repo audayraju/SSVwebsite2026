@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './ProductCard.module.css'
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onClick }) {
   const navigate = useNavigate()
   const [liked, setLiked] = useState(false)
 
@@ -11,19 +11,24 @@ export default function ProductCard({ product }) {
     name,
     category,
     price,
+    image,
     product_image,
     sku,
   } = product
 
-  const imgSrc = product_image
-    ? (product_image.startsWith('http') ? product_image : `/uploads/${product_image}`)
+  const imgSrc = (image || product_image)
+    ? (() => {
+        const src = image || product_image
+        if (src.startsWith('http') || src.startsWith('data:')) return src
+        return `/uploads/${src}`
+      })()
     : '/slides/pictures/logo.jpeg'
 
   return (
     <div
       className={styles.card}
       data-category={category}
-      onClick={() => navigate(`/products/${id}`)}
+      onClick={() => onClick ? onClick() : navigate(`/products/${id}`)}
       role="button"
       tabIndex={0}
       onKeyDown={e => e.key === 'Enter' && navigate(`/products/${id}`)}

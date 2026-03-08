@@ -20,15 +20,23 @@ const PORT = process.env.PORT ?? 3001
 // ---------------------------------------------------------------------------
 // Data store — flat JSON file (no external DB required)
 // ---------------------------------------------------------------------------
-const DATA_DIR      = path.join(__dirname, 'data')
+const IS_VERCEL     = !!process.env.VERCEL
+const DATA_DIR      = IS_VERCEL ? '/tmp/ssv-data'    : path.join(__dirname, 'data')
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json')
-const UPLOADS_DIR   = path.join(__dirname, 'uploads')
+const UPLOADS_DIR   = IS_VERCEL ? '/tmp/ssv-uploads' : path.join(__dirname, 'uploads')
 
 ;[DATA_DIR, UPLOADS_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 })
 
 function readProducts() {
+  if (!fs.existsSync(PRODUCTS_FILE)) {
+    // On Vercel first cold-start, seed from the committed data file
+    const seed = path.join(__dirname, 'data', 'products.json')
+    if (fs.existsSync(seed)) {
+      try { fs.copyFileSync(seed, PRODUCTS_FILE) } catch { /* ignore */ }
+    }
+  }
   if (!fs.existsSync(PRODUCTS_FILE)) return []
   try {
     return JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'))
@@ -82,22 +90,13 @@ function requireAdmin(req, res, next) {
 }
 
 // ---------------------------------------------------------------------------
-// Multer — image uploads
+// Multer — image uploads (memory storage → base64 in JSON)
 // ---------------------------------------------------------------------------
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, UPLOADS_DIR),
-  filename:    (_req, file, cb) => {
-    const ext  = path.extname(file.originalname).toLowerCase()
-    const safe = `${Date.now()}-${uuidv4()}${ext}`
-    cb(null, safe)
-  },
-})
-
 const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
 const upload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 }, // 8 MB
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
   fileFilter: (_req, file, cb) => {
     if (ALLOWED_MIME.has(file.mimetype)) return cb(null, true)
     cb(new Error('Only JPEG, PNG, and WEBP images are allowed.'))
@@ -109,20 +108,19 @@ const upload = multer({
 // ---------------------------------------------------------------------------
 app.use(cors({
   origin: (origin, cb) => {
-    const allowed = [
-      process.env.CLIENT_ORIGIN ?? 'http://localhost:5173',
-      'http://localhost:5173',
-      'http://localhost:4173',
-    ]
-    // Allow requests with no origin (server-to-server, curl, etc.)
-    if (!origin || allowed.includes(origin)) return cb(null, true)
+    if (
+      !origin ||
+      /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
+      /\.vercel\.app$/.test(origin) ||
+      (process.env.CLIENT_ORIGIN && origin === process.env.CLIENT_ORIGIN)
+    ) return cb(null, true)
     cb(new Error(`CORS: origin ${origin} not allowed`))
   },
   credentials: true,
 }))
 
-app.use(express.json())
-app.use('/uploads', express.static(UPLOADS_DIR))
+app.use(express.json({ limit: '10mb' }))
+// Note: /uploads static route removed — images stored as base64 data URLs in JSON
 
 // ---------------------------------------------------------------------------
 // Public routes
@@ -216,7 +214,9 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
     specs:          productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : [],
-    image:          req.file ? req.file.filename : null,
+    image:          req.file
+      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
+      : null,
     createdAt:      new Date().toISOString(),
   }
 
@@ -259,7 +259,9 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
     specs:          productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : existing.specs,
-    image:          req.file ? req.file.filename : existing.image,
+    image:          req.file
+      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
+      : existing.image,
     updatedAt:      new Date().toISOString(),
   }
 
@@ -275,12 +277,6 @@ app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
 
   const [removed] = products.splice(idx, 1)
 
-  // Remove the uploaded image file too
-  if (removed.image) {
-    const imgPath = path.join(UPLOADS_DIR, removed.image)
-    if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath)
-  }
-
   writeProducts(products)
   res.json({ message: 'Product deleted', id: removed.id })
 })
@@ -291,7 +287,7 @@ app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
   if (err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(413).json({ message: 'Image must be smaller than 8 MB.' })
+    return res.status(413).json({ message: 'Image must be smaller than 2 MB.' })
   }
   console.error(err.message)
   res.status(500).json({ message: err.message ?? 'Internal server error' })
@@ -300,6 +296,10 @@ app.use((err, _req, res, _next) => {
 // ---------------------------------------------------------------------------
 // Start
 // ---------------------------------------------------------------------------
-app.listen(PORT, () => {
-  console.log(`SSV API running on http://localhost:${PORT}`)
-})
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`SSV API running on http://localhost:${PORT}`)
+  })
+}
+
+module.exports = app

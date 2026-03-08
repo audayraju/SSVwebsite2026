@@ -52,7 +52,7 @@ export default function UploadProduct() {
         productType:           p.type            ?? '',
         productSpecs:          Array.isArray(p.specs) ? p.specs.join('\n') : (p.specs ?? ''),
       })
-      if (p.image) setPreview(p.image.startsWith('http') ? p.image : `/uploads/${p.image}`)
+      if (p.image) setPreview(p.image.startsWith('data:') || p.image.startsWith('http') ? p.image : `/uploads/${p.image}`)
     }).catch(() => {
       setStatus({ msg: 'Failed to load product for editing.', ok: false })
     })
