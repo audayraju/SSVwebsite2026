@@ -129,8 +129,22 @@
 }
 
 .float-btn img {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+}
+
+/* stronger hover effect for floating button */
+.float-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+.float-btn.whatsapp {
+    background: #ffffff;
+}
+
+.float-btn.whatsapp img {
+    filter: none;
 }
 
 @media (max-width: 900px) {
@@ -164,13 +178,25 @@
         grid-template-columns: 1fr;
     }
 }
+
 .footer-copyright {
     font-size: 0.75rem;
     color: rgba(231, 236, 239, 0.7);
 }
+
 .footer-logo {
-   font-weight: 1000;
-   font-family: interface, inter, system-ui, -apple-system, 'segoe ui', sans-serif;
-  text-transform:  uppercase;
-  height: auto;
+    font-weight: 1000;
+    font-family: interface, inter, system-ui, -apple-system, 'segoe ui', sans-serif;
+    text-transform: uppercase;
+    height: auto;
+}
+
+.footer-logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.footer-logo-link .footer-logo {
+    cursor: pointer;
 }

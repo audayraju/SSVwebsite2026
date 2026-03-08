@@ -46,12 +46,28 @@ function getFavouriteItems() {
         const parsed = raw ? JSON.parse(raw) : [];
         return Array.isArray(parsed) ? parsed : [];
     } catch {
-        return [];
+        try {
+            const raw = sessionStorage.getItem(FAVOURITES_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
     }
 }
 
 function setFavouriteItems(items) {
-    localStorage.setItem(FAVOURITES_KEY, JSON.stringify(items));
+    try {
+        localStorage.setItem(FAVOURITES_KEY, JSON.stringify(items));
+    } catch (err) {
+        // Fallback to sessionStorage if localStorage is unavailable (e.g., private mode)
+        try {
+            sessionStorage.setItem(FAVOURITES_KEY, JSON.stringify(items));
+        } catch (e) {
+            // As a last resort, log to console — storage unavailable
+            console.warn('Unable to persist favourites to localStorage/sessionStorage', e || err);
+        }
+    }
 }
 
 function getAdminProducts() {
@@ -185,14 +201,18 @@ function toggleFavouriteFromCard(card) {
     const product = extractCardData(card);
     const favourites = getFavouriteItems();
     const existingIndex = favourites.findIndex((item) => item.sku === product.sku);
+    let added = false;
 
     if (existingIndex >= 0) {
         favourites.splice(existingIndex, 1);
+        added = false;
     } else {
         favourites.unshift(product);
+        added = true;
     }
 
     setFavouriteItems(favourites);
+    return added;
 }
 
 function openProductFromCard(card) {
@@ -572,11 +592,69 @@ function closeImageViewer() {
             favBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                toggleFavouriteFromCard(card);
+                const added = toggleFavouriteFromCard(card);
                 updateFavButtonsUI();
+                if (added) {
+                    openNavFavouritesPanel();
+                    showFavToast('Added to liked collections');
+                } else {
+                    showFavToast('Removed from liked collections');
+                }
             });
         }
     });
+
+    // Delegate clicks on any .card-fav to support dynamically added cards
+    document.addEventListener('click', (e) => {
+        const favEl = e.target instanceof HTMLElement ? e.target.closest('.card-fav') : null;
+        if (!favEl) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const card = favEl.closest('.product-card');
+        if (!card) return;
+        const added = toggleFavouriteFromCard(card);
+        updateFavButtonsUI();
+        if (added) {
+            openNavFavouritesPanel();
+            showFavToast('Added to liked collections');
+        } else {
+            showFavToast('Removed from liked collections');
+        }
+    });
+
+    // Small toast feedback for user when adding/removing favourites
+    function showFavToast(text) {
+        try {
+            const toast = document.createElement('div');
+            toast.className = 'fav-toast';
+            toast.textContent = text;
+            Object.assign(toast.style, {
+                position: 'fixed',
+                right: '20px',
+                bottom: '90px',
+                background: 'rgba(0,0,0,0.8)',
+                color: '#fff',
+                padding: '10px 14px',
+                borderRadius: '8px',
+                zIndex: 99999,
+                opacity: '0',
+                transition: 'opacity 220ms ease, transform 220ms ease',
+                transform: 'translateY(8px)'
+            });
+            document.body.appendChild(toast);
+            // force repaint
+            void toast.offsetWidth;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            window.setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(8px)';
+                window.setTimeout(() => toast.remove(), 300);
+            }, 1400);
+        } catch (err) {
+            // ignore
+        }
+    }
 
     if (navMenuBtn) {
         navMenuBtn.addEventListener('click', (e) => {

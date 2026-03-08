@@ -9,27 +9,35 @@
   --text-light: #718096;
   --radius: 16px;
   --radius-lg: 24px;
-  --shadow-sm: 0 6px 18px rgba(0,0,0,0.06);
-  --shadow-md: 0 15px 35px rgba(0,0,0,0.08);
-  --shadow-lg: 0 25px 55px rgba(0,0,0,0.12);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 15px 35px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 25px 55px rgba(0, 0, 0, 0.12);
   --font-display-about: 'Playfair Display', serif;
   --font-body-about: 'Montserrat', sans-serif;
 }
 
 .aboutPanel {
-  padding: 40px 20px;
-  background: linear-gradient(180deg, #faf8f4, #f2efe9);
+  /* Reduce large top/bottom gaps and add a subtle background */
+  padding: 12px 12px 20px;
+  background-image: linear-gradient(180deg, #fff 0%, #fbf8f4 40%), url('/slides/pictures/about-bg.jpg');
+  background-size: cover, auto;
+  background-position: center top, center;
+  background-repeat: no-repeat;
 }
 
-.specializationsSection { margin: 2rem 0; }
+.specializationsSection {
+  padding: 8px 0 16px;
+}
 
 .specialHeader {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.6rem;
+  margin-top: 1.0rem;
+  padding-top: 6px;
 }
 
 .specialHeader h2 {
-  font-family: var(--font-display-about);
+  font-family: interface, 'Playfair Display', serif;
   font-size: 2rem;
   color: var(--navy);
   margin-bottom: 0.75rem;
@@ -38,23 +46,35 @@
 .para {
   font-family: var(--font-body-about);
   color: var(--text-light);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.7;
-  font-size: 0.95rem;
+  max-width: 920px;
+  margin: 0 auto 10px;
+  line-height: 1.8;
+  font-size: 1rem;
+  padding: 0 12px;
+}
+
+/* light cream background box behind the about text */
+.paraGroup {
+  background: #fbf6ee;
+  /* light cream */
+  padding: 18px 14px;
+  border-radius: 12px;
+  max-width: 980px;
+  margin: 0 auto 14px;
+  box-shadow: 0 8px 20px rgba(10, 10, 10, 0.04);
 }
 
 .specializationsPanel {
-  background: linear-gradient(180deg, rgba(250,248,244,0.98), rgba(245,243,240,0.98));
-  border-radius: 20px;
-  padding: 28px 20px;
-  box-shadow: 0 20px 40px rgba(10,10,10,0.06);
+  background: linear-gradient(180deg, rgba(250, 248, 244, 0.98), rgba(245, 243, 240, 0.98));
+  border-radius: 14px;
+  padding: 18px 14px;
+  box-shadow: 0 14px 30px rgba(10, 10, 10, 0.05);
 }
 
 .specializationsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .specializationCard {
@@ -71,7 +91,9 @@
 .specializationCard::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3px;
   background: linear-gradient(90deg, var(--brass), var(--brass-light));
 }
@@ -201,11 +223,25 @@
 }
 
 @media (max-width: 768px) {
-  .specializationsGrid { grid-template-columns: 1fr; }
-  .featuresList { grid-template-columns: 1fr 1fr; }
-  .missionVision { grid-template-columns: 1fr; }
+  .specializationsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featuresList {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .missionVision {
+    grid-template-columns: 1fr;
+  }
+
+  .paraGroup {
+    padding: 14px 12px;
+  }
 }
 
 @media (max-width: 480px) {
-  .featuresList { grid-template-columns: 1fr; }
+  .featuresList {
+    grid-template-columns: 1fr;
+  }
 }

@@ -43,7 +43,7 @@ export default function Contact() {
       </section>
 
       {/* ── MAP ── */}
-      <section className={styles.mapSection}>
+      <section id="store-map" className={styles.mapSection}>
         <h2>Visit Our Store</h2>
         <iframe
           src="https://maps.app.goo.gl/fS5d2jJRwi3N7SRb9?g_st=ic"

@@ -20,12 +20,12 @@ const SPECIALIZATIONS = [
 ]
 
 const WHY_CHOOSE = [
-  { title: 'Quality Assurance',      desc: 'Every piece undergoes rigorous quality inspection to ensure perfection.' },
-  { title: 'Authentic Certification',desc: 'All gemstones come with proper certification and documentation.' },
-  { title: 'Expert Craftsmanship',   desc: 'Our master artisans bring decades of experience to every creation.' },
-  { title: 'Custom Designs',         desc: 'We create bespoke jewelry tailored to your unique vision.' },
-  { title: 'Lifetime Warranty',      desc: 'Comprehensive warranty and after-sales service on all collections.' },
-  { title: 'Ethical Sourcing',       desc: 'All materials sourced responsibly and ethically.' },
+  { title: 'Quality Assurance', desc: 'Every piece undergoes rigorous quality inspection to ensure perfection.' },
+  { title: 'Authentic Certification', desc: 'All gemstones come with proper certification and documentation.' },
+  { title: 'Expert Craftsmanship', desc: 'Our master artisans bring decades of experience to every creation.' },
+  { title: 'Custom Designs', desc: 'We create bespoke jewelry tailored to your unique vision.' },
+  { title: 'Lifetime Warranty', desc: 'Comprehensive warranty and after-sales service on all collections.' },
+  { title: 'Ethical Sourcing', desc: 'All materials sourced responsibly and ethically.' },
 ]
 
 export default function About() {
@@ -43,11 +43,10 @@ export default function About() {
         {/* ── Specializations ── */}
         <div className={styles.specializationsSection}>
           <div className={styles.specialHeader}>
-            <h2>Our Specializations</h2>
-            <p className={styles.para}>
-              We take pride in our expertise across a range of precious materials,
-              ensuring each piece is crafted to perfection.
-            </p>
+            <h2>About our Store</h2>
+            <div className={styles.paraGroup}>
+              <p className={styles.para}>Welcome to SSV Jewellery, a trusted destination for elegant and timeless jewellery. Established in 2017, our store has been dedicated to offering high-quality gold, silver, and diamond jewellery crafted with precision and care. From traditional designs to modern styles, we bring a beautiful collection that suits every occasion—weddings, celebrations, and everyday elegance. Our goal is to provide jewellery that not only enhances beauty but also becomes a cherished memory for our customers. At SSV Jewellery, we believe that jewellery is more than an accessory; it is a symbol of love, tradition, and personal expression. Every piece in our collection is carefully selected to ensure the finest craftsmanship and lasting value.</p>
+            </div>
           </div>
           <div className={styles.specializationsPanel}>
             <div className={styles.specializationsGrid}>

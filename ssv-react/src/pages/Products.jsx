@@ -84,6 +84,8 @@ export default function Products() {
         ))}
       </div>
 
+      {/* mobile dropdown removed — filter handled via category bar */}
+
       <div className={styles.content}>
         <div className={styles.textBg}>
           <h2>Our Jewellery Collections</h2>

@@ -12,13 +12,13 @@ export default function Footer() {
             </Link>
           </div>
           <div className="footer-contact">
-            <a href="tel:+919876543210">+91 98765 43210</a>
+            <a href="tel:+919876543210">+91 98765 432101</a>
             <a
               href="https://wa.me/916281049201?text=Hi%2C%20I%E2%80%99m%20interested%20in%20your%20website.%20Could%20you%20please%20share%20more%20details%3F"
               target="_blank"
               rel="noopener noreferrer"
             >
-              WhatsApp Chat
+              WhatsApp Chats
             </a>
           </div>
         </div>

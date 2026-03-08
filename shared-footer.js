@@ -4,7 +4,9 @@
     <div class="footer-shell">
         <div class="footer-head">
             <div class="footer-brand">
-                <h3 class="footer-logo">SSV JEWELLERS</h3>
+                <a class="footer-logo-link" href="indexpage.html" aria-label="Go to home page">
+                    <h3 class="footer-logo">SSV JEWELLERS</h3>
+                </a>
                 <p>Wholesale & Retail</p>
             </div>
             <div class="footer-contact">

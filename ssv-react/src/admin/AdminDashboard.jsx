@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async'
 import styles from './Admin.module.css'
 
 const QUICK_LINKS = [
-  { to: '/admin/upload',   icon: '➕', title: 'Add Product',   desc: 'Upload images and add new products to your catalog.' },
+  { to: '/admin/upload', icon: '➕', title: 'Add Product', desc: 'Upload images and add new products to your catalog.' },
   { to: '/admin/products', icon: '📦', title: 'Manage Products', desc: 'Edit or delete existing products in your catalog.' },
-  { to: '/',               icon: '🌐', title: 'View Website',   desc: 'Open the live website in a new tab.' },
+  { to: '/', icon: '🌐', title: 'View Website', desc: 'Open the live website in a new tab.' },
 ]
 
 export default function AdminDashboard() {
@@ -62,8 +62,8 @@ export default function AdminDashboard() {
 export function AdminSidebar({ onLogout, active }) {
   const links = [
     { to: '/admin/dashboard', label: 'Dashboard' },
-    { to: '/admin/upload',    label: 'Add Product' },
-    { to: '/admin/products',  label: 'Manage Products' },
+    { to: '/admin/upload', label: 'Add Product' },
+    { to: '/admin/products', label: 'Manage Products' },
   ]
 
   return (
