@@ -52,8 +52,8 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.14);
-    background: #fff;
+    border: none;
+    background: transparent;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -65,9 +65,46 @@ body {
 .menu-btn span {
     display: block;
     width: 14px;
-    height: 1.5px;
+    height: 2px;
     border-radius: 999px;
-    background: #303030;
+    background: #fff;
+
+    /* Stronger overrides to ensure other page CSS (e.g. products.css) doesn't force a white box */
+    .navbar .menu-wrap .menu-btn {
+        background: transparent !important;
+        border: none !important;
+        width: 36px !important;
+        height: 36px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .navbar .menu-wrap .menu-btn svg {
+        color: #fff !important;
+        fill: #fff !important;
+    }
+
+    .menu-icon {
+        width: 18px !important;
+        height: 18px !important;
+        display: block !important;
+    }
+
+    .menu-icon path {
+        fill: #fff !important;
+    }
+
+    border-radius: 20px;
+}
+
+.menu-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    border-radius: 20px;
+    color: #fff;
+    /* SVG uses currentColor for fill */
 }
 
 .menu-btn[aria-expanded="true"] {
@@ -142,6 +179,27 @@ body {
 
 .nav-links a:hover {
     color: #ffffff;
+}
+
+/* Active/clicked state styling */
+.nav-links a.active,
+.nav-links a:active,
+.nav-links a[aria-current="page"] {
+    color: #ffffff;
+}
+
+.nav-links a.active::after,
+.nav-links a:active::after,
+.nav-links a[aria-current="page"]::after {
+    width: 100%;
+}
+
+/* Add a subtle scale animation on click for tactile feedback */
+.nav-links a {
+    transition: color 0.18s ease, transform 0.12s ease;
+}
+.nav-links a:active {
+    transform: scale(0.98);
 }
 
 .nav-links a:hover::after {

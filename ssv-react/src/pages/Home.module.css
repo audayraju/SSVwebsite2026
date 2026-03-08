@@ -21,7 +21,8 @@
 .slide {
   min-width: 100%;
   position: relative;
-  height: clamp(290px, 50vw, 540px);
+  /* Increased banner height: larger minimum and maximum for a more prominent hero */
+  height: clamp(380px, 60vw, 760px);
   isolation: isolate;
 }
 
@@ -42,10 +43,11 @@
 
 .caption {
   position: absolute;
-  left: clamp(16px, 5vw, 44px);
-  bottom: clamp(16px, 4vw, 38px);
+  left: clamp(20px, 5vw, 64px);
+  /* move caption up slightly on taller banners */
+  bottom: clamp(24px, 6vw, 80px);
   z-index: 2;
-  max-width: min(82%, 560px);
+  max-width: min(82%, 760px);
   color: #fff;
 }
 

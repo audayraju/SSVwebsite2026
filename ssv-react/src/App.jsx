@@ -1,13 +1,16 @@
 import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import FloatingButtons from './components/FloatingButtons'
 import PageLoader from './components/PageLoader'
+import { FavoritesProvider } from './context/FavoritesContext'
 
 /* ── Lazy-loaded pages ── */
 const Home        = lazy(() => import('./pages/Home'))
-const Products    = lazy(() => import('./pages/Products'))
+// Temporarily import Products directly to debug render issues (can revert to lazy)
+import Products from './pages/Products'
 const ProductDetails = lazy(() => import('./pages/ProductDetails'))
 const About       = lazy(() => import('./pages/About'))
 const Contact     = lazy(() => import('./pages/Contact'))
@@ -28,9 +31,11 @@ function RequireAdmin({ children }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
+    <HelmetProvider>
+      <BrowserRouter>
+        <FavoritesProvider>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
           {/* ── Public routes with shared layout ── */}
           <Route element={<PublicLayout />}>
             <Route path="/"          element={<Home />} />
@@ -56,9 +61,11 @@ export default function App() {
 
           {/* ── Fallback ── */}
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+          </Routes>
+        </Suspense>
+        </FavoritesProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   )
 }
 

@@ -1,11 +1,11 @@
 import { useState } from 'react'
+import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product, onClick }) {
   const navigate = useNavigate()
-  const [liked, setLiked] = useState(false)
-
+  const { isFavorite, toggleFavorite } = useFavorites()
   const {
     id,
     name,
@@ -16,12 +16,14 @@ export default function ProductCard({ product, onClick }) {
     sku,
   } = product
 
+  const liked = isFavorite(id)
+
   const imgSrc = (image || product_image)
     ? (() => {
-        const src = image || product_image
-        if (src.startsWith('http') || src.startsWith('data:')) return src
-        return `/uploads/${src}`
-      })()
+      const src = image || product_image
+      if (src.startsWith('http') || src.startsWith('data:')) return src
+      return `/uploads/${src}`
+    })()
     : '/slides/pictures/logo.jpeg'
 
   return (
@@ -43,7 +45,7 @@ export default function ProductCard({ product, onClick }) {
         />
         <button
           className={`${styles.likeBtn}${liked ? ` ${styles.liked}` : ''}`}
-          onClick={e => { e.stopPropagation(); setLiked(v => !v) }}
+          onClick={e => { e.stopPropagation(); toggleFavorite({ id, name, image: imgSrc }) }}
           aria-label={liked ? 'Unlike' : 'Like'}
         >
           <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'} aria-hidden="true" />

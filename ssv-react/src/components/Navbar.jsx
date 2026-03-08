@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useFavorites } from '../context/FavoritesContext'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
@@ -7,8 +8,65 @@ export default function Navbar() {
   const [storeOpen, setStoreOpen] = useState(false)
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
+  const { favorites, removeFavorite } = useFavorites()
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])
+
+  /* Auto-typing placeholder suggestions for the search box */
+  const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets']
+  const [suggestIndex, setSuggestIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [typing, setTyping] = useState(true)
+  const [placeholderText, setPlaceholderText] = useState('Search...')
+
+  useEffect(() => {
+    if (search) {
+      setPlaceholderText('')
+      return
+    }
+
+    let mounted = true
+    const word = suggestions[suggestIndex]
+
+    // typing forward
+    if (typing && charIndex < word.length) {
+      const t = setTimeout(() => {
+        if (!mounted) return
+        setCharIndex(ci => ci + 1)
+        setPlaceholderText(word.slice(0, charIndex + 1))
+      }, 100)
+      return () => { mounted = false; clearTimeout(t) }
+    }
+
+    // pause at end of word
+    if (typing && charIndex === word.length) {
+      const t = setTimeout(() => {
+        if (!mounted) return
+        setTyping(false)
+      }, 1400)
+      return () => { mounted = false; clearTimeout(t) }
+    }
+
+    // deleting
+    if (!typing && charIndex > 0) {
+      const t = setTimeout(() => {
+        if (!mounted) return
+        setCharIndex(ci => ci - 1)
+        setPlaceholderText(word.slice(0, charIndex - 1))
+      }, 60)
+      return () => { mounted = false; clearTimeout(t) }
+    }
+
+    // move to next word
+    if (!typing && charIndex === 0) {
+      const t = setTimeout(() => {
+        if (!mounted) return
+        setTyping(true)
+        setSuggestIndex(i => (i + 1) % suggestions.length)
+      }, 400)
+      return () => { mounted = false; clearTimeout(t) }
+    }
+  }, [charIndex, typing, suggestIndex, search])
 
   function handleSearch(e) {
     e.preventDefault()
@@ -55,8 +113,14 @@ export default function Navbar() {
             onClick={() => setMenuOpen(v => !v)}
             aria-label="Open navigation menu"
             aria-expanded={menuOpen}
+            style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 6 }}
           >
-            <span /><span /><span />
+            {/* Use stroked lines so they remain visible on any background */}
+            <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+              <line x1="4" y1="7" x2="20" y2="7" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+              <line x1="4" y1="12" x2="20" y2="12" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+              <line x1="4" y1="17" x2="20" y2="17" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+            </svg>
           </button>
 
           <div className={`menu-dropdown${menuOpen ? ' open' : ''}`} role="menu">
@@ -81,9 +145,9 @@ export default function Navbar() {
 
         {/* Desktop nav links */}
         <div className="nav-links">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/products">Collections</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
+          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Collections</NavLink>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
         </div>
 
         {/* Favourites + Search grouped on the right */}
@@ -91,7 +155,7 @@ export default function Navbar() {
           <form className="search-box" onSubmit={handleSearch}>
             <input
               type="text"
-              placeholder="Search..."
+              placeholder={search ? '' : placeholderText}
               value={search}
               onChange={e => setSearch(e.target.value)}
               aria-label="Search jewellery"
@@ -104,13 +168,38 @@ export default function Navbar() {
             aria-label="Open liked collections"
           >
             <i className="bi bi-heart" aria-hidden="true" />
+            {favorites.length > 0 && (
+              <span className="tool-count" aria-hidden="true">{favorites.length}</span>
+            )}
           </button>
+
           <div className={`nav-fav-panel${favOpen ? ' open' : ''}`} aria-hidden={!favOpen}>
             <div className="nav-fav-header">
               <h4>Liked Collections</h4>
               <button className="nav-fav-close" onClick={() => setFavOpen(false)}>×</button>
             </div>
-            <p className="nav-fav-empty">No liked collections yet.</p>
+            {favorites.length === 0 ? (
+              <p className="nav-fav-empty">No liked collections yet.</p>
+            ) : (
+              <div className="nav-fav-list">
+                {favorites.map(item => (
+                  <div
+                    className="nav-fav-item"
+                    key={item.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => { navigate(`/products/${item.id}`); setFavOpen(false); }}
+                    onKeyDown={e => { if (e.key === 'Enter') { navigate(`/products/${item.id}`); setFavOpen(false); } }}
+                  >
+                    <img src={item.image || '/slides/pictures/logo.jpeg'} alt={item.name} />
+                    <div className="nav-fav-meta">
+                      <div className="nav-fav-name">{item.name}</div>
+                      <button className="nav-fav-remove" onClick={e => { e.stopPropagation(); removeFavorite(item.id); }} aria-label={`Remove ${item.name}`}>Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </nav>
