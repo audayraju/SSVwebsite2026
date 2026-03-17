@@ -1009,10 +1009,10 @@ body {
 .floating-buttons {
     position: fixed;
     right: 22px;
-    bottom: 22px;
+    top: 22px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     z-index: 9999;
 }
 

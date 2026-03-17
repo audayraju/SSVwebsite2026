@@ -1,15 +1,16 @@
 /* ── CAROUSEL ── */
 .carousel {
-  width: min(100%, 1280px);
-  margin: 2px auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   padding: 0;
 }
 
 .viewport {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(10,10,10,0.16);
+  border-radius: 0;
+  box-shadow: 0 12px 36px rgba(10, 10, 10, 0.16);
 }
 
 .track {
@@ -21,9 +22,15 @@
 .slide {
   min-width: 100%;
   position: relative;
-  /* Increased banner height: larger minimum and maximum for a more prominent hero */
-  height: clamp(380px, 60vw, 760px);
+  height: clamp(14rem, 45vw, 28rem);
   isolation: isolate;
+  border-radius: none;
+}
+
+@media (max-width: 768px) {
+  .slide {
+    height: clamp(12rem, 50vw, 22rem);
+  }
 }
 
 .slide img {
@@ -37,7 +44,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(5,8,12,0.72), rgba(5,8,12,0.22));
+  background: linear-gradient(to top, rgba(5, 8, 12, 0.72), rgba(5, 8, 12, 0.22));
   z-index: 1;
 }
 
@@ -75,7 +82,9 @@
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-.carouselBtn:hover { transform: translateY(-2px); }
+.carouselBtn:hover {
+  transform: translateY(-2px);
+}
 
 .control {
   position: absolute;
@@ -86,7 +95,7 @@
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   color: #23252a;
   font-size: 30px;
   line-height: 1;
@@ -94,8 +103,13 @@
   place-items: center;
 }
 
-.prev { left: 12px; }
-.next { right: 12px; }
+.prev {
+  left: 12px;
+}
+
+.next {
+  right: 12px;
+}
 
 .dots {
   display: flex;
@@ -113,7 +127,9 @@
   cursor: pointer;
 }
 
-.dotActive { background: #3b2f3e; }
+.dotActive {
+  background: #3b2f3e;
+}
 
 /* ── THREE COLUMN VIEW ── */
 .viewThree {
@@ -146,12 +162,12 @@
   display: block;
   margin: 0 auto 12px;
   filter: grayscale(38%) brightness(0.62);
-  transition: transform 2s cubic-bezier(0.22,0.9,0.28,1), box-shadow 2s;
+  transition: transform 2s cubic-bezier(0.22, 0.9, 0.28, 1), box-shadow 2s;
 }
 
 .viewItem:hover .avatar {
   transform: scale(1.06);
-  box-shadow: 0 16px 36px rgba(30,22,32,0.12);
+  box-shadow: 0 16px 36px rgba(30, 22, 32, 0.12);
   filter: grayscale(0%) brightness(1);
 }
 
@@ -181,7 +197,9 @@
   transition: transform 0.25s;
 }
 
-.viewBtn:hover { transform: translateY(-2px); }
+.viewBtn:hover {
+  transform: translateY(-2px);
+}
 
 /* ── ALT SECTIONS ── */
 .section {
@@ -189,7 +207,9 @@
   background: var(--bg);
 }
 
-.section + .section { background: #f2ede8; }
+.section+.section {
+  background: #f2ede8;
+}
 
 .container {
   max-width: 1100px;
@@ -199,7 +219,9 @@
   gap: 48px;
 }
 
-.reverse { flex-direction: row-reverse; }
+.reverse {
+  flex-direction: row-reverse;
+}
 
 .imageBox {
   flex: 1;
@@ -216,7 +238,9 @@
   transition: transform 0.5s ease;
 }
 
-.imageBox:hover img { transform: scale(1.03); }
+.imageBox:hover img {
+  transform: scale(1.03);
+}
 
 .contentBox {
   flex: 1;
@@ -252,11 +276,13 @@
 
 .readMoreBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(155,104,30,0.35);
+  box-shadow: 0 8px 20px rgba(155, 104, 30, 0.35);
 }
 
 /* ── PRODUCT SECTION ── */
-.productsSection { padding: 20px 16px 40px; }
+.productsSection {
+  padding: 20px 16px 40px;
+}
 
 .homeProductGrid {
   display: grid;
@@ -281,12 +307,14 @@
   transition: transform 0.5s ease;
 }
 
-.productCard:hover img { transform: scale(1.08); }
+.productCard:hover img {
+  transform: scale(1.08);
+}
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,5,15,0.80), transparent 55%);
+  background: linear-gradient(to top, rgba(10, 5, 15, 0.80), transparent 55%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -295,7 +323,9 @@
   transition: opacity 0.35s ease;
 }
 
-.productCard:hover .overlay { opacity: 1; }
+.productCard:hover .overlay {
+  opacity: 1;
+}
 
 .overlay h3 {
   color: #fff;
@@ -304,7 +334,10 @@
   margin-bottom: 10px;
 }
 
-.cardActions { display: flex; gap: 10px; }
+.cardActions {
+  display: flex;
+  gap: 10px;
+}
 
 .knowBtn {
   padding: 8px 18px;
@@ -318,14 +351,35 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .viewGrid { grid-template-columns: 1fr; gap: 28px; }
-  .viewThree { padding: 0 20px; }
-  .container { flex-direction: column; gap: 28px; }
-  .reverse { flex-direction: column; }
-  .imageBox img { height: 240px; }
-  .homeProductGrid { grid-template-columns: 1fr; }
+  .viewGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .viewThree {
+    padding: 0 20px;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .reverse {
+    flex-direction: column;
+  }
+
+  .imageBox img {
+    height: 240px;
+  }
+
+  .homeProductGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .homeProductGrid { grid-template-columns: repeat(2, 1fr); }
+  .homeProductGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
