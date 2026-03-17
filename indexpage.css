@@ -24,6 +24,7 @@
 /* ====== BODY ====== */
 body {
     background: #f8f4f1;
+    scroll-behavior: smooth;
 }
 
 
@@ -32,7 +33,7 @@ body {
 /* ===== HERO SECTION ===== */
 /* ============================= */
 .hero {
-    height: 75vh;
+    height: 45vh;
     /* Reduced height to avoid navbar overlap */
     width: 100%;
     background: url('https://krishnajewellers.com/cdn/shop/files/Main_Banner_Gold_Desktop.jpg?v=1765432607&width=2000') center/cover no-repeat;
@@ -69,6 +70,7 @@ body {
     /* Ensure content is above overlay */
     max-width: 800px;
     padding: 0 20px;
+
 }
 
 .hero h1 {
@@ -89,7 +91,7 @@ body {
     color: #ffffff;
     padding: 12px 30px;
     border: none;
-    border-radius: 30px;
+    border-radius: 00px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
@@ -133,7 +135,7 @@ body {
 .triple-carousel__slide {
     min-width: 100%;
     position: relative;
-    height: clamp(290px, 50vw, 540px);
+    height: clamp(24px, 45vw, 450px);
     isolation: isolate;
 }
 
@@ -869,7 +871,7 @@ H2 {
 /* Desktop */
 @media (min-width: 1200px) {
     .hero {
-        height: 75vh;
+        height: 100vh;
     }
 
     .section {
@@ -908,7 +910,7 @@ H2 {
     }
 
     .triple-carousel__slide {
-        height: clamp(250px, 50vw, 400px);
+        height: clamp(180px, 35vh, 400px);
     }
 
     .view-three__grid {
@@ -944,7 +946,7 @@ H2 {
     }
 
     .triple-carousel__slide {
-        height: clamp(220px, 62vw, 340px);
+        height: clamp(240px, 45vw, 450px);
     }
 
     .view-three {

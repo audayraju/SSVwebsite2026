@@ -10,6 +10,13 @@ export default function FloatingButtons() {
       >
         <i className="bi bi-whatsapp" aria-hidden="true" />
       </a>
+      <a
+        href="tel:+91916281049201"
+        className="float-btn call"
+        aria-label="Call us"
+      >
+        <i className="bi bi-telephone" aria-hidden="true" />
+      </a>
     </div>
   )
 }

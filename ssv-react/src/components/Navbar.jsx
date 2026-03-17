@@ -86,7 +86,7 @@ export default function Navbar() {
             <a href="/contact#store-map" className="mini-item" aria-label="Open store location">📍 Store</a>
             <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" className="mini-item" aria-label="Schedule a video call">🎥 Video Call</a>
           </div>
-          <Link to="/about" className="top-center" aria-label="About us">ESTABLISHED 1983</Link>
+          <Link to="/about" className="top-center" aria-label="About us">ESTABLISHED 2017</Link>
           <div className="top-right">
             <button type="button" className="mini-item" onClick={() => setStoreOpen(true)} aria-label="Open store details">Store Details</button>
           </div>
