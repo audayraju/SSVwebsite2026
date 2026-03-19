@@ -1,0 +1,224 @@
+.viewDetailsButton {
+    /* Base sizing and spacing */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 24px;
+    padding-inline: clamp(16px, 4vw, 24px);
+
+    /* Appearance */
+    background-color: var(--btn-bg, #D4AF37);
+    color: var(--btn-text, #1a1a1a);
+    border: 1px solid var(--btn-border, #D4AF37);
+    border-radius: 8px;
+
+    /* Typography */
+    font-size: clamp(0.875rem, 1vw, 1rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+    font-family: inherit;
+
+    /* Cursor and behavior */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    /* Remove default button styles */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Focus and accessibility */
+    position: relative;
+    outline: none;
+
+    /* Premium shadow baseline */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    /* Ensure touch target is accessible */
+    min-width: 48px;
+    touch-action: manipulation;
+}
+
+/* Default hover state - premium, subtle lift */
+.viewDetailsButton:hover:not(:disabled):not([aria-busy="true"]) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: var(--btn-bg-hover, color-mix(in srgb, var(--btn-bg) 90%, black));
+}
+
+/* Active/pressed state - elegant down effect */
+.viewDetailsButton:active:not(:disabled):not([aria-busy="true"]) {
+    transform: translateY(0px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: var(--btn-bg-active, color-mix(in srgb, var(--btn-bg) 85%, black));
+}
+
+/* Focus state - accessible outline */
+.viewDetailsButton:focus-visible {
+    outline: 2px solid var(--btn-border, #D4AF37);
+    outline-offset: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Disabled state */
+.viewDetailsButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
+/* Loading state - spinner animation */
+.viewDetailsButton[aria-busy="true"] {
+    cursor: wait;
+    pointer-events: none;
+}
+
+/* Button content wrapper */
+.buttonContent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(6px, 1.5vw, 10px);
+    width: 100%;
+    min-height: 24px;
+}
+
+/* Spinner styles */
+.spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+}
+
+.spinnerIcon {
+    width: 100%;
+    height: 100%;
+    color: currentColor;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Text styling */
+.text {
+    display: inline-block;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+    .viewDetailsButton {
+        min-height: 44px;
+        padding: 10px clamp(14px, 3.5vw, 20px);
+        font-size: clamp(0.8125rem, 0.9vw, 0.875rem);
+    }
+
+    .buttonContent {
+        gap: clamp(4px, 1vw, 8px);
+    }
+
+    .spinner {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 380px) {
+    .viewDetailsButton {
+        min-height: 40px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .buttonContent {
+        gap: 4px;
+    }
+
+    .spinner {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .viewDetailsButton {
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .viewDetailsButton:not(:disabled):not([aria-busy="true"]):hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .viewDetailsButton {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .viewDetailsButton:hover:not(:disabled):not([aria-busy="true"]) {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    .viewDetailsButton {
+        border-width: 2px;
+    }
+
+    .viewDetailsButton:focus-visible {
+        outline-width: 3px;
+    }
+}
+
+/* Reduced motion support - respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .viewDetailsButton,
+    .spinner {
+        animation: none;
+        transition: none;
+    }
+
+    .viewDetailsButton:hover:not(:disabled):not([aria-busy="true"]) {
+        transform: none;
+    }
+
+    .viewDetailsButton:active:not(:disabled):not([aria-busy="true"]) {
+        transform: none;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(0deg);
+        }
+    }
+}

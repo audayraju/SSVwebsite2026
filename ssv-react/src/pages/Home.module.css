@@ -50,10 +50,10 @@
 
 .caption {
   position: absolute;
-  left: clamp(20px, 5vw, 64px);
-  bottom: clamp(24px, 6vw, 80px);
+  left: clamp(12px, 4vw, 64px);
+  bottom: clamp(16px, 5vw, 80px);
   z-index: 2;
-  max-width: min(82%, 760px);
+  max-width: min(92%, 760px);
   color: #fff;
 }
 
@@ -72,11 +72,12 @@
 .carouselBtn {
   display: inline-block;
   text-decoration: none;
-  padding: 10px 18px;
+  padding: 5px 10px;
   border-radius: 999px;
   background: linear-gradient(90deg, #9b681e, #f4dd62);
   color: #ffffff;
   font-weight: 700;
+  font-size: 0.78rem;
   transition: transform 0.25s ease;
   font-family: 'Inter', system-ui, sans-serif;
 }
@@ -85,12 +86,33 @@
   transform: translateY(-2px);
 }
 
+.viewBtn,
+.readMoreBtn,
+.knowBtn {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9b681e, #f4dd62);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.viewBtn:hover,
+.readMoreBtn:hover,
+.knowBtn:hover {
+  transform: translateY(-2px);
+}
+
 .control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: clamp(36px, 3.2vw, 44px);
+  height: clamp(36px, 3.2vw, 44px);
   border: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -133,13 +155,13 @@
 .viewThree {
   width: min(100%, 900px);
   margin: 0 auto 34px;
-  padding: 0 16px;
+  padding-inline: clamp(12px, 2.8vw, 20px);
 }
 
 .viewGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: clamp(14px, 2.4vw, 24px);
   margin-top: 28px;
 }
 
@@ -151,8 +173,8 @@
 }
 
 .avatar {
-  width: 150px;
-  height: 150px;
+  width: clamp(118px, 16vw, 150px);
+  height: clamp(118px, 16vw, 150px);
   padding: 2px;
   border-radius: 50%;
   background: linear-gradient(90deg, #9b681e, #f4dd62);
@@ -183,25 +205,10 @@
   line-height: 1.6;
 }
 
-.viewBtn {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: transform 0.25s;
-}
-
-.viewBtn:hover {
-  transform: translateY(-2px);
-}
 
 /* ── ALT SECTIONS ── */
 .section {
-  padding: 60px 24px;
+  padding: clamp(38px, 6vw, 60px) clamp(12px, 3vw, 24px);
   background: var(--bg);
 }
 
@@ -214,7 +221,7 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 48px;
+  gap: clamp(22px, 4vw, 48px);
 }
 
 .reverse {
@@ -261,33 +268,21 @@
 }
 
 .readMoreBtn {
-  display: inline-block;
   align-self: flex-start;
-  padding: 12px 28px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.readMoreBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(155, 104, 30, 0.35);
 }
 
 /* ── PRODUCT SECTION ── */
 .productsSection {
-  padding: 20px 16px 40px;
+  padding: clamp(14px, 2.4vw, 20px) clamp(12px, 3vw, 16px) clamp(26px, 5vw, 40px);
 }
 
 .homeProductGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: clamp(14px, 2.6vw, 24px);
   max-width: 960px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .productCard {
@@ -316,7 +311,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 20px 16px;
+  padding: clamp(14px, 2.2vw, 20px) clamp(12px, 2vw, 16px);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -337,30 +332,16 @@
   gap: 10px;
 }
 
-.knowBtn {
-  padding: 8px 18px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
 /* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .viewGrid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-
+@media (max-width: 768px) and (min-width: 601px) {
   .viewThree {
-    padding: 0 20px;
+    padding-inline: 16px;
   }
 
   .container {
     flex-direction: column;
-    gap: 28px;
+    gap: 32px;
+    padding: 0 16px;
   }
 
   .reverse {
@@ -368,16 +349,100 @@
   }
 
   .imageBox img {
-    height: 240px;
+    height: 260px;
   }
 
   .homeProductGrid {
     grid-template-columns: 1fr;
   }
+
+  .caption h2 {
+    font-size: clamp(1.4rem, 5.2vw, 1.8rem);
+  }
+
+  .caption p {
+    font-size: clamp(0.88rem, 2.8vw, 1rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .viewThree {
+    padding-inline: 12px;
+    margin-bottom: 20px;
+  }
+
+  .viewGrid {
+    gap: clamp(20px, 4vw, 28px);
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 22px;
+    padding: 0 12px;
+  }
+
+  .reverse {
+    flex-direction: column;
+  }
+
+  .imageBox img {
+    height: 220px;
+  }
+
+  .homeProductGrid {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
+  }
+
+  .caption h2 {
+    font-size: clamp(1.1rem, 5vw, 1.35rem);
+  }
+
+  .caption p {
+    font-size: clamp(0.78rem, 2.6vw, 0.86rem);
+  }
+
+  .carouselBtn {
+    padding: 4px 9px;
+    font-size: 0.74rem;
+  }
+
+  .viewBtn,
+  .readMoreBtn,
+  .knowBtn {
+    padding: 4px 9px;
+    font-size: 0.74rem;
+  }
+
+  .section {
+    padding: clamp(32px, 5vw, 48px) clamp(12px, 2.4vw, 16px);
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+  .viewGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .homeProductGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 2560px) {
+  .slide {
+    height: clamp(24rem, 32vw, 42rem);
+  }
+
+  .viewThree {
+    width: min(100%, 1200px);
+  }
+
+  .container {
+    max-width: 1440px;
+  }
+
+  .homeProductGrid {
+    max-width: 1320px;
   }
 }

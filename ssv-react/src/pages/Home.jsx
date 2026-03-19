@@ -125,7 +125,7 @@ export default function Home() {
               Discover handcrafted gold, silver, and diamond designs made to
               celebrate your most special moments with timeless elegance.
             </p>
-            <Link to="/about" className={styles.readMoreBtn}>Read More</Link>
+            <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
           </div>
         </div>
       </section>
@@ -139,7 +139,7 @@ export default function Home() {
               Each piece is thoughtfully designed to reflect elegance and precision,
               using only the finest certified materials.
             </p>
-            <Link to="/products" className={styles.readMoreBtn}>Explore</Link>
+            <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
           </div>
           <div className={styles.imageBox}>
             <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers collection" loading="lazy" />
@@ -156,7 +156,7 @@ export default function Home() {
               <div className={styles.overlay}>
                 <h3>{p.title}</h3>
                 <div className={styles.cardActions}>
-                  <Link to={p.link} className={styles.knowBtn}>Know more</Link>
+                  <Link to={p.link} className={styles.knowBtn}>View details »</Link>
                 </div>
               </div>
             </div>
