@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import ImageGallery from '../components/ImageGallery'
+import { apiUrl, productImageUrl } from '../lib/api'
 import styles from './ProductDetails.module.css'
 
 /* Same seed as Products.jsx – in production this comes from API */
 const SEED_PRODUCTS = [
-  { id: 1,  name: 'Radha Krishna Haram',      category: 'necklace', sku: 'SSV-HRM-001', price: '₹ 1,89,000', product_image: '/slides/pictures/logo.jpeg', description: 'Traditional temple haram with intricate Radha Krishna motif work, handcrafted for bridal and festive wear.', specs: ['22K Gold', 'Approx. 52 g', 'Temple Craft Detailing', 'Handcrafted Finish'], extra: 'Hallmark certified. Customisation available on request.' },
-  { id: 2,  name: 'Classic Diamond Ring',      category: 'ring',     sku: 'SSV-RNG-002', price: '₹ 75,000',   product_image: '/slides/pictures/logo.jpeg', description: 'Brilliant-cut solitaire diamond ring set in 18K white gold.', specs: ['18K White Gold', '0.5 ct Diamond', 'GIA Certified', 'VS1 Clarity'], extra: '' },
-  { id: 3,  name: 'Sterling Silver Bracelet',  category: 'bracelet', sku: 'SSV-BRC-003', price: '₹ 12,500',  product_image: '/slides/pictures/logo.jpeg', description: '925 sterling silver bracelet with contemporary leaf motif.', specs: ['925 Sterling Silver', '20 cm length', 'Polished Finish'], extra: 'Available in custom sizes.' },
-  { id: 4,  name: 'Gold Chain Necklace',       category: 'chain',    sku: 'SSV-CHN-004', price: '₹ 55,000',  product_image: '/slides/pictures/logo.jpeg', description: '22K gold rope chain, durable and lightweight for daily wear.', specs: ['22K Gold', '45 cm', 'Rope Design'], extra: '' },
-  { id: 5,  name: 'Pearl Drop Earrings',       category: 'earring',  sku: 'SSV-ERR-005', price: '₹ 22,000',  product_image: '/slides/pictures/logo.jpeg', description: 'South-sea pearl earrings with 18K gold setting.', specs: ['18K Gold', 'South-sea Pearl', 'Push-back Closure'], extra: '' },
-  { id: 6,  name: 'Kundan Necklace Set',       category: 'necklace', sku: 'SSV-KND-006', price: '₹ 98,000',  product_image: '/slides/pictures/logo.jpeg', description: 'Exquisite Kundan necklace set with matching earrings.', specs: ['22K Gold', 'Kundan Work', 'Meenakari Back'], extra: 'Comes in velvet box.' },
-  { id: 7,  name: 'Sapphire Ring',             category: 'ring',     sku: 'SSV-RNG-007', price: '₹ 45,000',  product_image: '/slides/pictures/logo.jpeg', description: 'Natural blue sapphire ring set in 18K yellow gold.', specs: ['18K Gold', 'Natural Sapphire', 'GIA Certified'], extra: '' },
-  { id: 8,  name: 'Gold Bangle Set',           category: 'bracelet', sku: 'SSV-BNG-008', price: '₹ 1,20,000',product_image: '/slides/pictures/logo.jpeg', description: 'Set of 6 plain gold bangles, hallmark certified.', specs: ['22K Gold', 'Set of 6', 'Hallmark Certified'], extra: '' },
+  { id: 1,  name: 'Radha Krishna Haram',      category: 'necklace', sku: 'SSV-HRM-001', price: '₹ 1,89,000', product_image: '/logo.png', description: 'Traditional temple haram with intricate Radha Krishna motif work, handcrafted for bridal and festive wear.', specs: ['22K Gold', 'Approx. 52 g', 'Temple Craft Detailing', 'Handcrafted Finish'], extra: 'Hallmark certified. Customisation available on request.' },
+  { id: 2,  name: 'Classic Diamond Ring',      category: 'ring',     sku: 'SSV-RNG-002', price: '₹ 75,000',   product_image: '/logo.png', description: 'Brilliant-cut solitaire diamond ring set in 18K white gold.', specs: ['18K White Gold', '0.5 ct Diamond', 'GIA Certified', 'VS1 Clarity'], extra: '' },
+  { id: 3,  name: 'Sterling Silver Bracelet',  category: 'bracelet', sku: 'SSV-BRC-003', price: '₹ 12,500',  product_image: '/logo.png', description: '925 sterling silver bracelet with contemporary leaf motif.', specs: ['925 Sterling Silver', '20 cm length', 'Polished Finish'], extra: 'Available in custom sizes.' },
+  { id: 4,  name: 'Gold Chain Necklace',       category: 'chain',    sku: 'SSV-CHN-004', price: '₹ 55,000',  product_image: '/logo.png', description: '22K gold rope chain, durable and lightweight for daily wear.', specs: ['22K Gold', '45 cm', 'Rope Design'], extra: '' },
+  { id: 5,  name: 'Pearl Drop Earrings',       category: 'earring',  sku: 'SSV-ERR-005', price: '₹ 22,000',  product_image: '/logo.png', description: 'South-sea pearl earrings with 18K gold setting.', specs: ['18K Gold', 'South-sea Pearl', 'Push-back Closure'], extra: '' },
+  { id: 6,  name: 'Kundan Necklace Set',       category: 'necklace', sku: 'SSV-KND-006', price: '₹ 98,000',  product_image: '/logo.png', description: 'Exquisite Kundan necklace set with matching earrings.', specs: ['22K Gold', 'Kundan Work', 'Meenakari Back'], extra: 'Comes in velvet box.' },
+  { id: 7,  name: 'Sapphire Ring',             category: 'ring',     sku: 'SSV-RNG-007', price: '₹ 45,000',  product_image: '/logo.png', description: 'Natural blue sapphire ring set in 18K yellow gold.', specs: ['18K Gold', 'Natural Sapphire', 'GIA Certified'], extra: '' },
+  { id: 8,  name: 'Gold Bangle Set',           category: 'bracelet', sku: 'SSV-BNG-008', price: '₹ 1,20,000',product_image: '/logo.png', description: 'Set of 6 plain gold bangles, hallmark certified.', specs: ['22K Gold', 'Set of 6', 'Hallmark Certified'], extra: '' },
 ]
 
 export default function ProductDetails() {
@@ -24,7 +25,7 @@ export default function ProductDetails() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`/api/products/${id}`)
+        const res = await fetch(apiUrl(`/api/products/${id}`))
         if (!res.ok) throw new Error()
         const data = await res.json()
         setProduct(data)
@@ -52,8 +53,8 @@ export default function ProductDetails() {
 
   const _img = product.image || product.product_image
   const imgSrc = _img
-    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
-    : '/slides/pictures/logo.jpeg'
+    ? productImageUrl(_img)
+    : '/logo.png'
 
   const images = [imgSrc]
   const waMsg  = encodeURIComponent(`Hi, I'm interested in ${product.name} (${product.sku || ''}). Could you give more details?`)

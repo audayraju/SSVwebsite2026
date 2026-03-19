@@ -19,7 +19,7 @@
 .aboutPanel {
   /* Reduce large top/bottom gaps and add a subtle background */
   padding: 12px 12px 20px;
-  background-image: linear-gradient(180deg, #fff 0%, #fbf8f4 40%), url('/slides/pictures/about-bg.jpg');
+  background-image: linear-gradient(180deg, #fff 0%, #fbf8f4 40%), url('/image.png');
   background-size: cover, auto;
   background-position: center top, center;
   background-repeat: no-repeat;

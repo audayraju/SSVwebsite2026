@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react'
+import { productImageUrl } from '../lib/api'
 import styles from './ProductModal.module.css'
 
 export default function ProductModal({ product, onClose }) {
@@ -39,8 +40,8 @@ export default function ProductModal({ product, onClose }) {
 
   const _img   = image || product_image
   const imgSrc = _img
-    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
-    : '/slides/pictures/logo.jpeg'
+    ? productImageUrl(_img)
+    : '/logo.png'
 
   const waMsg  = encodeURIComponent(`Hi, I'm interested in ${name}${sku ? ` (SKU: ${sku})` : ''}. Could you share more details?`)
   const waLink = `https://wa.me/916281049201?text=${waMsg}`

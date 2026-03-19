@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import axios from 'axios'
 import { AdminSidebar } from './AdminDashboard'
+import { apiUrl, productImageUrl } from '../lib/api'
 import styles from './Admin.module.css'
 
 export default function ProductList() {
@@ -17,7 +18,7 @@ export default function ProductList() {
     setError('')
     try {
       const token = sessionStorage.getItem('ssv_admin_token')
-      const r = await axios.get('/api/admin/products', {
+      const r = await axios.get(apiUrl('/api/admin/products'), {
         headers: { Authorization: `Bearer ${token}` },
       })
       setProducts(r.data ?? [])
@@ -35,7 +36,7 @@ export default function ProductList() {
     setDeleting(id)
     try {
       const token = sessionStorage.getItem('ssv_admin_token')
-      await axios.delete(`/api/admin/products/${id}`, {
+      await axios.delete(apiUrl(`/api/admin/products/${id}`), {
         headers: { Authorization: `Bearer ${token}` },
       })
       setProducts(prev => prev.filter(p => p.id !== id))
@@ -106,7 +107,7 @@ export default function ProductList() {
                     <div className={styles.productItemImage}>
                       {product.image ? (
                         <img
-                          src={product.image.startsWith('http') ? product.image : `/uploads/${product.image}`}
+                          src={productImageUrl(product.image)}
                           alt={product.name}
                           loading="lazy"
                           width={64}
