@@ -1,8 +1,41 @@
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
+  const announcementItems = [
+    <>
+      <strong>NOTE:</strong>  We accept all types of custom designs in Gold and Silver to match your style and preferences.
+    </>,
+    <>
+      <strong>Gold Ornaments:</strong> Gold Wastage: Only 8% VA | No Making Charges
+    </>,
+    <>
+      <strong>Silver Ornaments:</strong> Lower and more reasonable prices compared to other markets.
+    </>,
+  ]
+
   return (
     <footer className="site-footer" aria-label="Website footer">
+      <div className="footer-announcement" aria-label="Custom design announcement">
+        <div className="footer-announcement__viewport">
+          <div className="footer-announcement__track">
+            {[0, 1].map(loopIndex => (
+              <div
+                key={loopIndex}
+                className="footer-announcement__group"
+                aria-hidden={loopIndex === 1 ? 'true' : undefined}
+              >
+                <span className="footer-announcement__spacer" aria-hidden="true" />
+                {announcementItems.map((item, itemIndex) => (
+                  <p key={`${loopIndex}-${itemIndex}`} className="footer-announcement__text">
+                    {item}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="footer-shell">
         <div className="footer-head">
           <div className="footer-brand">

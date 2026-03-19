@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap');
+
 /* ===== SHARED FOOTER ===== */
 .site-footer {
     background: #60073e;
@@ -21,7 +23,7 @@
 
 .footer-brand h3 {
     font-size: 0.8rem;
-    font-family: 'InterFace', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     letter-spacing: 1px;
     line-height: 4;
     margin-bottom: 10px;
@@ -31,7 +33,7 @@
 .footer-brand p {
     color: rgba(231, 236, 239, 0.82);
     font-size: 1.0rem;
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
 
 }
 
@@ -71,7 +73,7 @@
 
 .footer-col h3 {
     font-size: 1.2rem;
-    font-family: 'CORMORANT GARAMOND', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
     margin-bottom: 10px;
     color: #f5f8fa;
 }
@@ -81,7 +83,7 @@
     font-size: 0.8rem;
     line-height: 1.55;
     color: rgba(231, 236, 239, 0.8);
-    font-family: 'INTERFACE', 'INTER', system-ui, -apple-system, 'SEGOE UI', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 
@@ -186,7 +188,7 @@
 
 .footer-logo {
     font-weight: 1000;
-    font-family: interface, inter, system-ui, -apple-system, 'segoe ui', sans-serif;
+    font-family: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     text-transform: uppercase;
     height: auto;
 }

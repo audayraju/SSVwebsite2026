@@ -1,7 +1,7 @@
 /* ===================== */
 /* IMPORT FONTS */
 /* ===================== */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap');
 
 /* ===================== */
 /* CSS VARIABLES */
@@ -38,8 +38,9 @@
     --radius-lg: 24px;
 
     /* Typography */
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'DM Sans', 'Segoe UI', sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-button: 'Poppins', 'Segoe UI', sans-serif;
 
     /* Motion */
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -69,6 +70,26 @@ body {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+}
+
+p {
+    font-family: var(--font-body);
+}
+
+button {
+    font-family: var(--font-button);
+}
+
+button.primary {
+    background-color: #C5A47E;
+    color: #fff;
+    border-radius: 4px;
 }
 
 /* ===================== */

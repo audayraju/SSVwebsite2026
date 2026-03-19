@@ -2,8 +2,8 @@ import { useState } from 'react'
 import styles from './ImageGallery.module.css'
 
 export default function ImageGallery({ images = [], alt = 'Product image' }) {
-  const [active, setActive]   = useState(0)
-  const [viewer, setViewer]   = useState(false)
+  const [active, setActive] = useState(0)
+  const [viewer, setViewer] = useState(false)
 
   if (!images.length) return null
 
@@ -18,7 +18,6 @@ export default function ImageGallery({ images = [], alt = 'Product image' }) {
             className={styles.mainImg}
             loading="lazy"
           />
-          <span className={styles.zoomHint} aria-hidden="true">🔍</span>
         </div>
 
         {/* Thumbnails */}

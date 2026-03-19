@@ -97,16 +97,6 @@ export default function Home() {
           <button className={`${styles.control} ${styles.next}`} onClick={next} aria-label="Next slide">›</button>
         </div>
 
-        <div className={styles.dots} aria-label="Carousel indicators">
-          {SLIDES.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot}${i === activeSlide ? ` ${styles.dotActive}` : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
       </section>
 
       {/* ── THREE FEATURE COLUMNS ── */}

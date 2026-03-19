@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,37 @@
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #f8f4f1 0%, #efe7df 100%);
-    font-family: 'DM Sans', Arial, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     color: #2c2c2c;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #2c2c2c;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #555;
+}
+
+button,
+.policy-actions a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+button.primary {
+    background-color: #C5A47E;
+    color: #fff;
+    border-radius: 4px;
 }
 
 .policy-wrap {

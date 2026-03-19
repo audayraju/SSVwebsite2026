@@ -2,7 +2,7 @@
 /* IMPORT FONTS */
 /* ===================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap');
 
 /* ===================== */
 /* LUXURY COLOR PALETTE */
@@ -31,8 +31,9 @@
 
     --transition: 0.35s ease;
 
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'DM Sans', sans-serif;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-button: 'Poppins', sans-serif;
 }
 
 /* ===================== */
@@ -50,6 +51,26 @@ body {
     color: var(--slate);
     background: linear-gradient(180deg, #faf8f4, #f2efe9 40%, #ece7df 100%);
     overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+}
+
+p {
+    font-family: var(--font-body);
+}
+
+button {
+    font-family: var(--font-button);
+}
+
+button.primary {
+    background-color: #C5A47E;
+    color: #fff;
+    border-radius: 4px;
 }
 
 /* ===================== */
@@ -86,6 +107,7 @@ body {
     margin-bottom: 12px;
     letter-spacing: 1px;
     background: linear-gradient(90deg, var(--sapphire), var(--brass));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

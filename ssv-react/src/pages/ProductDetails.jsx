@@ -42,7 +42,11 @@ export default function ProductDetails() {
   if (!product) return (
     <div className={styles.notFound}>
       <h2>Product not found</h2>
-      <Link to="/products" className={styles.backBtn}>← Back to Collections</Link>
+      <Link to="/products" className={styles.backBtn} aria-label="Back to collections" title="Back to collections">
+        <svg className={styles.backIcon} viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M11.75 4.75 6.5 10l5.25 5.25" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </Link>
     </div>
   )
 
@@ -66,7 +70,11 @@ export default function ProductDetails() {
       </Helmet>
 
       <div className={styles.wrapper}>
-        <Link to="/products" className={styles.backBtn}>← Back to Collections</Link>
+        <Link to="/products" className={styles.backBtn} aria-label="Back to collections" title="Back to collections">
+          <svg className={styles.backIcon} viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path d="M11.75 4.75 6.5 10l5.25 5.25" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
 
         <div className={styles.layout}>
           {/* Gallery */}

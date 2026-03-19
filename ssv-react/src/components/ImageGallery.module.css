@@ -17,15 +17,6 @@
 
 .main:hover .mainImg { transform: scale(1.04); }
 
-.zoomHint {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
-  font-size: 18px;
-  opacity: 0.7;
-  pointer-events: none;
-}
-
 .thumbs {
   display: flex;
   gap: 8px;

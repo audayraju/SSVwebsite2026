@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import React, { Suspense, lazy, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -34,6 +34,7 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <FavoritesProvider>
+        <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
           <Routes>
           {/* ── Public routes with shared layout ── */}
@@ -69,8 +70,17 @@ export default function App() {
   )
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [pathname])
+
+  return null
+}
+
 /* Shared layout wrapper (Outlet lives inside each page) */
-import { Outlet } from 'react-router-dom'
 
 function PublicLayout() {
   return (

@@ -90,17 +90,25 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.85);
-  color: #23252a;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
   font-size: 30px;
   line-height: 1;
   display: grid;
   place-items: center;
+  box-shadow: none;
+  transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.control:hover {
+  color: #ffffff;
+  opacity: 0.9;
 }
 
 .prev {
@@ -109,26 +117,6 @@
 
 .next {
   right: 12px;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 9px;
-  margin-top: 12px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 0;
-  background: #c0b6bf;
-  cursor: pointer;
-}
-
-.dotActive {
-  background: #3b2f3e;
 }
 
 /* ── THREE COLUMN VIEW ── */

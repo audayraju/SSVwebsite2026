@@ -11,6 +11,11 @@ export default function Navbar() {
   const { favorites, removeFavorite } = useFavorites()
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])
+  const closeFav = useCallback(() => setFavOpen(false), [])
+  const closePanels = useCallback(() => {
+    setMenuOpen(false)
+    setFavOpen(false)
+  }, [])
 
   /* Auto-typing placeholder suggestions for the search box */
   const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets']
@@ -76,19 +81,29 @@ export default function Navbar() {
     }
   }
 
+  function scrollToTopNow() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }
+
   return (
     <>
       {/* Top mini bar (fixed) */}
       <div className="top-mini-bar" role="navigation" aria-label="Top quick links">
         <div className="top-mini-inner">
-          <div className="top-left">
-            <a href="tel:+919876543211" className="mini-item" aria-label="Call us">📞 9876543211</a>
-            <a href="/contact#store-map" className="mini-item" aria-label="Open store location">📍 Store</a>
-            <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" className="mini-item" aria-label="Schedule a video call">🎥 Video Call</a>
-          </div>
-          <Link to="/about" className="top-center" aria-label="About us">ESTABLISHED 2017</Link>
-          <div className="top-right">
-            <button type="button" className="mini-item" onClick={() => setStoreOpen(true)} aria-label="Open store details">Store Details</button>
+          <div className="top-pill" role="list" aria-label="Top highlights">
+            <span className="mini-item top-pill-item" role="listitem">Gold Wastage: 8% VA | No Making Charges</span>
+            <a href="tel:+919876543211" className="mini-item top-pill-item" role="listitem" aria-label="Trusted support call">
+              Trusted Support • Call: +91 98765 43211
+            </a>
+            <button
+              type="button"
+              className="mini-item top-pill-item"
+              role="listitem"
+              onClick={() => setStoreOpen(true)}
+              aria-label="Visit store details"
+            >
+              Visit Store
+            </button>
           </div>
         </div>
       </div>
@@ -110,7 +125,10 @@ export default function Navbar() {
           <button
             type="button"
             className={`menu-btn${menuOpen ? ' open' : ''}`}
-            onClick={() => setMenuOpen(v => !v)}
+            onClick={() => {
+              setFavOpen(false)
+              setMenuOpen(v => !v)
+            }}
             aria-label="Open navigation menu"
             aria-expanded={menuOpen}
             style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 6 }}
@@ -132,8 +150,8 @@ export default function Navbar() {
             >×</button>
             <NavLink to="/about" role="menuitem" onClick={closeMenu}>About</NavLink>
             <NavLink to="/services" role="menuitem" onClick={closeMenu}>Services</NavLink>
-            <NavLink to="/products" role="menuitem" onClick={closeMenu}>Collections</NavLink>
-            <NavLink to="/contact" role="menuitem" onClick={closeMenu}>Contact</NavLink>
+            <NavLink to="/products" role="menuitem" onClick={() => { closeMenu(); scrollToTopNow() }}>Collections</NavLink>
+            <NavLink to="/contact" role="menuitem" onClick={() => { closeMenu(); scrollToTopNow() }}>Contact</NavLink>
           </div>
         </div>
 
@@ -145,9 +163,9 @@ export default function Navbar() {
 
         {/* Desktop nav links */}
         <div className="nav-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
-          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Collections</NavLink>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
+          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Home</NavLink>
+          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Collections</NavLink>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Contact</NavLink>
         </div>
 
         {/* Favourites + Search grouped on the right */}
@@ -164,7 +182,10 @@ export default function Navbar() {
           <button
             type="button"
             className="tool-btn fav-btn"
-            onClick={() => setFavOpen(v => !v)}
+            onClick={() => {
+              setMenuOpen(false)
+              setFavOpen(v => !v)
+            }}
             aria-label="Open liked collections"
           >
             <i className="bi bi-heart" aria-hidden="true" />
@@ -176,7 +197,7 @@ export default function Navbar() {
           <div className={`nav-fav-panel${favOpen ? ' open' : ''}`} aria-hidden={!favOpen}>
             <div className="nav-fav-header">
               <h4>Liked Collections</h4>
-              <button className="nav-fav-close" onClick={() => setFavOpen(false)}>×</button>
+              <button className="nav-fav-close" onClick={closeFav}>×</button>
             </div>
             {favorites.length === 0 ? (
               <p className="nav-fav-empty">No liked collections yet.</p>
@@ -188,8 +209,8 @@ export default function Navbar() {
                     key={item.id}
                     role="button"
                     tabIndex={0}
-                    onClick={() => { navigate(`/products/${item.id}`); setFavOpen(false); }}
-                    onKeyDown={e => { if (e.key === 'Enter') { navigate(`/products/${item.id}`); setFavOpen(false); } }}
+                    onClick={() => { navigate(`/products/${item.id}`); closeFav(); }}
+                    onKeyDown={e => { if (e.key === 'Enter') { navigate(`/products/${item.id}`); closeFav(); } }}
                   >
                     <img src={item.image || '/slides/pictures/logo.jpeg'} alt={item.name} />
                     <div className="nav-fav-meta">
@@ -206,9 +227,9 @@ export default function Navbar() {
 
       {/* Backdrop */}
       <div
-        className={`menu-backdrop${menuOpen ? ' open' : ''}`}
+        className={`menu-backdrop${menuOpen || favOpen ? ' open' : ''}`}
         aria-hidden="true"
-        onClick={closeMenu}
+        onClick={closePanels}
       />
     </>
   )

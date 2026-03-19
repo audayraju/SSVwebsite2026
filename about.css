@@ -2,7 +2,7 @@
 /* IMPORT FONTS */
 /* ===================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap');
 
 
 /* ===================== */
@@ -33,7 +33,8 @@
 --shadow-lg:0 25px 55px rgba(0,0,0,0.12);
 
 --font-display:'Playfair Display',serif;
---font-body:'Montserrat',sans-serif;
+--font-body:'Inter',sans-serif;
+--font-button:'Poppins',sans-serif;
 
 }
 
@@ -101,6 +102,16 @@ p{
 font-size:0.95rem;
 color:var(--text-light);
 
+}
+
+button{
+font-family:var(--font-button);
+}
+
+button.primary{
+background-color:#C5A47E;
+color:#fff;
+border-radius:4px;
 }
 
 
