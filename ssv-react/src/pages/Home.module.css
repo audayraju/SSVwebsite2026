@@ -51,7 +51,6 @@
 .caption {
   position: absolute;
   left: clamp(20px, 5vw, 64px);
-  /* move caption up slightly on taller banners */
   bottom: clamp(24px, 6vw, 80px);
   z-index: 2;
   max-width: min(82%, 760px);
@@ -95,13 +94,8 @@
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-<<<<<<< HEAD
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
-=======
-  background: rgba(255, 255, 255, 0.85);
-  color: #23252a;
->>>>>>> 183c8c8c60cc8c9b7ca5d38d422c973ee6756898
   font-size: 30px;
   line-height: 1;
   display: grid;
@@ -111,11 +105,11 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
-<<<<<<< HEAD
 .control:hover {
   color: #ffffff;
   opacity: 0.9;
-=======
+}
+
 .prev {
   left: 12px;
 }
@@ -129,20 +123,10 @@
   justify-content: center;
   gap: 9px;
   margin-top: 12px;
->>>>>>> 183c8c8c60cc8c9b7ca5d38d422c973ee6756898
 }
 
-.prev {
-  left: 12px;
-}
-
-<<<<<<< HEAD
-.next {
-  right: 12px;
-=======
 .dotActive {
   background: #3b2f3e;
->>>>>>> 183c8c8c60cc8c9b7ca5d38d422c973ee6756898
 }
 
 /* ── THREE COLUMN VIEW ── */
