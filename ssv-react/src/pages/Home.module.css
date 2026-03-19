@@ -209,11 +209,7 @@
 /* ── ALT SECTIONS ── */
 .section {
   padding: clamp(38px, 6vw, 60px) clamp(12px, 3vw, 24px);
-  background: var(--bg);
-}
-
-.section+.section {
-  background: #f2ede8;
+  background: none;
 }
 
 .container {

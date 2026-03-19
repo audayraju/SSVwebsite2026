@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import ProductCard from '../components/ProductCard'
@@ -26,8 +26,24 @@ export default function Products() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [showLeftArrow, setShowLeftArrow] = useState(false)
+  const [showRightArrow, setShowRightArrow] = useState(true)
+  const catBarRef = useRef(null)
 
   const searchQuery = searchParams.get('search') || ''
+
+  const handleCatScroll = useCallback(() => {
+    const el = catBarRef.current
+    if (!el) return
+    setShowLeftArrow(el.scrollLeft > 4)
+    setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth - 4)
+  }, [])
+
+  const scrollCat = useCallback((dir) => {
+    const el = catBarRef.current
+    if (!el) return
+    el.scrollBy({ left: dir === 'right' ? 140 : -140, behavior: 'smooth' })
+  }, [])
 
   /* Fetch from API if available */
   useEffect(() => {
@@ -72,19 +88,43 @@ export default function Products() {
       </Helmet>
 
       {/* Category Filter Bar */}
-      <div className={styles.categoryBar}>
-        {CATEGORIES.map(cat => (
+      <div className={styles.catBarWrapper}>
+        {showLeftArrow && (
           <button
-            key={cat}
-            className={`${styles.catItem}${activeCategory === cat ? ` ${styles.catActive}` : ''}`}
-            onClick={() => setActiveCategory(cat)}
+            className={`${styles.catScrollBtn} ${styles.catScrollLeft}`}
+            onClick={() => scrollCat('left')}
+            aria-label="Scroll categories left"
           >
-            <div className={styles.catIconWrap}>
-              <img src="/slides/pictures/logo.jpeg" alt={cat} loading="lazy" />
-            </div>
-            <span className={styles.catLabel}>{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's'}</span>
+            &#8249;
           </button>
-        ))}
+        )}
+        <div
+          className={styles.categoryBar}
+          ref={catBarRef}
+          onScroll={handleCatScroll}
+        >
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              className={`${styles.catItem}${activeCategory === cat ? ` ${styles.catActive}` : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              <div className={styles.catIconWrap}>
+                <img src="/slides/pictures/logo.jpeg" alt={cat} loading="lazy" />
+              </div>
+              <span className={styles.catLabel}>{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's'}</span>
+            </button>
+          ))}
+        </div>
+        {showRightArrow && (
+          <button
+            className={`${styles.catScrollBtn} ${styles.catScrollRight}`}
+            onClick={() => scrollCat('right')}
+            aria-label="Scroll categories right"
+          >
+            &#8250;
+          </button>
+        )}
       </div>
 
       {/* mobile dropdown removed — filter handled via category bar */}

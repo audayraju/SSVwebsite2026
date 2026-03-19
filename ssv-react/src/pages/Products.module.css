@@ -1,3 +1,9 @@
+/* Category bar wrapper — positions the scroll arrows relative to the bar */
+.catBarWrapper {
+  position: relative;
+  margin-top: 18px;
+}
+
 /* Category bar */
 .categoryBar {
   display: flex;
@@ -5,8 +11,42 @@
   flex-wrap: wrap;
   gap: 8px;
   padding: 8px 12px 0;
-  /* reduce top padding so filter doesn't push into navbar */
-  margin-top: 18px;
+}
+
+/* Scroll arrow buttons — hidden on desktop, shown on mobile via media query */
+.catScrollBtn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  color: #560537;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.catScrollBtn:hover {
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+.catScrollLeft {
+  left: 2px;
+}
+
+.catScrollRight {
+  right: 2px;
 }
 
 .catItem {
@@ -143,9 +183,52 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
+}
+
+/* ── MOBILE: horizontal scrolling category bar ── */
+@media (max-width: 600px) {
+  .catBarWrapper {
+    margin-top: 18px;
+  }
+
+  .categoryBar {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    gap: 10px;
+    /* add side padding to keep items clear of the arrows */
+    padding: 8px 36px;
+
+    /* hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .categoryBar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .catItem {
+    flex: 0 0 auto;
+    min-width: 72px;
+    padding: 6px 10px;
+  }
 
   .catIconWrap {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .catLabel {
+    font-size: 0.68rem;
+  }
+
+  /* show the arrows only on mobile */
+  .catScrollBtn {
+    display: inline-flex;
   }
 }
