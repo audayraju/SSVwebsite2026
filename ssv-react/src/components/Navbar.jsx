@@ -5,7 +5,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [favOpen, setFavOpen] = useState(false)
-  const [storeOpen, setStoreOpen] = useState(false)
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
   const { favorites, removeFavorite } = useFavorites()
@@ -87,32 +86,25 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top mini bar (fixed) */}
       <div className="top-mini-bar" role="navigation" aria-label="Top quick links">
         <div className="top-mini-inner">
-          <div className="top-left">
-            <a href="tel:+919876543211" className="mini-item" aria-label="Call us">📞 9876543211</a>
-            <a href="/contact#store-map" className="mini-item" aria-label="Open store location">📍 Store</a>
-            <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" className="mini-item" aria-label="Schedule a video call">🎥 Video Call</a>
-          </div>
-          <Link to="/about" className="top-center" aria-label="About us">ESTABLISHED 1983</Link>
-          <div className="top-right">
-            <button type="button" className="mini-item" onClick={() => setStoreOpen(true)} aria-label="Open store details">Store Details</button>
+          <div className="top-pill">
+            <a href="/contact#store-map" className="top-pill-item mini-item" aria-label="Visit store location">
+              📍 Visit Store
+            </a>
+            <span className="top-pill-item mini-item" aria-label="Trusted since 2017">
+              Trusted Since 2017
+            </span>
+            <a href="tel:+919876543211" className="top-pill-item mini-item" aria-label="Call now">
+              Call Now
+            </a>
+            <span className="top-pill-item mini-item" aria-label="Gold wastage range">
+              Gold Wastage 8%–12%
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Store details modal (simple) */}
-      {typeof window !== 'undefined' && (
-        <div className={`store-modal${storeOpen ? ' open' : ''}`} role="dialog" aria-modal="true" aria-label="Store details">
-          <div className="store-modal-inner">
-            <button className="store-modal-close" onClick={() => setStoreOpen(false)}>×</button>
-            <h3>Our Store</h3>
-            <img src="/slides/pictures/logo.jpeg" alt="Store" className="store-dummy-image" />
-            <p>Address: Yellow brick road 111, Fantasy Land. Open hours: Mon–Sat.</p>
-          </div>
-        </div>
-      )}
       <nav className="navbar">
         {/* Hamburger menu */}
         <div className="menu-wrap">
