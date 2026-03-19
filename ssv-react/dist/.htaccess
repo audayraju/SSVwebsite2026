@@ -1,0 +1,13 @@
+# Apache rewrite rules for React SPA on Hostinger shared hosting
+# Place this file inside the `dist/` folder after running `npm run build`
+# (or put it in public/ so Vite copies it automatically)
+
+Options -MultiViews
+RewriteEngine On
+
+# Serve existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Everything else → index.html (React Router handles the URL)
+RewriteRule ^ index.html [L]
