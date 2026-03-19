@@ -90,20 +90,14 @@ export default function Navbar() {
       {/* Top mini bar (fixed) */}
       <div className="top-mini-bar" role="navigation" aria-label="Top quick links">
         <div className="top-mini-inner">
-          <div className="top-pill" role="list" aria-label="Top highlights">
-            <span className="mini-item top-pill-item" role="listitem">Gold Wastage: 8% VA | No Making Charges</span>
-            <a href="tel:+919876543211" className="mini-item top-pill-item" role="listitem" aria-label="Trusted support call">
-              Trusted Support • Call: +91 98765 43211
-            </a>
-            <button
-              type="button"
-              className="mini-item top-pill-item"
-              role="listitem"
-              onClick={() => setStoreOpen(true)}
-              aria-label="Visit store details"
-            >
-              Visit Store
-            </button>
+          <div className="top-left">
+            <a href="tel:+919876543211" className="mini-item" aria-label="Call us">📞 9876543211</a>
+            <a href="/contact#store-map" className="mini-item" aria-label="Open store location">📍 Store</a>
+            <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" className="mini-item" aria-label="Schedule a video call">🎥 Video Call</a>
+          </div>
+          <Link to="/about" className="top-center" aria-label="About us">ESTABLISHED 1983</Link>
+          <div className="top-right">
+            <button type="button" className="mini-item" onClick={() => setStoreOpen(true)} aria-label="Open store details">Store Details</button>
           </div>
         </div>
       </div>

@@ -28,6 +28,7 @@
 body {
     background: #f8f4f1;
     scroll-behavior: smooth;
+<<<<<<< HEAD
 }
 
 h1,
@@ -48,6 +49,8 @@ button.primary {
     background-color: #C5A47E;
     color: #fff;
     border-radius: 4px;
+=======
+>>>>>>> 183c8c8c60cc8c9b7ca5d38d422c973ee6756898
 }
 
 
