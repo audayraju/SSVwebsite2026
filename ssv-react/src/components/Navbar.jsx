@@ -96,11 +96,8 @@ export default function Navbar() {
               Trusted Since 2017
             </span>
             <a href="tel:+919876543211" className="top-pill-item mini-item" aria-label="Call now">
-              Call Now
+              Call Now 9874563210  
             </a>
-            <span className="top-pill-item mini-item" aria-label="Gold wastage range">
-              Gold Wastage 8%–12%
-            </span>
           </div>
         </div>
       </div>
