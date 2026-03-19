@@ -108,7 +108,7 @@ export default function Navbar() {
           <div className="store-modal-inner">
             <button className="store-modal-close" onClick={() => setStoreOpen(false)}>×</button>
             <h3>Our Store</h3>
-            <img src="/slides/pictures/logo.jpeg" alt="Store" className="store-dummy-image" />
+            <img src="/logo.png" alt="Store" className="store-dummy-image" />
             <p>Address: Yellow brick road 111, Fantasy Land. Open hours: Mon–Sat.</p>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link className="logo-wrapper" to="/" aria-label="Go to home page">
-          <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className="navbar-logo" loading="lazy" />
+          <img src="/logo.png" alt="SSV Logo" className="navbar-logo" loading="lazy" />
           <span className="logo">SSV JEWELLERS</span>
         </Link>
 
@@ -206,7 +206,7 @@ export default function Navbar() {
                     onClick={() => { navigate(`/products/${item.id}`); closeFav(); }}
                     onKeyDown={e => { if (e.key === 'Enter') { navigate(`/products/${item.id}`); closeFav(); } }}
                   >
-                    <img src={item.image || '/slides/pictures/logo.jpeg'} alt={item.name} />
+                    <img src={item.image || '/logo.png'} alt={item.name} />
                     <div className="nav-fav-meta">
                       <div className="nav-fav-name">{item.name}</div>
                       <button className="nav-fav-remove" onClick={e => { e.stopPropagation(); removeFavorite(item.id); }} aria-label={`Remove ${item.name}`}>Remove</button>

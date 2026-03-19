@@ -49,6 +49,30 @@ function writeProducts(data) {
   fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf8')
 }
 
+function resolveUploadPath(imageValue) {
+  if (!imageValue) return null
+  if (typeof imageValue !== 'string') return null
+  if (imageValue.startsWith('http') || imageValue.startsWith('data:')) return null
+
+  const withoutLeadingSlash = imageValue.replace(/^\/+/, '')
+  const filename = withoutLeadingSlash.startsWith('uploads/')
+    ? withoutLeadingSlash.slice('uploads/'.length)
+    : withoutLeadingSlash
+
+  const safeFilename = path.basename(filename)
+  if (!safeFilename) return null
+
+  return path.join(UPLOADS_DIR, safeFilename)
+}
+
+function deleteUploadedImage(imageValue) {
+  const filePath = resolveUploadPath(imageValue)
+  if (!filePath) return
+  if (fs.existsSync(filePath)) {
+    try { fs.unlinkSync(filePath) } catch { /* ignore */ }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Auth helpers
 // ---------------------------------------------------------------------------
@@ -90,12 +114,24 @@ function requireAdmin(req, res, next) {
 }
 
 // ---------------------------------------------------------------------------
-// Multer — image uploads (memory storage → base64 in JSON)
+// Multer — image uploads (disk storage)
 // ---------------------------------------------------------------------------
 const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
+const MIME_TO_EXT = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+}
+
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: multer.diskStorage({
+    destination: (_req, _file, cb) => cb(null, UPLOADS_DIR),
+    filename: (_req, file, cb) => {
+      const ext = MIME_TO_EXT[file.mimetype] ?? 'bin'
+      cb(null, `${Date.now()}-${uuidv4()}.${ext}`)
+    },
+  }),
   limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
   fileFilter: (_req, file, cb) => {
     if (ALLOWED_MIME.has(file.mimetype)) return cb(null, true)
@@ -120,7 +156,7 @@ app.use(cors({
 }))
 
 app.use(express.json({ limit: '10mb' }))
-// Note: /uploads static route removed — images stored as base64 data URLs in JSON
+app.use('/uploads', express.static(UPLOADS_DIR))
 
 // ---------------------------------------------------------------------------
 // Public routes
@@ -214,9 +250,7 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
     specs:          productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : [],
-    image:          req.file
-      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
-      : null,
+    image:          req.file ? req.file.filename : null,
     createdAt:      new Date().toISOString(),
   }
 
@@ -242,10 +276,9 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
     productSpecs,
   } = req.body ?? {}
 
-  // If a new image was uploaded, delete the old one
+  // If a new image was uploaded, delete the old uploaded file (if any)
   if (req.file && existing.image) {
-    const oldPath = path.join(UPLOADS_DIR, existing.image)
-    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath)
+    deleteUploadedImage(existing.image)
   }
 
   products[idx] = {
@@ -259,9 +292,7 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
     specs:          productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : existing.specs,
-    image:          req.file
-      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
-      : existing.image,
+    image:          req.file ? req.file.filename : existing.image,
     updatedAt:      new Date().toISOString(),
   }
 
@@ -276,6 +307,7 @@ app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
   if (idx === -1) return res.status(404).json({ message: 'Product not found' })
 
   const [removed] = products.splice(idx, 1)
+  deleteUploadedImage(removed.image)
 
   writeProducts(products)
   res.json({ message: 'Product deleted', id: removed.id })

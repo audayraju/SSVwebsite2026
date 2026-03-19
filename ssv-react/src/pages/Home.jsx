@@ -6,21 +6,21 @@ import styles from './Home.module.css'
 /* ── Carousel data ── */
 const SLIDES = [
   {
-    img: '/picture/image.png',
+    img: '/image.png',
     alt: 'Premium Gold Jewellery',
     title: 'Gold Heritage Collection',
     desc: 'Timeless handcrafted jewellery for every celebration.',
     link: '/products?search=gold',
   },
   {
-    img: '/picture/image.png',
+    img: '/image.png',
     alt: 'Elegant Silver Jewellery',
     title: 'Silver Signature Collection',
     desc: 'Classic shine crafted for modern elegance.',
     link: '/products?search=silver',
   },
   {
-    img: '/picture/image.png',
+    img: '/image.png',
     alt: 'Premium Diamond Jewellery',
     title: 'Diamond Prestige Collection',
     desc: 'Brilliance that elevates every special moment.',
@@ -30,16 +30,16 @@ const SLIDES = [
 
 /* ── Feature cards ── */
 const FEATURES = [
-  { title: 'Trending #1', desc: 'Handcrafted gold designs made with the finest craftsmanship.', link: '/products?search=gold', img: '/picture/image.png', alt: 'Gold feature' },
-  { title: 'Trending #2', desc: 'Classic silver jewellery for modern elegance and everyday wear.', link: '/products?search=silver', img: '/picture/image.png', alt: 'Silver feature' },
-  { title: 'Trending #3', desc: 'Diamond pieces that shine at every special occasion.', link: '/products?search=diamond', img: '/picture/image.png', alt: 'Diamond feature' },
+  { title: 'Trending #1', desc: 'Handcrafted gold designs made with the finest craftsmanship.', link: '/products?search=gold', img: '/image.png', alt: 'Gold feature' },
+  { title: 'Trending #2', desc: 'Classic silver jewellery for modern elegance and everyday wear.', link: '/products?search=silver', img: '/image.png', alt: 'Silver feature' },
+  { title: 'Trending #3', desc: 'Diamond pieces that shine at every special occasion.', link: '/products?search=diamond', img: '/image.png', alt: 'Diamond feature' },
 ]
 
 /* ── Home product cards ── */
 const HOME_PRODUCTS = [
-  { title: 'Gold Collection', link: '/products?search=gold', img: '/picture/image.png' },
-  { title: 'Silver Collection', link: '/products?search=silver', img: '/picture/image.png' },
-  { title: 'Diamond Collection', link: '/products?search=diamond', img: '/picture/image.png' },
+  { title: 'Gold Collection', link: '/products?search=gold', img: '/image.png' },
+  { title: 'Silver Collection', link: '/products?search=silver', img: '/image.png' },
+  { title: 'Diamond Collection', link: '/products?search=diamond', img: '/image.png' },
 ]
 
 export default function Home() {
@@ -117,7 +117,7 @@ export default function Home() {
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.imageBox}>
-            <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
+            <img src="/image.png" alt="SSV Jewellers craftsmanship" loading="lazy" />
           </div>
           <div className={styles.contentBox}>
             <h2>Timeless Jewellery Craftsmanship</h2>
@@ -142,7 +142,7 @@ export default function Home() {
             <Link to="/products" className={styles.readMoreBtn}>Explore</Link>
           </div>
           <div className={styles.imageBox}>
-            <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers collection" loading="lazy" />
+            <img src="/image.png" alt="SSV Jewellers collection" loading="lazy" />
           </div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import axios from 'axios'
 import { AdminSidebar } from './AdminDashboard'
+import { apiUrl, productImageUrl } from '../lib/api'
 import styles from './Admin.module.css'
 
 const CATEGORIES = [
@@ -39,7 +40,7 @@ export default function UploadProduct() {
   useEffect(() => {
     if (!editId) return
     const token = sessionStorage.getItem('ssv_admin_token')
-    axios.get(`/api/admin/products/${editId}`, {
+    axios.get(apiUrl(`/api/admin/products/${editId}`), {
       headers: { Authorization: `Bearer ${token}` },
     }).then(r => {
       const p = r.data
@@ -52,7 +53,7 @@ export default function UploadProduct() {
         productType:           p.type            ?? '',
         productSpecs:          Array.isArray(p.specs) ? p.specs.join('\n') : (p.specs ?? ''),
       })
-      if (p.image) setPreview(p.image.startsWith('data:') || p.image.startsWith('http') ? p.image : `/uploads/${p.image}`)
+      if (p.image) setPreview(productImageUrl(p.image))
     }).catch(() => {
       setStatus({ msg: 'Failed to load product for editing.', ok: false })
     })
@@ -89,7 +90,7 @@ export default function UploadProduct() {
       Object.entries(form).forEach(([k, v]) => fd.append(k, v))
       if (imageFile) fd.append('productImage', imageFile)
 
-      const url    = editId ? `/api/admin/products/${editId}` : '/api/admin/products'
+      const url    = editId ? apiUrl(`/api/admin/products/${editId}`) : apiUrl('/api/admin/products')
       const method = editId ? 'put' : 'post'
 
       await axios[method](url, fd, {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
+import { productImageUrl } from '../lib/api'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product, onClick }) {
@@ -21,10 +22,9 @@ export default function ProductCard({ product, onClick }) {
   const imgSrc = (image || product_image)
     ? (() => {
       const src = image || product_image
-      if (src.startsWith('http') || src.startsWith('data:')) return src
-      return `/uploads/${src}`
+      return productImageUrl(src)
     })()
-    : '/slides/pictures/logo.jpeg'
+    : '/logo.png'
 
   return (
     <div
