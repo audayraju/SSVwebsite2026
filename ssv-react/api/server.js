@@ -2,32 +2,47 @@
 
 require('dotenv').config()
 
-const express  = require('express')
-const cors     = require('cors')
-const multer   = require('multer')
-const path     = require('path')
-const fs       = require('fs')
+const express = require('express')
+const cors = require('cors')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
-const bcrypt   = require('bcryptjs')
-const crypto   = require('crypto')
+const bcrypt = require('bcryptjs')
+const crypto = require('crypto')
 
 // ---------------------------------------------------------------------------
 // Bootstrap
 // ---------------------------------------------------------------------------
-const app  = express()
+const app = express()
 const PORT = process.env.PORT ?? 3001
+
+const GOOGLE_REVIEW_CACHE_MS = 10 * 60 * 1000
+let googleReviewCache = { data: null, ts: 0 }
+
+async function fetchJsonWithTimeout(url, timeoutMs = 10000) {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+  try {
+    const response = await fetch(url, { signal: controller.signal })
+    const json = await response.json()
+    return { ok: response.ok, status: response.status, json }
+  } finally {
+    clearTimeout(timeout)
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Data store — flat JSON file (no external DB required)
 // ---------------------------------------------------------------------------
-const IS_VERCEL     = !!process.env.VERCEL
-const DATA_DIR      = IS_VERCEL ? '/tmp/ssv-data'    : path.join(__dirname, 'data')
+const IS_VERCEL = !!process.env.VERCEL
+const DATA_DIR = IS_VERCEL ? '/tmp/ssv-data' : path.join(__dirname, 'data')
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json')
-const UPLOADS_DIR   = IS_VERCEL ? '/tmp/ssv-uploads' : path.join(__dirname, 'uploads')
+const UPLOADS_DIR = IS_VERCEL ? '/tmp/ssv-uploads' : path.join(__dirname, 'uploads')
 
-;[DATA_DIR, UPLOADS_DIR].forEach(dir => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-})
+  ;[DATA_DIR, UPLOADS_DIR].forEach(dir => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  })
 
 function readProducts() {
   if (!fs.existsSync(PRODUCTS_FILE)) {
@@ -60,7 +75,7 @@ const TOKEN_SECRET = process.env.TOKEN_SECRET ?? 'changeme'
 // Simple HMAC token — avoids a JWT library dependency
 function signToken(payload) {
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url')
-  const sig  = crypto.createHmac('sha256', TOKEN_SECRET).update(data).digest('base64url')
+  const sig = crypto.createHmac('sha256', TOKEN_SECRET).update(data).digest('base64url')
   return `${data}.${sig}`
 }
 
@@ -80,7 +95,7 @@ function verifyToken(token) {
 
 function requireAdmin(req, res, next) {
   const header = req.headers.authorization ?? ''
-  const token  = header.startsWith('Bearer ') ? header.slice(7) : null
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null
   const payload = verifyToken(token)
   if (!payload || payload.role !== 'admin') {
     return res.status(401).json({ message: 'Unauthorized' })
@@ -129,6 +144,71 @@ app.use(express.json({ limit: '10mb' }))
 // Health-check
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 
+// Live Google reviews (auto-updating)
+app.get('/api/google-reviews', async (_req, res) => {
+  const now = Date.now()
+  if (googleReviewCache.data && (now - googleReviewCache.ts) < GOOGLE_REVIEW_CACHE_MS) {
+    return res.json(googleReviewCache.data)
+  }
+
+  const googleApiKey = process.env.GOOGLE_PLACES_API_KEY
+  const placeQuery = process.env.GOOGLE_PLACE_QUERY ?? 'Sri shakthi Vinayaka Jewellers Vidya Nagar Hyderabad'
+
+  if (!googleApiKey) {
+    return res.status(503).json({
+      message: 'Google reviews are not configured. Set GOOGLE_PLACES_API_KEY.',
+      reviews: [],
+    })
+  }
+
+  try {
+    const findPlaceUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(placeQuery)}&inputtype=textquery&fields=place_id,name&key=${googleApiKey}`
+    const findPlace = await fetchJsonWithTimeout(findPlaceUrl)
+
+    if (!findPlace.ok || findPlace.json?.status === 'REQUEST_DENIED') {
+      return res.status(502).json({ message: 'Unable to resolve Google place.', reviews: [] })
+    }
+
+    const placeId = findPlace.json?.candidates?.[0]?.place_id
+    if (!placeId) {
+      return res.status(404).json({ message: 'Google place not found for configured query.', reviews: [] })
+    }
+
+    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=name,rating,user_ratings_total,reviews,url&reviews_sort=newest&language=en&key=${googleApiKey}`
+    const details = await fetchJsonWithTimeout(detailsUrl)
+
+    if (!details.ok || !details.json?.result) {
+      return res.status(502).json({ message: 'Unable to fetch Google place details.', reviews: [] })
+    }
+
+    const result = details.json.result
+    const reviews = Array.isArray(result.reviews)
+      ? result.reviews.map(r => ({
+        name: r.author_name ?? 'Google User',
+        rating: Number(r.rating ?? 5),
+        text: r.text ?? '',
+        when: r.relative_time_description || (r.time ? new Date(r.time * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''),
+        meta: 'Google review',
+        photoUrl: r.profile_photo_url ?? '',
+      }))
+      : []
+
+    const payload = {
+      placeName: result.name ?? 'SSV Jewellers',
+      rating: Number(result.rating ?? 0),
+      totalRatings: Number(result.user_ratings_total ?? 0),
+      reviews,
+      googleMapsUrl: result.url ?? '',
+      updatedAt: new Date().toISOString(),
+    }
+
+    googleReviewCache = { data: payload, ts: now }
+    return res.json(payload)
+  } catch (err) {
+    return res.status(500).json({ message: `Google reviews fetch failed: ${err.message}`, reviews: [] })
+  }
+})
+
 // List all products (public)
 app.get('/api/products', (_req, res) => {
   const products = readProducts()
@@ -138,7 +218,7 @@ app.get('/api/products', (_req, res) => {
 // Single product (public)
 app.get('/api/products/:id', (req, res) => {
   const products = readProducts()
-  const product  = products.find(p => p.id === req.params.id)
+  const product = products.find(p => p.id === req.params.id)
   if (!product) return res.status(404).json({ message: 'Product not found' })
   res.json(product)
 })
@@ -204,20 +284,20 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
 
   const products = readProducts()
   const product = {
-    id:             uuidv4(),
-    name:           String(productName).slice(0, 200),
-    category:       String(productCategory).slice(0, 50),
-    price:          productPrice ? parseFloat(productPrice) : null,
-    description:    productDescription  ? String(productDescription).slice(0, 2000)  : '',
+    id: uuidv4(),
+    name: String(productName).slice(0, 200),
+    category: String(productCategory).slice(0, 50),
+    price: productPrice ? parseFloat(productPrice) : null,
+    description: productDescription ? String(productDescription).slice(0, 2000) : '',
     additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : '',
-    type:           productType ? String(productType).slice(0, 100) : '',
-    specs:          productSpecs
+    type: productType ? String(productType).slice(0, 100) : '',
+    specs: productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : [],
-    image:          req.file
+    image: req.file
       ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
       : null,
-    createdAt:      new Date().toISOString(),
+    createdAt: new Date().toISOString(),
   }
 
   products.unshift(product)
@@ -228,7 +308,7 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
 // Update product
 app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), (req, res) => {
   const products = readProducts()
-  const idx      = products.findIndex(p => p.id === req.params.id)
+  const idx = products.findIndex(p => p.id === req.params.id)
   if (idx === -1) return res.status(404).json({ message: 'Product not found' })
 
   const existing = products[idx]
@@ -250,19 +330,19 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
 
   products[idx] = {
     ...existing,
-    name:           productName           ? String(productName).slice(0, 200)           : existing.name,
-    category:       productCategory       ? String(productCategory).slice(0, 50)        : existing.category,
-    price:          productPrice !== undefined ? parseFloat(productPrice)               : existing.price,
-    description:    productDescription    ? String(productDescription).slice(0, 2000)   : existing.description,
-    additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000): existing.additionalInfo,
-    type:           productType           ? String(productType).slice(0, 100)           : existing.type,
-    specs:          productSpecs
+    name: productName ? String(productName).slice(0, 200) : existing.name,
+    category: productCategory ? String(productCategory).slice(0, 50) : existing.category,
+    price: productPrice !== undefined ? parseFloat(productPrice) : existing.price,
+    description: productDescription ? String(productDescription).slice(0, 2000) : existing.description,
+    additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : existing.additionalInfo,
+    type: productType ? String(productType).slice(0, 100) : existing.type,
+    specs: productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
       : existing.specs,
-    image:          req.file
+    image: req.file
       ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
       : existing.image,
-    updatedAt:      new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   }
 
   writeProducts(products)
@@ -272,7 +352,7 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
 // Delete product
 app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
   const products = readProducts()
-  const idx      = products.findIndex(p => p.id === req.params.id)
+  const idx = products.findIndex(p => p.id === req.params.id)
   if (idx === -1) return res.status(404).json({ message: 'Product not found' })
 
   const [removed] = products.splice(idx, 1)

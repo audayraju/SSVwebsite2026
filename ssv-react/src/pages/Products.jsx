@@ -87,49 +87,49 @@ export default function Products() {
         <link rel="canonical" href="https://ssvjewellers.com/products" />
       </Helmet>
 
-      {/* Category Filter Bar */}
-      <div className={styles.catBarWrapper}>
-        {showLeftArrow && (
-          <button
-            className={`${styles.catScrollBtn} ${styles.catScrollLeft}`}
-            onClick={() => scrollCat('left')}
-            aria-label="Scroll categories left"
-          >
-            &#8249;
-          </button>
-        )}
-        <div
-          className={styles.categoryBar}
-          ref={catBarRef}
-          onScroll={handleCatScroll}
-        >
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              className={`${styles.catItem}${activeCategory === cat ? ` ${styles.catActive}` : ''}`}
-              onClick={() => setActiveCategory(cat)}
-            >
-              <div className={styles.catIconWrap}>
-                <img src="/slides/pictures/logo.jpeg" alt={cat} loading="lazy" />
-              </div>
-              <span className={styles.catLabel}>{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's'}</span>
-            </button>
-          ))}
-        </div>
-        {showRightArrow && (
-          <button
-            className={`${styles.catScrollBtn} ${styles.catScrollRight}`}
-            onClick={() => scrollCat('right')}
-            aria-label="Scroll categories right"
-          >
-            &#8250;
-          </button>
-        )}
-      </div>
-
-      {/* mobile dropdown removed — filter handled via category bar */}
-
       <div className={styles.content}>
+        {/* Category Filter Bar */}
+        <div className={styles.catBarWrapper}>
+          {showLeftArrow && (
+            <button
+              className={`${styles.catScrollBtn} ${styles.catScrollLeft}`}
+              onClick={() => scrollCat('left')}
+              aria-label="Scroll categories left"
+            >
+              &#8249;
+            </button>
+          )}
+          <div
+            className={styles.categoryBar}
+            ref={catBarRef}
+            onScroll={handleCatScroll}
+          >
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                className={`${styles.catItem}${activeCategory === cat ? ` ${styles.catActive}` : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                <div className={styles.catIconWrap}>
+                  <img src="/slides/pictures/logo.jpeg" alt={cat} loading="lazy" />
+                </div>
+                <span className={styles.catLabel}>{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's'}</span>
+              </button>
+            ))}
+          </div>
+          {showRightArrow && (
+            <button
+              className={`${styles.catScrollBtn} ${styles.catScrollRight}`}
+              onClick={() => scrollCat('right')}
+              aria-label="Scroll categories right"
+            >
+              &#8250;
+            </button>
+          )}
+        </div>
+
+        {/* mobile dropdown removed — filter handled via category bar */}
+
         <div className={styles.textBg}>
           <h2>Our Jewellery Collections</h2>
           <p>Explore a curated selection of jewellery designed to complement every style and occasion.</p>

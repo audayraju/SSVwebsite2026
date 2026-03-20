@@ -1,7 +1,14 @@
 /* Category bar wrapper — positions the scroll arrows relative to the bar */
 .catBarWrapper {
-  position: relative;
-  margin-top: 18px;
+  position: sticky;
+  /* top: var(--products-sticky-top, 72px); */
+  z-index: 40;
+  margin: 0 auto 8px;
+  padding: 1px 0 0;
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
 }
 
 /* Category bar */
@@ -9,8 +16,8 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 8px 12px 0;
+  gap: 2px;
+  padding: 0 8px;
 }
 
 /* Scroll arrow buttons — hidden on desktop, shown on mobile via media query */
@@ -53,12 +60,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   background: none;
   border: 2px solid transparent;
   border-radius: 12px;
   cursor: pointer;
-  padding: 8px 14px;
+  padding: 3px 9px;
   transition: border-color 0.2s, background 0.2s;
 }
 
@@ -74,8 +81,8 @@
 }
 
 .catIconWrap {
-  width: 52px;
-  height: 52px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   overflow: hidden;
   /* neutral border instead of gold */
@@ -89,7 +96,7 @@
 }
 
 .catLabel {
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   font-weight: 600;
   color: var(--dark);
   text-transform: capitalize;
@@ -115,7 +122,7 @@
   /* smaller hero area */
   border-radius: 12px;
   text-align: center;
-  margin: 0 auto 12px;
+  margin: 0 auto 14px;
   border: 1px solid rgba(201, 168, 76, 0.08);
 }
 
@@ -124,15 +131,16 @@
   color: var(--dark);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.15rem;
 }
 
 .textBg p {
   margin: 0;
   font-family: var(--font-body);
   color: var(--mid);
+  font-size: 0.52rem;
   max-width: 760px;
-  line-height: 1.8;
+  line-height: 1.6;
 }
 
 .searchNote {
@@ -188,7 +196,9 @@
 /* ── MOBILE: horizontal scrolling category bar ── */
 @media (max-width: 600px) {
   .catBarWrapper {
-    margin-top: 18px;
+    top: var(--products-sticky-top-mobile, 66px);
+    margin-bottom: 8px;
+    border-radius: 0;
   }
 
   .categoryBar {
@@ -199,9 +209,9 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 4px;
     /* add side padding to keep items clear of the arrows */
-    padding: 8px 36px;
+    padding: 2px 34px;
 
     /* hide scrollbar */
     scrollbar-width: none;
@@ -214,17 +224,17 @@
 
   .catItem {
     flex: 0 0 auto;
-    min-width: 72px;
-    padding: 6px 10px;
+    min-width: 58px;
+    padding: 2px 6px;
   }
 
   .catIconWrap {
-    width: 44px;
-    height: 44px;
+    width: 28px;
+    height: 28px;
   }
 
   .catLabel {
-    font-size: 0.68rem;
+    font-size: 0.58rem;
   }
 
   /* show the arrows only on mobile */
