@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
 import styles from './ProductCard.module.css'
@@ -5,6 +6,7 @@ import styles from './ProductCard.module.css'
 export default function ProductCard({ product, onClick }) {
   const navigate = useNavigate()
   const { isFavorite, toggleFavorite } = useFavorites()
+  const [heartPop, setHeartPop] = useState(false)
   const {
     id,
     name,
@@ -52,24 +54,38 @@ export default function ProductCard({ product, onClick }) {
           className={styles.img}
           loading="lazy"
         />
-        <button
-          className={`${styles.likeBtn}${liked ? ` ${styles.liked}` : ''}`}
-          onClick={e => { e.stopPropagation(); toggleFavorite({ id, name, image: imgSrc }) }}
-          aria-label={liked ? 'Unlike' : 'Like'}
-        >
-          <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'} aria-hidden="true" />
-        </button>
-        <button
-          className={styles.detailsBtn}
-          type="button"
-          onClick={e => {
-            e.stopPropagation()
-            openDetails()
-          }}
-          aria-label={`View details for ${name}`}
-        >
-          View Details
-        </button>
+      </div>
+
+      <div className={styles.footer}>
+        <h3 className={styles.name}>{name}</h3>
+        <div className={styles.actionsRow}>
+          <button
+            className={styles.detailsBtn}
+            type="button"
+            onClick={e => {
+              e.stopPropagation()
+              openDetails()
+            }}
+            aria-label={`View details for ${name}`}
+          >
+            <img src="/slides/pictures/logo.jpeg" alt="SSV" className={styles.btnLogo} />
+            <span>View Details</span>
+          </button>
+
+          <button
+            className={`${styles.likeBtn}${liked ? ` ${styles.liked}` : ''}${heartPop ? ` ${styles.pop}` : ''}`}
+            onClick={e => {
+              e.stopPropagation()
+              toggleFavorite({ id, name, image: imgSrc })
+              setHeartPop(false)
+              requestAnimationFrame(() => setHeartPop(true))
+            }}
+            onAnimationEnd={() => setHeartPop(false)}
+            aria-label={liked ? 'Unlike' : 'Like'}
+          >
+            <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'} aria-hidden="true" />
+          </button>
+        </div>
       </div>
     </div>
   )
