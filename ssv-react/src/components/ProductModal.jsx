@@ -8,6 +8,7 @@ export default function ProductModal({ product, onClose }) {
   const [translate, setTranslate] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
   const dragRef = useRef({ active: false, startX: 0, startY: 0, tx: 0, ty: 0, moved: false })
+  const lastTapRef = useRef({ time: 0, x: 0, y: 0 })
   const rightPaneRef = useRef(null)
 
   useEffect(() => {
@@ -56,18 +57,17 @@ export default function ProductModal({ product, onClose }) {
   const waLink = `https://wa.me/916281049201?text=${waMsg}`
 
   function openViewer() {
-    setViewerZoomed(true)
+    setViewerZoomed(false)
     setViewerOrigin('center center')
     setTranslate({ x: 0, y: 0 })
     setZoomed(true)
   }
 
-  function handleViewerClick(e) {
-    if (dragRef.current.moved) return  // don't toggle zoom after a drag
+  function toggleViewerZoomAtPoint(clientX, clientY, el) {
     if (!viewerZoomed) {
-      const rect = e.currentTarget.getBoundingClientRect()
-      const xPct = ((e.clientX - rect.left) / rect.width * 100).toFixed(2)
-      const yPct = ((e.clientY - rect.top) / rect.height * 100).toFixed(2)
+      const rect = el.getBoundingClientRect()
+      const xPct = ((clientX - rect.left) / rect.width * 100).toFixed(2)
+      const yPct = ((clientY - rect.top) / rect.height * 100).toFixed(2)
       setViewerOrigin(`${xPct}% ${yPct}%`)
       setTranslate({ x: 0, y: 0 })
       setViewerZoomed(true)
@@ -78,10 +78,45 @@ export default function ProductModal({ product, onClose }) {
     }
   }
 
+  function handleViewerDoubleClick(e) {
+    e.stopPropagation()
+    if (dragRef.current.moved) return
+    toggleViewerZoomAtPoint(e.clientX, e.clientY, e.currentTarget)
+  }
+
+  function handleViewerTouchEnd(e) {
+    if (dragRef.current.moved) return
+    const touch = e.changedTouches?.[0]
+    if (!touch) return
+
+    const now = Date.now()
+    const dt = now - lastTapRef.current.time
+    const dx = Math.abs(touch.clientX - lastTapRef.current.x)
+    const dy = Math.abs(touch.clientY - lastTapRef.current.y)
+
+    const isDoubleTap = dt > 0 && dt < 320 && dx < 24 && dy < 24
+    if (isDoubleTap) {
+      e.preventDefault()
+      e.stopPropagation()
+      toggleViewerZoomAtPoint(touch.clientX, touch.clientY, e.currentTarget)
+      lastTapRef.current = { time: 0, x: 0, y: 0 }
+      return
+    }
+
+    lastTapRef.current = { time: now, x: touch.clientX, y: touch.clientY }
+  }
+
   function handlePointerDown(e) {
     if (!viewerZoomed) return
     e.currentTarget.setPointerCapture(e.pointerId)
-    dragRef.current = { active: true, startX: e.clientX, startY: e.clientY, tx: translate.x, ty: translate.y, moved: false }
+    dragRef.current = {
+      active: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      tx: translate.x,
+      ty: translate.y,
+      moved: false,
+    }
     setIsDragging(true)
   }
 
@@ -96,6 +131,9 @@ export default function ProductModal({ product, onClose }) {
   function handlePointerUp() {
     dragRef.current.active = false
     setIsDragging(false)
+    setTimeout(() => {
+      dragRef.current.moved = false
+    }, 0)
   }
 
   const specList = Array.isArray(specs)
@@ -182,7 +220,7 @@ export default function ProductModal({ product, onClose }) {
             aria-label="Close"
           >&#xd7;</button>
           <p className={styles.lightboxHint}>
-            {viewerZoomed ? 'Drag to pan · Click image to zoom out' : 'Click image to zoom in'}
+            {viewerZoomed ? 'Double tap to zoom out · Drag to move' : 'Double tap image to zoom in'}
           </p>
           <img
             src={imgSrc}
@@ -191,9 +229,7 @@ export default function ProductModal({ product, onClose }) {
             draggable={false}
             style={{
               transformOrigin: viewerOrigin,
-              transform: viewerZoomed
-                ? `translate(${translate.x}px, ${translate.y}px) scale(3)`
-                : 'scale(1)',
+              transform: viewerZoomed ? `translate(${translate.x}px, ${translate.y}px) scale(3)` : 'scale(1)',
               cursor: viewerZoomed ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in',
               transition: isDragging ? 'none' : 'transform 0.35s ease',
             }}
@@ -201,7 +237,9 @@ export default function ProductModal({ product, onClose }) {
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
-            onClick={e => { e.stopPropagation(); handleViewerClick(e) }}
+            onClick={e => { e.stopPropagation() }}
+            onDoubleClick={handleViewerDoubleClick}
+            onTouchEnd={handleViewerTouchEnd}
           />
         </div>
       )}
