@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async'
+import { motion } from 'framer-motion'
+import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './About.module.css'
 
 const SPECIALIZATIONS = [
@@ -38,7 +40,7 @@ export default function About() {
         <link rel="canonical" href="https://ssvjewellers.com/about" />
       </Helmet>
 
-      <div className={styles.aboutPanel}>
+      <motion.div className={styles.aboutPanel} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
 
         {/* ── Specializations ── */}
         <div className={styles.specializationsSection}>
@@ -49,39 +51,39 @@ export default function About() {
             </div>
           </div>
           <div className={styles.specializationsPanel}>
-            <div className={styles.specializationsGrid}>
+            <motion.div className={styles.specializationsGrid} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
               {SPECIALIZATIONS.map(spec => (
-                <div key={spec.title} className={styles.specializationCard}>
+                <motion.div key={spec.title} className={styles.specializationCard} variants={fadeUp}>
                   <div className={styles.specTitle}>{spec.title}</div>
                   <div className={styles.specDescription}>{spec.desc}</div>
                   <div className={styles.specFeatures}>
                     <ul>{spec.features.map(f => <li key={f}>{f}</li>)}</ul>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Why Choose Us ── */}
-      <div className={styles.whyChooseUs}>
-        <h2>Why Choose Us?</h2>
-        <div className={styles.featuresList}>
+      <motion.div className={styles.whyChooseUs} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+        <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>Why Choose Us?</motion.h2>
+        <motion.div className={styles.featuresList} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           {WHY_CHOOSE.map(item => (
-            <div key={item.title} className={styles.featureItem}>
+            <motion.div key={item.title} className={styles.featureItem} variants={fadeUp}>
               <div className={styles.featureText}>
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ── Mission / Vision ── */}
-      <div className={styles.missionVision}>
-        <div className={styles.missionBox}>
+      <motion.div className={styles.missionVision} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+        <motion.div className={styles.missionBox} variants={fadeUp}>
           <h3>Our Mission</h3>
           <p>
             To create exceptional jewelry pieces that celebrate love, commitment, and personal
@@ -89,16 +91,16 @@ export default function About() {
             exceptional service, and beautiful designs that become treasured heirlooms for
             generations to come.
           </p>
-        </div>
-        <div className={styles.visionBox}>
+        </motion.div>
+        <motion.div className={styles.visionBox} variants={fadeUp}>
           <h3>Our Vision</h3>
           <p>
             To be recognised globally as the premier destination for luxury jewelry, where
             artistry meets authenticity. We envision a world where every person can own a piece
             of timeless elegance that tells their unique story.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   )
 }

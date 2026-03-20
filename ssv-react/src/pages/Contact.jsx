@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { motion } from 'framer-motion'
+import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Contact.module.css'
 
 const FALLBACK_REVIEWS = [
@@ -90,7 +92,7 @@ export default function Contact() {
 
       {/* ── HERO ── */}
       <section className={styles.hero}>
-        <div className={styles.heroLeft}>
+        <motion.div className={styles.heroLeft} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <h1>Luminous<br />Handmade Jewelry</h1>
           <p>Premium wholesale &amp; retail jewellery crafted with perfection and elegance.</p>
           <div className={styles.heroActions}>
@@ -98,9 +100,9 @@ export default function Contact() {
               <span>📞 Contact Now</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        <div className={styles.heroRight}>
+        <motion.div className={styles.heroRight} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <img src="/slides/03.png" alt="SSV Jewellers jewellery display" loading="lazy" />
           <div className={styles.socialIcons}>
             <a href="https://www.facebook.com/ssvjeweller" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -116,13 +118,14 @@ export default function Contact() {
               <i className="bi bi-whatsapp" aria-hidden="true" />
             </a>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ── MAP ── */}
-      <section id="store-map" className={styles.mapSection}>
+      <motion.section id="store-map" className={styles.mapSection} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
         <h2>Visit Our Store</h2>
-        <iframe
+        <motion.iframe
+          variants={fadeUp}
           src="https://www.google.com/maps?q=CG35%2B3XW%2C%20Sri%20shakthi%20Vinayaka%20Jewellers%2C%20Vidya%20Nagar%2C%20Ram%20Nagar%20Gundu%2C%20Adikmet%2C%20Hyderabad%2C%20Telangana%20500044&output=embed"
           width="100%"
           height="450"
@@ -134,7 +137,7 @@ export default function Contact() {
           aria-label="Google Map showing SSV Jewellers location"
         />
 
-        <div className={styles.reviewsSection} aria-live="polite">
+        <motion.div className={styles.reviewsSection} aria-live="polite" variants={fadeUp}>
           <h3>Customer Reviews</h3>
           <article className={styles.reviewCard}>
             <header className={styles.reviewHead}>
@@ -162,8 +165,8 @@ export default function Contact() {
           >
             View all reviews on Google
           </a>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </>
   )
 }

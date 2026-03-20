@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { motion } from 'framer-motion'
+import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Services.module.css'
 
 const SERVICES = [
@@ -24,11 +26,11 @@ const SERVICES = [
 ]
 
 const FAQS = [
-  { q: 'How long does jewelry repair take?',          a: 'Most repairs take 5–10 business days. Simple repairs like cleaning can be done same-day. We\'ll provide an exact timeline during consultation.' },
-  { q: 'Do you provide warranties on repairs?',        a: 'Yes! All repairs come with a 1-year warranty. We stand behind our workmanship and will fix any issues at no additional cost.' },
-  { q: 'Can you resize all types of rings?',           a: 'We can resize most rings in gold, silver, and platinum. Some styles may have limitations. Contact us for specific questions.' },
-  { q: 'What makes your custom designs unique?',       a: 'Our master craftsmen work directly with you to create one-of-a-kind pieces. We use CAD design for preview before creation.' },
-  { q: 'Are your appraisals accepted by insurers?',    a: 'Yes! Our appraisals are certified and recognised by major insurance companies for coverage and claims purposes.' },
+  { q: 'How long does jewelry repair take?', a: 'Most repairs take 5–10 business days. Simple repairs like cleaning can be done same-day. We\'ll provide an exact timeline during consultation.' },
+  { q: 'Do you provide warranties on repairs?', a: 'Yes! All repairs come with a 1-year warranty. We stand behind our workmanship and will fix any issues at no additional cost.' },
+  { q: 'Can you resize all types of rings?', a: 'We can resize most rings in gold, silver, and platinum. Some styles may have limitations. Contact us for specific questions.' },
+  { q: 'What makes your custom designs unique?', a: 'Our master craftsmen work directly with you to create one-of-a-kind pieces. We use CAD design for preview before creation.' },
+  { q: 'Are your appraisals accepted by insurers?', a: 'Yes! Our appraisals are certified and recognised by major insurance companies for coverage and claims purposes.' },
 ]
 
 export default function Services() {
@@ -43,8 +45,8 @@ export default function Services() {
         <link rel="canonical" href="https://ssvjewellers.com/services" />
       </Helmet>
 
-      <div className={styles.content}>
-        <div className={styles.servicesHeader}>
+      <motion.div className={styles.content} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+        <motion.div className={styles.servicesHeader} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <h1>Our Services</h1>
           <p className={styles.subtitle}>Comprehensive jewelry solutions tailored to your needs</p>
           <div className={styles.servicesIntro}>
@@ -54,28 +56,28 @@ export default function Services() {
               providing exceptional service with attention to detail.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         <div className={styles.servicesPanel}>
-          <div className={styles.servicesGrid}>
+          <motion.div className={styles.servicesGrid} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
             {SERVICES.map(s => (
-              <div key={s.title} className={styles.serviceCard}>
+              <motion.div key={s.title} className={styles.serviceCard} variants={fadeUp}>
                 <div className={styles.serviceIcon}>{s.icon}</div>
                 <div className={styles.serviceTitle}>{s.title}</div>
                 <div className={styles.serviceDescription}>{s.desc}</div>
                 <div className={styles.serviceFeatures}>
                   <ul>{s.features.map(f => <li key={f}>{f}</li>)}</ul>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* FAQ */}
-        <div className={styles.faqSection}>
-          <h2>Frequently Asked Questions</h2>
+        <motion.div className={styles.faqSection} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+          <motion.h2 variants={fadeUp}>Frequently Asked Questions</motion.h2>
           {FAQS.map((faq, i) => (
-            <div key={i} className={styles.faqItem}>
+            <motion.div key={i} className={styles.faqItem} variants={fadeUp}>
               <button
                 className={styles.faqQuestion}
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -87,10 +89,10 @@ export default function Services() {
               {openFaq === i && (
                 <div className={styles.faqAnswer}>{faq.a}</div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   )
 }

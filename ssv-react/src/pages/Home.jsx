@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { motion } from 'framer-motion'
+import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Home.module.css'
 
 /* ── Carousel data ── */
@@ -101,16 +103,22 @@ export default function Home() {
 
       {/* ── THREE FEATURE COLUMNS ── */}
       <section className={styles.viewThree} aria-label="Featured categories">
-        <div className={styles.viewGrid}>
+        <motion.div
+          className={styles.viewGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           {FEATURES.map((f, i) => (
-            <article key={i} className={styles.viewItem}>
+            <motion.article key={i} className={styles.viewItem} variants={fadeUp}>
               <img src={f.img} alt={f.alt} className={styles.avatar} loading="lazy" />
               <h3>{f.title}</h3>
               <p>{f.desc}</p>
               <Link to={f.link} className={styles.viewBtn}>View details »</Link>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* ── SECTION 1 – image left / text right ── */}
@@ -120,12 +128,31 @@ export default function Home() {
             <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
           </div>
           <div className={styles.contentBox}>
-            <h2>Timeless Jewellery Craftsmanship</h2>
-            <p>
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Timeless Jewellery Craftsmanship
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
               Discover handcrafted gold, silver, and diamond designs made to
               celebrate your most special moments with timeless elegance.
-            </p>
-            <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -134,12 +161,31 @@ export default function Home() {
       <section className={`${styles.section} ${styles.sectionReverse}`}>
         <div className={`${styles.container} ${styles.reverse}`}>
           <div className={styles.contentBox}>
-            <h2>Pure Crafted Excellence</h2>
-            <p>
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Pure Crafted Excellence
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
               Each piece is thoughtfully designed to reflect elegance and precision,
               using only the finest certified materials.
-            </p>
-            <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
+            </motion.div>
           </div>
           <div className={styles.imageBox}>
             <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers collection" loading="lazy" />
@@ -149,9 +195,15 @@ export default function Home() {
 
       {/* ── PRODUCT GRID ── */}
       <section className={styles.productsSection} aria-label="Product collections">
-        <div className={styles.homeProductGrid}>
+        <motion.div
+          className={styles.homeProductGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           {HOME_PRODUCTS.map((p, i) => (
-            <div key={i} className={styles.productCard}>
+            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
               <img src={p.img} alt={p.title} loading="lazy" />
               <div className={styles.overlay}>
                 <h3>{p.title}</h3>
@@ -159,9 +211,9 @@ export default function Home() {
                   <Link to={p.link} className={styles.knowBtn}>View details »</Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
     </>
   )

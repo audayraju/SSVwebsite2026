@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { motion } from 'framer-motion'
 import ProductCard from '../components/ProductCard'
 import ProductModal from '../components/ProductModal'
+import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Products.module.css'
 
 /* ── Static seed products (replaced by API data in production) ── */
@@ -87,7 +89,7 @@ export default function Products() {
         <link rel="canonical" href="https://ssvjewellers.com/products" />
       </Helmet>
 
-      <div className={styles.content}>
+      <motion.div className={styles.content} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
         {/* Category Filter Bar */}
         <div className={styles.catBarWrapper}>
           {showLeftArrow && (
@@ -130,7 +132,7 @@ export default function Products() {
 
         {/* mobile dropdown removed — filter handled via category bar */}
 
-        <div className={styles.textBg}>
+        <motion.div className={styles.textBg} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <h2>Our Jewellery Collections</h2>
           <p>Explore a curated selection of jewellery designed to complement every style and occasion.</p>
           {searchQuery && (
@@ -139,7 +141,7 @@ export default function Products() {
               <button className={styles.clearSearch} onClick={clearSearch}>✕ Clear</button>
             </p>
           )}
-        </div>
+        </motion.div>
 
         {loading ? (
           <div className={styles.loadingWrap}>
@@ -148,17 +150,18 @@ export default function Products() {
         ) : filtered.length === 0 ? (
           <p className={styles.noResults}>No products found. Try a different filter.</p>
         ) : (
-          <div className={styles.productsGrid}>
+          <motion.div className={styles.productsGrid} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
             {filtered.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onClick={() => setSelectedProduct(product)}
-              />
+              <motion.div key={product.id} variants={fadeUp}>
+                <ProductCard
+                  product={product}
+                  onClick={() => setSelectedProduct(product)}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
       {/* Product Detail Modal */}
       {selectedProduct && (
