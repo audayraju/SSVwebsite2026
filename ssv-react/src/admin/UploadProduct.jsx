@@ -6,11 +6,11 @@ import { AdminSidebar } from './AdminDashboard'
 import styles from './Admin.module.css'
 
 const CATEGORIES = [
-  { value: 'ring',     label: 'Rings' },
+  { value: 'ring', label: 'Rings' },
   { value: 'necklace', label: 'Necklaces' },
   { value: 'bracelet', label: 'Bracelets' },
-  { value: 'earring',  label: 'Earrings' },
-  { value: 'chain',    label: 'Chains' },
+  { value: 'earring', label: 'Earrings' },
+  { value: 'chain', label: 'Chains' },
 ]
 
 const EMPTY = {
@@ -21,6 +21,7 @@ const EMPTY = {
   productAdditionalInfo: '',
   productType: '',
   productSpecs: '',
+  productImageId: '',
 }
 
 export default function UploadProduct() {
@@ -28,11 +29,11 @@ export default function UploadProduct() {
   const [searchParams] = useSearchParams()
   const editId = searchParams.get('edit')
 
-  const [form, setForm]         = useState(EMPTY)
+  const [form, setForm] = useState(EMPTY)
   const [imageFile, setImageFile] = useState(null)
-  const [preview, setPreview]   = useState(null)
-  const [status, setStatus]     = useState({ msg: '', ok: true })
-  const [saving, setSaving]     = useState(false)
+  const [preview, setPreview] = useState(null)
+  const [status, setStatus] = useState({ msg: '', ok: true })
+  const [saving, setSaving] = useState(false)
   const fileRef = useRef(null)
 
   // Pre-fill form when editing
@@ -44,13 +45,14 @@ export default function UploadProduct() {
     }).then(r => {
       const p = r.data
       setForm({
-        productName:           p.name            ?? '',
-        productCategory:       p.category        ?? '',
-        productPrice:          p.price           ?? '',
-        productDescription:    p.description     ?? '',
-        productAdditionalInfo: p.additionalInfo  ?? '',
-        productType:           p.type            ?? '',
-        productSpecs:          Array.isArray(p.specs) ? p.specs.join('\n') : (p.specs ?? ''),
+        productName: p.name ?? '',
+        productCategory: p.category ?? '',
+        productPrice: p.price ?? '',
+        productDescription: p.description ?? '',
+        productAdditionalInfo: p.additionalInfo ?? '',
+        productType: p.type ?? '',
+        productSpecs: Array.isArray(p.specs) ? p.specs.join('\n') : (p.specs ?? ''),
+        productImageId: p.imageId ?? '',
       })
       if (p.image) setPreview(p.image.startsWith('data:') || p.image.startsWith('http') ? p.image : `/uploads/${p.image}`)
     }).catch(() => {
@@ -89,7 +91,7 @@ export default function UploadProduct() {
       Object.entries(form).forEach(([k, v]) => fd.append(k, v))
       if (imageFile) fd.append('productImage', imageFile)
 
-      const url    = editId ? `/api/admin/products/${editId}` : '/api/admin/products'
+      const url = editId ? `/api/admin/products/${editId}` : '/api/admin/products'
       const method = editId ? 'put' : 'post'
 
       await axios[method](url, fd, {
@@ -107,7 +109,13 @@ export default function UploadProduct() {
         if (fileRef.current) fileRef.current.value = ''
       }
     } catch (err) {
-      const msg = err.response?.data?.message ?? 'Failed to save product. Please try again.'
+      const msg =
+        err?.response?.data?.message
+        ?? (err?.response?.status ? `Save failed (HTTP ${err.response.status}).` : null)
+        ?? err?.message
+        ?? 'Failed to save product. Please try again.'
+      // keep a full console trace for debugging while showing a readable UI message
+      console.error('UploadProduct save failed:', err)
       setStatus({ msg, ok: false })
     } finally {
       setSaving(false)
@@ -183,6 +191,18 @@ export default function UploadProduct() {
                   onChange={handleChange}
                   placeholder="Enter product name"
                   required
+                />
+              </div>
+
+              <div className={styles.fieldGroup}>
+                <label htmlFor="productImageId">Image ID Number</label>
+                <input
+                  type="text"
+                  id="productImageId"
+                  name="productImageId"
+                  value={form.productImageId}
+                  onChange={handleChange}
+                  placeholder="Auto if empty (e.g. 12 or IMG-000012)"
                 />
               </div>
 

@@ -106,7 +106,7 @@ export default function ProductList() {
                     <div className={styles.productItemImage}>
                       {product.image ? (
                         <img
-                          src={product.image.startsWith('http') ? product.image : `/uploads/${product.image}`}
+                          src={(product.image.startsWith('http') || product.image.startsWith('data:')) ? product.image : `/uploads/${product.image}`}
                           alt={product.name}
                           loading="lazy"
                           width={64}
@@ -128,6 +128,11 @@ export default function ProductList() {
                           </span>
                         )}
                       </span>
+                      {product.imageId && (
+                        <span className={styles.productItemMeta}>
+                          Image ID: <strong>{product.imageId}</strong>
+                        </span>
+                      )}
                     </div>
 
                     <div className={styles.productItemActions}>

@@ -89,6 +89,7 @@ export default function ProductDetails() {
             <span className={styles.badge}>{product.category}</span>
             <h1 className={styles.title}>{product.name}</h1>
             {product.sku && <p className={styles.sku}>{product.sku}</p>}
+            {product.imageId && <p className={styles.sku}>Image ID: {product.imageId}</p>}
             {product.price && <p className={styles.price}>{product.price}</p>}
 
             <p className={styles.desc}>{product.description}</p>

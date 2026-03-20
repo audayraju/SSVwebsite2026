@@ -30,13 +30,6 @@ const SLIDES = [
   },
 ]
 
-/* ── Feature cards ── */
-const FEATURES = [
-  { title: 'Trending #1', desc: 'Handcrafted gold designs made with the finest craftsmanship.', link: '/products?search=gold', img: '/picture/image.png', alt: 'Gold feature' },
-  { title: 'Trending #2', desc: 'Classic silver jewellery for modern elegance and everyday wear.', link: '/products?search=silver', img: '/picture/image.png', alt: 'Silver feature' },
-  { title: 'Trending #3', desc: 'Diamond pieces that shine at every special occasion.', link: '/products?search=diamond', img: '/picture/image.png', alt: 'Diamond feature' },
-]
-
 /* ── Home product cards ── */
 const HOME_PRODUCTS = [
   { title: 'Gold Collection', link: '/products?search=gold', img: '/picture/image.png' },
@@ -101,26 +94,6 @@ export default function Home() {
 
       </section>
 
-      {/* ── THREE FEATURE COLUMNS ── */}
-      <section className={styles.viewThree} aria-label="Featured categories">
-        <motion.div
-          className={styles.viewGrid}
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inViewViewport}
-        >
-          {FEATURES.map((f, i) => (
-            <motion.article key={i} className={styles.viewItem} variants={fadeUp}>
-              <img src={f.img} alt={f.alt} className={styles.avatar} loading="lazy" />
-              <h3>{f.title}</h3>
-              <p>{f.desc}</p>
-              <Link to={f.link} className={styles.viewBtn}>View details »</Link>
-            </motion.article>
-          ))}
-        </motion.div>
-      </section>
-
       {/* ── SECTION 1 – image left / text right ── */}
       <section className={styles.section}>
         <div className={styles.container}>
@@ -159,7 +132,7 @@ export default function Home() {
 
       {/* ── SECTION 2 – text left / image right ── */}
       <section className={`${styles.section} ${styles.sectionReverse}`}>
-        <div className={`${styles.container} ${styles.reverse}`}>
+        <div className={styles.container}>
           <div className={styles.contentBox}>
             <motion.h2
               variants={fadeUp}
@@ -204,7 +177,9 @@ export default function Home() {
         >
           {HOME_PRODUCTS.map((p, i) => (
             <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <img src={p.img} alt={p.title} loading="lazy" />
+              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+                <img src={p.img} alt={p.title} loading="lazy" />
+              </Link>
               <div className={styles.overlay}>
                 <h3>{p.title}</h3>
                 <div className={styles.cardActions}>

@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0f0a12 0%, #2a1228 50%, #3b1f38 100%);
+  background:  #560537 ;
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -148,7 +148,7 @@
 /* ── Sidebar ── */
 .sidebar {
   width: 250px;
-  background: linear-gradient(180deg, #140d18 0%, #1e1620 60%, #260e1c 100%);
+  background: #560537;
   color: #e7ecef;
   display: flex;
   flex-direction: column;
@@ -650,7 +650,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(90deg, #140d18, #1e1620);
+    background: #560537;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
 

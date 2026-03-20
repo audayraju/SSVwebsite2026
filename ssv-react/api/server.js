@@ -54,7 +54,10 @@ function readProducts() {
   }
   if (!fs.existsSync(PRODUCTS_FILE)) return []
   try {
-    return JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'))
+    const parsed = JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'))
+    const { normalized, changed } = normalizeProducts(parsed)
+    if (changed) writeProducts(normalized)
+    return normalized
   } catch {
     return []
   }
@@ -62,6 +65,108 @@ function readProducts() {
 
 function writeProducts(data) {
   fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf8')
+}
+
+function parseImageIdNumber(imageId) {
+  if (typeof imageId !== 'string') return 0
+  const m = /^IMG-(\d{6})$/.exec(imageId.trim())
+  return m ? Number(m[1]) : 0
+}
+
+function formatImageId(n) {
+  return `IMG-${String(n).padStart(6, '0')}`
+}
+
+function getNextImageId(products) {
+  const max = products.reduce((acc, p) => {
+    const n = parseImageIdNumber(p?.imageId)
+    return n > acc ? n : acc
+  }, 0)
+  return formatImageId(max + 1)
+}
+
+function normalizeInputImageId(raw) {
+  if (raw === undefined || raw === null) return null
+  const text = String(raw).trim().toUpperCase()
+  if (!text) return null
+
+  if (/^\d{1,6}$/.test(text)) {
+    const n = Number(text)
+    if (n < 1 || n > 999999) return null
+    return formatImageId(n)
+  }
+
+  const m = /^IMG-(\d{1,6})$/.exec(text)
+  if (!m) return null
+  const n = Number(m[1])
+  if (n < 1 || n > 999999) return null
+  return formatImageId(n)
+}
+
+function validateRequestedImageId(rawImageId, products, currentProductId = null) {
+  if (rawImageId === undefined || rawImageId === null || String(rawImageId).trim() === '') {
+    return { ok: true, value: null }
+  }
+
+  const normalized = normalizeInputImageId(rawImageId)
+  if (!normalized) {
+    return {
+      ok: false,
+      message: 'Invalid image ID. Use a number (e.g. 12) or IMG-000012 format.',
+    }
+  }
+
+  const duplicate = products.find(
+    p => p.id !== currentProductId && p.imageId === normalized,
+  )
+  if (duplicate) {
+    return {
+      ok: false,
+      message: `Image ID ${normalized} is already used by another product.`,
+    }
+  }
+
+  return { ok: true, value: normalized }
+}
+
+function normalizeProducts(rawProducts) {
+  const products = Array.isArray(rawProducts) ? rawProducts : []
+  let maxIdNum = products.reduce((acc, p) => {
+    const n = parseImageIdNumber(p?.imageId)
+    return n > acc ? n : acc
+  }, 0)
+
+  let changed = false
+  const normalized = products.map(p => {
+    const hasImage = !!(p?.image && String(p.image).trim())
+    const isValidImageId = parseImageIdNumber(p?.imageId) > 0
+
+    if (!hasImage && p?.imageId) {
+      changed = true
+      return { ...p, imageId: null }
+    }
+
+    if (hasImage && !isValidImageId) {
+      maxIdNum += 1
+      changed = true
+      return { ...p, imageId: formatImageId(maxIdNum) }
+    }
+
+    return p
+  })
+
+  return { normalized, changed }
+}
+
+function sortProductsByImageId(products) {
+  return [...products].sort((a, b) => {
+    const aId = parseImageIdNumber(a?.imageId)
+    const bId = parseImageIdNumber(b?.imageId)
+    if (aId === bId) return 0
+    if (aId === 0) return 1
+    if (bId === 0) return -1
+    return aId - bId
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -211,7 +316,7 @@ app.get('/api/google-reviews', async (_req, res) => {
 
 // List all products (public)
 app.get('/api/products', (_req, res) => {
-  const products = readProducts()
+  const products = sortProductsByImageId(readProducts())
   res.json(products)
 })
 
@@ -256,7 +361,7 @@ app.post('/api/admin/login', async (req, res) => {
 
 // List all (admin view — same data, different auth)
 app.get('/api/admin/products', requireAdmin, (_req, res) => {
-  res.json(readProducts())
+  res.json(sortProductsByImageId(readProducts()))
 })
 
 // Get single product (admin edit)
@@ -276,6 +381,8 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
     productAdditionalInfo,
     productType,
     productSpecs,
+    productImageId,
+    imageId,
   } = req.body ?? {}
 
   if (!productName || !productCategory) {
@@ -283,6 +390,15 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
   }
 
   const products = readProducts()
+  const requestedImageId = productImageId ?? imageId
+  const requestedIdResult = validateRequestedImageId(requestedImageId, products)
+  if (!requestedIdResult.ok) {
+    return res.status(400).json({ message: requestedIdResult.message })
+  }
+
+  const generatedImageId = req.file
+    ? (requestedIdResult.value ?? getNextImageId(products))
+    : null
   const product = {
     id: uuidv4(),
     name: String(productName).slice(0, 200),
@@ -297,10 +413,11 @@ app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (re
     image: req.file
       ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
       : null,
+    imageId: generatedImageId,
     createdAt: new Date().toISOString(),
   }
 
-  products.unshift(product)
+  products.push(product)
   writeProducts(products)
   res.status(201).json(product)
 })
@@ -320,10 +437,26 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
     productAdditionalInfo,
     productType,
     productSpecs,
+    productImageId,
+    imageId,
   } = req.body ?? {}
 
-  // If a new image was uploaded, delete the old one
-  if (req.file && existing.image) {
+  const requestedImageId = productImageId ?? imageId
+  const requestedIdResult = validateRequestedImageId(requestedImageId, products, existing.id)
+  if (!requestedIdResult.ok) {
+    return res.status(400).json({ message: requestedIdResult.message })
+  }
+
+  // If a new image was uploaded, delete old file only when it is a file path.
+  // (Current products usually store image as data URL; trying fs.existsSync on
+  // those huge strings can fail on some platforms.)
+  if (
+    req.file &&
+    existing.image &&
+    typeof existing.image === 'string' &&
+    !existing.image.startsWith('data:') &&
+    !existing.image.startsWith('http')
+  ) {
     const oldPath = path.join(UPLOADS_DIR, existing.image)
     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath)
   }
@@ -342,6 +475,8 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), 
     image: req.file
       ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
       : existing.image,
+    imageId: requestedIdResult.value
+      ?? (existing.image ? (existing.imageId ?? getNextImageId(products)) : null),
     updatedAt: new Date().toISOString(),
   }
 
