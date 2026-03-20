@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
 import styles from './ProductCard.module.css'
@@ -10,13 +9,18 @@ export default function ProductCard({ product, onClick }) {
     id,
     name,
     category,
-    price,
     image,
     product_image,
-    sku,
   } = product
 
   const liked = isFavorite(id)
+  const openDetails = () => {
+    if (onClick) {
+      onClick()
+      return
+    }
+    navigate(`/products/${id}`)
+  }
 
   const imgSrc = (image || product_image)
     ? (() => {
@@ -30,10 +34,15 @@ export default function ProductCard({ product, onClick }) {
     <div
       className={styles.card}
       data-category={category}
-      onClick={() => onClick ? onClick() : navigate(`/products/${id}`)}
+      onClick={openDetails}
       role="button"
       tabIndex={0}
-      onKeyDown={e => e.key === 'Enter' && navigate(`/products/${id}`)}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          openDetails()
+        }
+      }}
       aria-label={`View ${name}`}
     >
       <div className={styles.imgWrap}>
@@ -50,12 +59,17 @@ export default function ProductCard({ product, onClick }) {
         >
           <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'} aria-hidden="true" />
         </button>
-      </div>
-      <div className={styles.info}>
-        <h3 className={styles.name}>{name}</h3>
-        {sku && <p className={styles.sku}>{sku}</p>}
-        {price && <p className={styles.price}>{price}</p>}
-        <span className={styles.badge}>{category}</span>
+        <button
+          className={styles.detailsBtn}
+          type="button"
+          onClick={e => {
+            e.stopPropagation()
+            openDetails()
+          }}
+          aria-label={`View details for ${name}`}
+        >
+          View Details
+        </button>
       </div>
     </div>
   )

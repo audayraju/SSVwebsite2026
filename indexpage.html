@@ -174,41 +174,64 @@
 
     <!-- PRODUCTS -->
     <section class="products">
-
-
-
         <div class="home-product-grid">
-
-
-            <div class="product-card">
-                <img src="picture/image.png">
-                <div class="overlay">
-                    <h3>Gold Collection</h3>
-                    <div class="card-actions">
-                        <a href="products.html?search=gold" class="know-btn">Know more</a>
-
-                    </div>
+            <article class="home-product-card" data-name="Radha Krishna Haram" data-sku="SSV-HRM-001"
+                data-price="₹ 1,89,000"
+                data-description="A regal handcrafted haram with intricate temple-inspired detailing, designed for bridal elegance and grand festive occasions.">
+                <img src="picture/image.png" alt="Radha Krishna Haram" loading="lazy">
+                <div class="home-product-card__overlay" aria-hidden="true">
+                    <button type="button" class="home-product-card__details-btn">View Details</button>
                 </div>
-            </div>
-            <div class="product-card">
-                <img src="picture/image.png">
-                <div class="overlay">
-                    <h3>Silver Collection</h3>
-                    <div class="card-actions">
-                        <a href="products.html?search=silver" class="know-btn">Know Now</a>
+            </article>
 
-                    </div>
+            <article class="home-product-card" data-name="Classic Diamond Ring" data-sku="SSV-RNG-002"
+                data-price="₹ 75,000"
+                data-description="A refined diamond ring with a timeless silhouette, perfect for special occasions, gifting, and everyday luxury.">
+                <img src="picture/image.png" alt="Classic Diamond Ring" loading="lazy">
+                <div class="home-product-card__overlay" aria-hidden="true">
+                    <button type="button" class="home-product-card__details-btn">View Details</button>
                 </div>
-            </div>
+            </article>
 
-            <div class="product-card">
-                <img src="picture/image.png">
-                <div class="overlay">
-                    <h3>Diamond Collection</h3>
-                    <div class="card-actions">
-                        <a href="products.html?search=diamond" class="know-btn">Know Now</a>
+            <article class="home-product-card" data-name="Sterling Silver Bracelet" data-sku="SSV-BRC-003"
+                data-price="₹ 12,500"
+                data-description="A sleek sterling silver bracelet with a polished finish that complements both contemporary and traditional styling.">
+                <img src="picture/image.png" alt="Sterling Silver Bracelet" loading="lazy">
+                <div class="home-product-card__overlay" aria-hidden="true">
+                    <button type="button" class="home-product-card__details-btn">View Details</button>
+                </div>
+            </article>
 
-                    </div>
+            <article class="home-product-card" data-name="Gold Chain Necklace" data-sku="SSV-CHN-004"
+                data-price="₹ 55,000"
+                data-description="A versatile gold chain necklace crafted for effortless layering, offering a clean premium finish with daily wear comfort.">
+                <img src="picture/image.png" alt="Gold Chain Necklace" loading="lazy">
+                <div class="home-product-card__overlay" aria-hidden="true">
+                    <button type="button" class="home-product-card__details-btn">View Details</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="home-product-modal" id="homeProductModal" aria-hidden="true" role="dialog" aria-modal="true"
+            aria-labelledby="homeProductModalTitle">
+            <div class="home-product-modal__dialog">
+                <button type="button" class="home-product-modal__close" id="homeProductModalClose"
+                    aria-label="Close product details">×</button>
+
+                <div class="home-product-modal__media">
+                    <img id="homeProductModalImage" src="picture/image.png" alt="Selected jewellery product">
+                </div>
+
+                <div class="home-product-modal__content">
+                    <span class="home-product-modal__eyebrow">Jewellery Details</span>
+                    <h3 id="homeProductModalTitle">Product Name</h3>
+                    <p class="home-product-modal__meta" id="homeProductModalSku">SKU: --</p>
+                    <p class="home-product-modal__price" id="homeProductModalPrice">₹ --</p>
+                    <p class="home-product-modal__description" id="homeProductModalDescription">
+                        Product description will appear here.
+                    </p>
+                    <a href="products.html" class="home-product-modal__link" id="homeProductModalLink">Open product
+                        page</a>
                 </div>
             </div>
         </div>
@@ -232,6 +255,7 @@
     <script src="nav-search.js"></script>
     <script src="index-carousel.js"></script>
     <script src="index-scroll-slide.js"></script>
+    <script src="index-home-products.js"></script>
     <script src="shared-footer.js"></script>
 </body>
 

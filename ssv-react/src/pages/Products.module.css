@@ -122,14 +122,14 @@
 .textBg h2 {
   margin: 0 0 8px;
   color: var(--dark);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.4rem;
 }
 
 .textBg p {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   color: var(--mid);
   max-width: 760px;
   line-height: 1.8;

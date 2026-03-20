@@ -150,9 +150,11 @@ export default function Products() {
         ) : (
           <div className={styles.productsGrid}>
             {filtered.map(product => (
-              <div key={product.id} onClick={() => setSelectedProduct(product)} className={styles.cardWrapper}>
-                <ProductCard product={product} />
-              </div>
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClick={() => setSelectedProduct(product)}
+              />
             ))}
           </div>
         )}
