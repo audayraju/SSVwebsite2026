@@ -68,8 +68,7 @@ export default function ProductCard({ product, onClick }) {
             }}
             aria-label={`View details for ${name}`}
           >
-            <img src="/slides/pictures/logo.jpeg" alt="SSV" className={styles.btnLogo} />
-            <span>View Details</span>
+            View Details
           </button>
 
           <button
