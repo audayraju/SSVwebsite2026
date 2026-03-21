@@ -92,6 +92,31 @@ export default function Home() {
 
       </section>
 
+      {/* ── PRODUCT GRID ── */}
+      <section className={styles.productsSection} aria-label="Product collections">
+        <motion.div
+          className={styles.homeProductGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
+          {HOME_PRODUCTS.map((p, i) => (
+            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
+              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+                <img src={p.img} alt={p.title} loading="lazy" />
+              </Link>
+              <div className={styles.overlay}>
+                <h3>{p.title}</h3>
+                <div className={styles.cardActions}>
+                  <Link to={p.link} className={styles.knowBtn}>View details »</Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
       {/* ── SECTION 1 – image left / text right ── */}
       <section className={styles.section}>
         <div className={styles.container}>
@@ -162,31 +187,6 @@ export default function Home() {
             <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers collection" loading="lazy" />
           </div>
         </div>
-      </section>
-
-      {/* ── PRODUCT GRID ── */}
-      <section className={styles.productsSection} aria-label="Product collections">
-        <motion.div
-          className={styles.homeProductGrid}
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inViewViewport}
-        >
-          {HOME_PRODUCTS.map((p, i) => (
-            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
-                <img src={p.img} alt={p.title} loading="lazy" />
-              </Link>
-              <div className={styles.overlay}>
-                <h3>{p.title}</h3>
-                <div className={styles.cardActions}>
-                  <Link to={p.link} className={styles.knowBtn}>View details »</Link>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
       </section>
     </>
   )

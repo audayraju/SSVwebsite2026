@@ -965,7 +965,8 @@ section,
   width: max-content;
   align-items: center;
   gap: 0;
-  animation: footerTicker 28s linear infinite;
+  /* Slower ticker speed for better readability */
+  animation: footerTicker 45s linear infinite;
   will-change: transform;
 }
 
