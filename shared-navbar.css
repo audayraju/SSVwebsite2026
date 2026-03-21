@@ -96,14 +96,14 @@ body {
         fill: #fff !important;
     }
 
-    border-radius: 20px;
+    border-radius: 8px;
 }
 
 .menu-btn svg {
     width: 18px;
     height: 18px;
     display: block;
-    border-radius: 20px;
+    border-radius: 8px;
     color: #fff;
     /* SVG uses currentColor for fill */
 }
@@ -365,7 +365,7 @@ body {
     height: 100vh;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0 14px 14px 0;
+    border-radius: 0 8px 14px 0;
     box-shadow: var(--shadow-md, 0 8px 30px rgba(30, 22, 32, 0.12));
     padding: 56px 10px 18px 10px;
     display: flex;
@@ -382,4 +382,12 @@ body {
 .navbar .nav-links a {
     font-size: 12px !important;
     font-weight: 600 !important;
+    border-radius: 2px !important;
+}
+
+.navbar .nav-links a.active,
+.navbar .nav-links a:hover,
+.navbar .nav-links a:focus,
+.navbar .nav-links a[aria-current="page"] {
+    border-radius: 2px !important;
 }

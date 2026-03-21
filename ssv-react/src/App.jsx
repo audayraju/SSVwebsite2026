@@ -83,13 +83,16 @@ function ScrollToTop() {
 /* Shared layout wrapper (Outlet lives inside each page) */
 
 function PublicLayout() {
+  const { pathname } = useLocation()
+  const hideFloatingButtons = pathname === '/contact'
+
   return (
     <>
       <Navbar />
       <main>
         <Outlet />
       </main>
-      <FloatingButtons />
+      {!hideFloatingButtons && <FloatingButtons />}
       <Footer />
     </>
   )

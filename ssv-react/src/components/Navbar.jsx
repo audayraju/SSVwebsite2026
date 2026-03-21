@@ -89,18 +89,25 @@ export default function Navbar() {
       <div className="top-mini-bar" role="navigation" aria-label="Top quick links">
         <div className="top-mini-inner">
           <div className="top-pill">
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=ssvjewllers@gmail.com&su=Enquiry%20from%20Website&body=Hi%20SSV%20Jewellers%2C%0A%0AI%20am%20interested%20in%20your%20collections.%20Please%20share%20more%20details.%0A%0AThank%20you."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="top-pill-item mini-item"
+              aria-label="Email SSV Jewellers via Gmail"
+            >
+              ✉️ ssvjewellers@gmail.com
+            </a>
             <a href="/contact#store-map" className="top-pill-item mini-item" aria-label="Visit store location">
               📍 Visit Store
             </a>
-            <span className="top-pill-item mini-item" aria-label="Trusted since 2017">
-              Trusted Since 2017
-            </span>
             <a href="tel:+919876543211" className="top-pill-item mini-item" aria-label="Call now">
-              Call Now 9874563210  
+              📞 Call Now 9874563210
             </a>
           </div>
         </div>
       </div>
+
 
       <nav className="navbar">
         {/* Hamburger menu */}

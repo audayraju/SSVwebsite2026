@@ -9,21 +9,21 @@ import styles from './Home.module.css'
 const SLIDES = [
   {
     img: '/picture/image.png',
-    alt: 'Premium Gold Jewellery',
+    alt: '',
     title: 'Gold Heritage Collection',
     desc: 'Timeless handcrafted jewellery for every celebration.',
     link: '/products?search=gold',
   },
   {
     img: '/picture/image.png',
-    alt: 'Elegant Silver Jewellery',
+    alt: '',
     title: 'Silver Signature Collection',
     desc: 'Classic shine crafted for modern elegance.',
     link: '/products?search=silver',
   },
   {
     img: '/picture/image.png',
-    alt: 'Premium Diamond Jewellery',
+    alt: '',
     title: 'Diamond Prestige Collection',
     desc: 'Brilliance that elevates every special moment.',
     link: '/products?search=diamond',
@@ -80,8 +80,6 @@ export default function Home() {
               >
                 <img src={slide.img} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} />
                 <div className={styles.caption}>
-                  <h2>{slide.title}</h2>
-                  <p>{slide.desc}</p>
                   <Link to={slide.link} className={styles.carouselBtn}>View details »</Link>
                 </div>
               </article>

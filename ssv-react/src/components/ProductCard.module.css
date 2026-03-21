@@ -1,5 +1,5 @@
 .card {
-  background: #faf5ef;
+  background: #ffffff;
   border-radius: 16px;
   border: 1px solid #e8ddd2;
   overflow: hidden;
@@ -40,7 +40,7 @@
 
 .footer {
   border-top: 1px solid #e8ddd2;
-  background: #faf5ef;
+  background: #ffffff;
   padding: 9px 10px 8px;
   display: grid;
   gap: 6px;
