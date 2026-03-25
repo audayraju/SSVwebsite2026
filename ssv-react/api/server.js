@@ -3,6 +3,9 @@
 require('dotenv').config()
 
 const express = require('express')
+const multer = require('multer')
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('cloudinary').v2
 const cors = require('cors')
 // const multer = require('multer')
 // const path = require('path')
@@ -23,21 +26,38 @@ mongoose.connect(MONGODB_URI)
     process.exit(1)
   })
 
-// Product schema (with image as Buffer)
+// Product schema (Cloudinary image)
 const productSchema = new mongoose.Schema({
-  name: { type: String, required: true, maxlength: 200 },
-  category: { type: String, required: true, maxlength: 50 },
-  price: { type: Number },
-  description: { type: String, maxlength: 2000 },
-  additionalInfo: { type: String, maxlength: 1000 },
-  type: { type: String, maxlength: 100 },
-  specs: [String],
-  image: { data: Buffer, contentType: String }, // Store image as Buffer
-  imageId: { type: String },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date },
+  name: { type: String, required: true, trim: true },
+  imageUrl: { type: String, required: true },
+  imagePublicId: { type: String, required: true },
+  imageId: { type: String, required: true, unique: true },
+  category: { type: String, required: true, trim: true },
+  price: { type: Number, required: true, min: 0 },
+  description: { type: String },
+  additionalInformation: { type: String },
+  type: { type: String },
+  specifications: [{ type: String }],
+  createdAt: Date,
+  updatedAt: Date,
 })
 const Product = mongoose.model('Product', productSchema)
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'products',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+  },
+})
+const upload = multer({ storage })
 
 // ---------------------------------------------------------------------------
 // Bootstrap
@@ -395,58 +415,58 @@ app.get('/api/admin/products/:id', requireAdmin, async (req, res) => {
 })
 
 // Add product (with optional image upload as base64)
-app.post('/api/admin/products', requireAdmin, async (req, res) => {
-  console.log('[POST] /api/admin/products')
-  const {
-    productName,
-    productCategory,
-    productPrice,
-    productDescription,
-    productAdditionalInfo,
-    productType,
-    productSpecs,
-    productImageId,
-    imageId,
-    imageBase64, // Expect base64 string from frontend
-    imageContentType, // e.g. 'image/jpeg'
-  } = req.body ?? {}
 
-  if (!productName || !productCategory) {
-    console.warn('[admin/products] Name and category required')
-    return res.status(400).json({ message: 'Name and category are required.' })
+// Helper to auto-generate imageId
+async function generateImageId() {
+  const last = await Product.findOne().sort({ imageId: -1 })
+  let num = 1
+  if (last && last.imageId) {
+    const match = last.imageId.match(/IMG-(\d+)/)
+    if (match) num = parseInt(match[1], 10) + 1
   }
+  return `IMG-${String(num).padStart(6, '0')}`
+}
 
-  let image = null
-  if (imageBase64 && imageContentType) {
-    try {
-      const buffer = Buffer.from(imageBase64, imageBase64.startsWith('data:') ? imageBase64.split(',')[1] : undefined ? 'base64' : 'base64')
-      image = { data: buffer, contentType: imageContentType }
-    } catch (e) {
-      console.warn('[admin/products] Invalid imageBase64')
-    }
-  }
-
+// Admin product upload (Cloudinary, multer, multipart/form-data)
+app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req, res) => {
   try {
+    const { name, category, price, description, additionalInformation, type, specifications, imageId } = req.body
+    if (!name || !category) return res.status(400).json({ message: 'Name and category are required.' })
+    if (!price || isNaN(price) || Number(price) <= 0) return res.status(400).json({ message: 'Price must be positive.' })
+    if (!req.file) return res.status(400).json({ message: 'Product image is required.' })
+
+    // Cloudinary result
+    const imageUrl = req.file.path
+    const imagePublicId = req.file.filename
+
+    // Auto-generate imageId if not provided
+    let finalImageId = imageId
+    if (!finalImageId) finalImageId = await generateImageId()
+
+    // Convert specifications (multi-line string to array)
+    let specsArr = []
+    if (specifications) {
+      specsArr = specifications.split('\n').map(s => s.trim()).filter(Boolean)
+    }
+
     const product = new Product({
-      name: String(productName).slice(0, 200),
-      category: String(productCategory).slice(0, 50),
-      price: productPrice ? parseFloat(productPrice) : null,
-      description: productDescription ? String(productDescription).slice(0, 2000) : '',
-      additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : '',
-      type: productType ? String(productType).slice(0, 100) : '',
-      specs: productSpecs
-        ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
-        : [],
-      image,
-      imageId: productImageId ?? imageId ?? null,
-      createdAt: new Date().toISOString(),
+      name: name.trim(),
+      imageUrl,
+      imagePublicId,
+      imageId: finalImageId,
+      category: category.trim(),
+      price: Number(price),
+      description: description || '',
+      additionalInformation: additionalInformation || '',
+      type: type || '',
+      specifications: specsArr,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
     await product.save()
-    console.log('[admin/products] Product added:', product._id)
     res.status(201).json(product)
   } catch (err) {
-    console.error('[admin/products] Failed to add product:', err)
-    res.status(500).json({ message: 'Failed to add product' })
+    res.status(500).json({ message: 'Failed to create product', error: err.message })
   }
 })
 
