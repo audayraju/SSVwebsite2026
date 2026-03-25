@@ -53,9 +53,9 @@ export default function ProductDetails() {
     </div>
   )
 
-  const _img = product.image || product.product_image
-  const imgSrc = _img
-    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
+  // Use backend API endpoint for images
+  const imgSrc = product && product._id
+    ? `https://api-vert.vercel.app/api/products/${product._id}/image`
     : '/slides/pictures/logo.jpeg'
 
   const images = [imgSrc]

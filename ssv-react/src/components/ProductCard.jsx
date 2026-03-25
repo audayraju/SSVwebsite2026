@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
-import { uploadsUrl } from '../lib/api'
+// import { uploadsUrl } from '../lib/api'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product, onClick }) {
@@ -25,12 +25,10 @@ export default function ProductCard({ product, onClick }) {
     navigate(`/products/${id}`)
   }
 
-  const imgSrc = (image || product_image)
-    ? (() => {
-      const src = image || product_image
-      if (src.startsWith('http') || src.startsWith('data:')) return src
-      return uploadsUrl(src)
-    })()
+
+  // Use backend API endpoint for images
+  const imgSrc = product && product._id
+    ? `https://api-vert.vercel.app/api/products/${product._id}/image`
     : '/slides/pictures/logo.jpeg'
 
   return (
