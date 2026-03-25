@@ -1,8 +1,15 @@
+/* Swap image and text in section 2 for mobile */
+@media (max-width: 768px) {
+  .sectionReverse .container {
+    flex-direction: column-reverse !important;
+  }
+}
+
 /* ── CAROUSEL ── */
 .carousel {
   width: 100%;
   max-width: none;
-  margin: 0;
+  margin: 6px 0 0 0;
   padding: 0;
 }
 
@@ -40,13 +47,7 @@
   filter: saturate(1.05);
 }
 
-.slide::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(5, 8, 12, 0.72), rgba(5, 8, 12, 0.22));
-  z-index: 1;
-}
+
 
 .caption {
   position: absolute;
@@ -177,24 +178,25 @@
   text-decoration: none;
 }
 
-.avatar {
-  width: clamp(118px, 16vw, 150px);
-  height: clamp(118px, 16vw, 150px);
-  padding: 2px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  object-fit: cover;
-  display: block;
-  margin: 0 auto 12px;
-  filter: grayscale(38%) brightness(0.62);
-  transition: transform 2s cubic-bezier(0.22, 0.9, 0.28, 1), box-shadow 2s;
+/* Overlay always visible, not just on hover */
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 32px 0 24px 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.12) 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: 1 !important;
+  z-index: 2;
 }
 
-.viewItem:hover .avatar {
-  transform: scale(1.06);
-  box-shadow: 0 16px 36px rgba(30, 22, 32, 0.12);
-  filter: grayscale(0%) brightness(1);
-}
+filter: grayscale(0%) brightness(1);
+
 
 .viewItem h3 {
   font-family: var(--font-display);
@@ -213,7 +215,7 @@
 
 /* ── ALT SECTIONS ── */
 .section {
-  padding: clamp(38px, 6vw, 60px) clamp(12px, 3vw, 24px);
+  padding: clamp(24px, 3vw, 36px) clamp(12px, 3vw, 24px);
   background: none;
 }
 

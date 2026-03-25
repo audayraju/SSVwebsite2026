@@ -158,7 +158,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link className="logo-wrapper" to="/" aria-label="Go to home page">
-          <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className="navbar-logo" loading="lazy" />
+          <img src="/picture/ssv-logo.png.png" alt="SSV Logo" className="navbarlogo" loading="lazy" style={{ height: '48px', width: 'auto', marginRight: '10px' }} />
           <span className="logo">SSV JEWELLERS</span>
         </Link>
 

@@ -138,7 +138,7 @@ button.primary {
 
 .triple-carousel {
     width: min(100%, 1280px);
-    margin: 2px auto;
+    margin: 18px auto 0;
     padding: 0;
 }
 

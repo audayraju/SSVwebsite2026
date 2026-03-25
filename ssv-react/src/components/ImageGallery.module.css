@@ -1,4 +1,8 @@
-.gallery { display: flex; flex-direction: column; gap: 10px; }
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .main {
   position: relative;
@@ -15,7 +19,9 @@
   transition: transform 0.5s ease;
 }
 
-.main:hover .mainImg { transform: scale(1.04); }
+.main:hover .mainImg {
+  transform: scale(1.04);
+}
 
 .thumbs {
   display: flex;
@@ -35,14 +41,21 @@
   transition: border-color 0.2s;
 }
 
-.thumb img { width: 100%; height: 100%; object-fit: cover; }
-.thumbActive { border-color: #c9a84c; }
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbActive {
+  border-color: #c9a84c;
+}
 
 /* Lightbox */
 .viewer {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   z-index: 99999;
   display: flex;
   align-items: center;

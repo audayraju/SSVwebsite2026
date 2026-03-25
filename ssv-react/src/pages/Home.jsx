@@ -8,22 +8,23 @@ import styles from './Home.module.css'
 /* ── Carousel data ── */
 const SLIDES = [
   {
-    img: '/picture/image.png',
-    alt: '',
+    img: '/picture/carousel-images/SSV_ Ads_Banners-03.jpg.jpeg',
+    alt: 'Banner 1',
     title: 'Gold Heritage Collection',
     desc: 'Timeless handcrafted jewellery for every celebration.',
     link: '/products?search=gold',
   },
   {
-    img: '/picture/image.png',
-    alt: '',
+    img: '/picture/carousel-images/SSV_Ads_Banners-01.jpg.jpeg',
+    alt: 'Banner 2',
     title: 'Silver Signature Collection',
     desc: 'Classic shine crafted for modern elegance.',
     link: '/products?search=silver',
   },
   {
-    img: '/picture/image.png',
-    alt: '',
+    img:
+      '/picture/carousel-images/SSV_ Ads_Banners-02.jpg.jpeg',
+    alt: 'Banner 3',
     title: 'Diamond Prestige Collection',
     desc: 'Brilliance that elevates every special moment.',
     link: '/products?search=diamond',
@@ -32,9 +33,9 @@ const SLIDES = [
 
 /* ── Home product cards ── */
 const HOME_PRODUCTS = [
-  { title: 'Gold Collection', link: '/products?search=gold', img: '/picture/image.png' },
-  { title: 'Silver Collection', link: '/products?search=silver', img: '/picture/image.png' },
-  { title: 'Diamond Collection', link: '/products?search=diamond', img: '/picture/image.png' },
+  { title: 'Gold Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
+  { title: 'Silver Collection', link: '/products?search=silver', img: '/picture/section-two.jpeg' },
+  { title: 'Diamond Collection', link: '/products?search=diamond', img: '/picture/section-three.jpeg' },
 ]
 
 export default function Home() {
@@ -79,9 +80,7 @@ export default function Home() {
                 aria-hidden={i !== activeSlide}
               >
                 <img src={slide.img} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-                <div className={styles.caption}>
-                  <Link to={slide.link} className={styles.carouselBtn}>View details »</Link>
-                </div>
+                {/* Removed View details button from top of carousel */}
               </article>
             ))}
           </div>
@@ -121,7 +120,7 @@ export default function Home() {
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.imageBox}>
-            <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
+            <img src="/picture/section-two.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
           </div>
           <div className={styles.contentBox}>
             <motion.h2
@@ -184,7 +183,7 @@ export default function Home() {
             </motion.div>
           </div>
           <div className={styles.imageBox}>
-            <img src="/slides/pictures/02.jpeg" alt="SSV Jewellers collection" loading="lazy" />
+            <img src="/picture/section-three.jpeg" alt="SSV Jewellers collection" loading="lazy" />
           </div>
         </div>
       </section>

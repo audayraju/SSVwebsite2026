@@ -156,6 +156,7 @@ export default function Products() {
                 <ProductCard
                   product={product}
                   onClick={() => setSelectedProduct(product)}
+                  overlayStyle={true}
                 />
               </motion.div>
             ))}

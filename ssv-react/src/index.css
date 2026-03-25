@@ -432,7 +432,8 @@ section,
   padding: 0 var(--page-gutter);
   /* keep content away from viewport edges */
 
-  background: #560537 !important;
+  background: #600e3f !important;
+  margin-bottom: 0 !important;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   box-shadow: 0 -4px 12px rgba(241, 240, 240, 0.35), 0 4px 12px rgba(0, 0, 0, 0.35);
@@ -491,12 +492,13 @@ section,
 .logo-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0;
   text-decoration: none;
   color: inherit;
   flex-shrink: 0;
-  margin-right: 2px;
+  margin-right: 0px;
   min-width: 0;
+
 }
 
 .navbar-logo {
@@ -510,9 +512,10 @@ section,
   font-family: 'Bell MT', Georgia, serif;
   font-size: 19px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #ffffff;
+  letter-spacing: 0.08em;
+  color: #e7bd55;
   white-space: nowrap;
+  
 }
 
 /* small icon next to logo text */
