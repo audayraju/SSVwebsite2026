@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
+import { apiUrl } from '../lib/api'
 import styles from './Contact.module.css'
 
 const FALLBACK_REVIEWS = [
@@ -47,7 +48,7 @@ export default function Contact() {
 
     async function loadGoogleReviews() {
       try {
-        const res = await fetch('/api/google-reviews')
+        const res = await fetch(apiUrl('/api/google-reviews'))
         if (!res.ok) return
 
         const data = await res.json()

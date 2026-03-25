@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { apiUrl } from '../lib/api'
 import styles from './Admin.module.css'
 
 export default function AdminLogin() {
@@ -16,7 +17,7 @@ export default function AdminLogin() {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/admin/login', {
+      const res = await fetch(apiUrl('/api/admin/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

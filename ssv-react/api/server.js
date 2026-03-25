@@ -3,13 +3,61 @@
 require('dotenv').config()
 
 const express = require('express')
-const cors = require('cors')
 const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('cloudinary').v2
+const cors = require('cors')
+// const multer = require('multer')
+// const path = require('path')
+// const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
+
+
+const mongoose = require('mongoose')
+
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ssvjewellers'
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('[MongoDB] Connected'))
+  .catch(err => {
+    console.error('[MongoDB] Connection error:', err)
+    process.exit(1)
+  })
+
+// Product schema (Cloudinary image)
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true },
+  imageUrl: { type: String, required: true },
+  imagePublicId: { type: String, required: true },
+  imageId: { type: String, required: true, unique: true },
+  category: { type: String, required: true, trim: true },
+  price: { type: Number, required: true, min: 0 },
+  description: { type: String },
+  additionalInformation: { type: String },
+  type: { type: String },
+  specifications: [{ type: String }],
+  createdAt: Date,
+  updatedAt: Date,
+})
+const Product = mongoose.model('Product', productSchema)
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'products',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+  },
+})
+const upload = multer({ storage })
 
 // ---------------------------------------------------------------------------
 // Bootstrap
@@ -24,54 +72,20 @@ async function fetchJsonWithTimeout(url, timeoutMs = 10000) {
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), timeoutMs)
   try {
+    console.log(`[fetchJsonWithTimeout] Fetching: ${url}`)
     const response = await fetch(url, { signal: controller.signal })
     const json = await response.json()
+    console.log(`[fetchJsonWithTimeout] Response status: ${response.status}`)
     return { ok: response.ok, status: response.status, json }
+  } catch (err) {
+    console.error(`[fetchJsonWithTimeout] Error:`, err)
+    throw err
   } finally {
     clearTimeout(timeout)
   }
 }
 
-// ---------------------------------------------------------------------------
-// Data store — flat JSON file (no external DB required)
-// ---------------------------------------------------------------------------
-const IS_VERCEL = !!process.env.VERCEL
-const DATA_DIR = IS_VERCEL ? '/tmp/ssv-data' : path.join(__dirname, 'data')
-const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json')
-const UPLOADS_DIR = IS_VERCEL ? '/tmp/ssv-uploads' : path.join(__dirname, 'uploads')
 
-  ;[DATA_DIR, UPLOADS_DIR].forEach(dir => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-  })
-
-function readProducts() {
-  if (!fs.existsSync(PRODUCTS_FILE)) {
-    // On Vercel first cold-start, seed from the committed data file
-    const seed = path.join(__dirname, 'data', 'products.json')
-    if (fs.existsSync(seed)) {
-      try { fs.copyFileSync(seed, PRODUCTS_FILE) } catch { /* ignore */ }
-    }
-  }
-  if (!fs.existsSync(PRODUCTS_FILE)) return []
-  try {
-    const parsed = JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'))
-    const { normalized, changed } = normalizeProducts(parsed)
-    if (changed) writeProducts(normalized)
-    return normalized
-  } catch {
-    return []
-  }
-}
-
-function writeProducts(data) {
-  fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf8')
-}
-
-function parseImageIdNumber(imageId) {
-  if (typeof imageId !== 'string') return 0
-  const m = /^IMG-(\d{6})$/.exec(imageId.trim())
-  return m ? Number(m[1]) : 0
-}
 
 function formatImageId(n) {
   return `IMG-${String(n).padStart(6, '0')}`
@@ -172,10 +186,10 @@ function sortProductsByImageId(products) {
 // ---------------------------------------------------------------------------
 // Auth helpers
 // ---------------------------------------------------------------------------
-const ADMIN_USER = process.env.ADMIN_USERNAME ?? 'ssvadmin'
+const ADMIN_USER = (process.env.ADMIN_USERNAME ?? 'ssvadmin').trim()
 // Pre-hash the password at startup so every comparison is constant-time
-const ADMIN_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD ?? 'SSV@Admin2025', 10)
-const TOKEN_SECRET = process.env.TOKEN_SECRET ?? 'changeme'
+const ADMIN_HASH = bcrypt.hashSync((process.env.ADMIN_PASSWORD ?? 'SSV@Admin2025').trim(), 10)
+const TOKEN_SECRET = (process.env.TOKEN_SECRET ?? 'changeme').trim()
 
 // Simple HMAC token — avoids a JWT library dependency
 function signToken(payload) {
@@ -203,25 +217,14 @@ function requireAdmin(req, res, next) {
   const token = header.startsWith('Bearer ') ? header.slice(7) : null
   const payload = verifyToken(token)
   if (!payload || payload.role !== 'admin') {
+    console.warn('[requireAdmin] Unauthorized access attempt')
     return res.status(401).json({ message: 'Unauthorized' })
   }
   req.admin = payload
   next()
 }
 
-// ---------------------------------------------------------------------------
-// Multer — image uploads (memory storage → base64 in JSON)
-// ---------------------------------------------------------------------------
-const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
-  fileFilter: (_req, file, cb) => {
-    if (ALLOWED_MIME.has(file.mimetype)) return cb(null, true)
-    cb(new Error('Only JPEG, PNG, and WEBP images are allowed.'))
-  },
-})
 
 // ---------------------------------------------------------------------------
 // Middleware
@@ -232,6 +235,7 @@ app.use(cors({
       !origin ||
       /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
       /\.vercel\.app$/.test(origin) ||
+      /^https?:\/\/(www\.)?ssvjewellers\.com$/.test(origin) ||
       (process.env.CLIENT_ORIGIN && origin === process.env.CLIENT_ORIGIN)
     ) return cb(null, true)
     cb(new Error(`CORS: origin ${origin} not allowed`))
@@ -248,9 +252,14 @@ app.use(express.json({ limit: '10mb' }))
 
 // Health-check
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
+app.get('/api/health', (_req, res) => {
+  console.log('[GET] /api/health')
+  res.json({ status: 'ok' })
+})
 
 // Live Google reviews (auto-updating)
 app.get('/api/google-reviews', async (_req, res) => {
+    console.log('[GET] /api/google-reviews')
   const now = Date.now()
   if (googleReviewCache.data && (now - googleReviewCache.ts) < GOOGLE_REVIEW_CACHE_MS) {
     return res.json(googleReviewCache.data)
@@ -315,23 +324,38 @@ app.get('/api/google-reviews', async (_req, res) => {
 })
 
 // List all products (public)
-app.get('/api/products', (_req, res) => {
-  const products = sortProductsByImageId(readProducts())
-  res.json(products)
+app.get('/api/products', async (_req, res) => {
+  console.log('[GET] /api/products')
+  try {
+    const products = await Product.find().sort({ imageId: 1 })
+    res.json(products)
+  } catch (err) {
+    console.error('[GET] /api/products error:', err)
+    res.status(500).json({ message: 'Failed to fetch products' })
+  }
 })
 
 // Single product (public)
-app.get('/api/products/:id', (req, res) => {
-  const products = readProducts()
-  const product = products.find(p => p.id === req.params.id)
-  if (!product) return res.status(404).json({ message: 'Product not found' })
-  res.json(product)
+app.get('/api/products/:id', async (req, res) => {
+  console.log(`[GET] /api/products/${req.params.id}`)
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      console.warn(`[GET] /api/products/${req.params.id} not found`)
+      return res.status(404).json({ message: 'Product not found' })
+    }
+    res.json(product)
+  } catch (err) {
+    console.error(`[GET] /api/products/${req.params.id} error:`, err)
+    res.status(500).json({ message: 'Failed to fetch product' })
+  }
 })
 
 // ---------------------------------------------------------------------------
 // Admin auth
 // ---------------------------------------------------------------------------
 app.post('/api/admin/login', async (req, res) => {
+    console.log('[POST] /api/admin/login')
   const { username, password } = req.body ?? {}
 
   if (
@@ -340,6 +364,7 @@ app.post('/api/admin/login', async (req, res) => {
     username.length > 100 ||
     password.length > 200
   ) {
+    console.warn('[admin/login] Invalid credentials format')
     return res.status(400).json({ message: 'Invalid credentials' })
   }
 
@@ -348,10 +373,12 @@ app.post('/api/admin/login', async (req, res) => {
   const passMatch = await bcrypt.compare(password, ADMIN_HASH)
 
   if (!userMatch || !passMatch) {
+    console.warn('[admin/login] Invalid credentials')
     return res.status(401).json({ message: 'Invalid credentials' })
   }
 
   const token = signToken({ role: 'admin', iat: Date.now() })
+  console.log('[admin/login] Login successful')
   res.json({ token })
 })
 
@@ -360,140 +387,170 @@ app.post('/api/admin/login', async (req, res) => {
 // ---------------------------------------------------------------------------
 
 // List all (admin view — same data, different auth)
-app.get('/api/admin/products', requireAdmin, (_req, res) => {
-  res.json(sortProductsByImageId(readProducts()))
+app.get('/api/admin/products', requireAdmin, async (_req, res) => {
+  console.log('[GET] /api/admin/products')
+  try {
+    const products = await Product.find().sort({ imageId: 1 })
+    res.json(products)
+  } catch (err) {
+    console.error('[GET] /api/admin/products error:', err)
+    res.status(500).json({ message: 'Failed to fetch products' })
+  }
 })
 
 // Get single product (admin edit)
-app.get('/api/admin/products/:id', requireAdmin, (req, res) => {
-  const product = readProducts().find(p => p.id === req.params.id)
-  if (!product) return res.status(404).json({ message: 'Product not found' })
-  res.json(product)
+app.get('/api/admin/products/:id', requireAdmin, async (req, res) => {
+  console.log(`[GET] /api/admin/products/${req.params.id}`)
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      console.warn(`[GET] /api/admin/products/${req.params.id} not found`)
+      return res.status(404).json({ message: 'Product not found' })
+    }
+    res.json(product)
+  } catch (err) {
+    console.error(`[GET] /api/admin/products/${req.params.id} error:`, err)
+    res.status(500).json({ message: 'Failed to fetch product' })
+  }
 })
 
-// Add product
-app.post('/api/admin/products', requireAdmin, upload.single('productImage'), (req, res) => {
-  const {
-    productName,
-    productCategory,
-    productPrice,
-    productDescription,
-    productAdditionalInfo,
-    productType,
-    productSpecs,
-    productImageId,
-    imageId,
-  } = req.body ?? {}
+// Add product (with optional image upload as base64)
 
-  if (!productName || !productCategory) {
-    return res.status(400).json({ message: 'Name and category are required.' })
+// Helper to auto-generate imageId
+async function generateImageId() {
+  const last = await Product.findOne().sort({ imageId: -1 })
+  let num = 1
+  if (last && last.imageId) {
+    const match = last.imageId.match(/IMG-(\d+)/)
+    if (match) num = parseInt(match[1], 10) + 1
   }
+  return `IMG-${String(num).padStart(6, '0')}`
+}
 
-  const products = readProducts()
-  const requestedImageId = productImageId ?? imageId
-  const requestedIdResult = validateRequestedImageId(requestedImageId, products)
-  if (!requestedIdResult.ok) {
-    return res.status(400).json({ message: requestedIdResult.message })
+// Admin product upload (Cloudinary, multer, multipart/form-data)
+app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req, res) => {
+  try {
+    const { name, category, price, description, additionalInformation, type, specifications, imageId } = req.body
+    if (!name || !category) return res.status(400).json({ message: 'Name and category are required.' })
+    if (!price || isNaN(price) || Number(price) <= 0) return res.status(400).json({ message: 'Price must be positive.' })
+    if (!req.file) return res.status(400).json({ message: 'Product image is required.' })
+
+    // Cloudinary result
+    const imageUrl = req.file.path
+    const imagePublicId = req.file.filename
+
+    // Auto-generate imageId if not provided
+    let finalImageId = imageId
+    if (!finalImageId) finalImageId = await generateImageId()
+
+    // Convert specifications (multi-line string to array)
+    let specsArr = []
+    if (specifications) {
+      specsArr = specifications.split('\n').map(s => s.trim()).filter(Boolean)
+    }
+
+    const product = new Product({
+      name: name.trim(),
+      imageUrl,
+      imagePublicId,
+      imageId: finalImageId,
+      category: category.trim(),
+      price: Number(price),
+      description: description || '',
+      additionalInformation: additionalInformation || '',
+      type: type || '',
+      specifications: specsArr,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    await product.save()
+    res.status(201).json(product)
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to create product', error: err.message })
   }
-
-  const generatedImageId = req.file
-    ? (requestedIdResult.value ?? getNextImageId(products))
-    : null
-  const product = {
-    id: uuidv4(),
-    name: String(productName).slice(0, 200),
-    category: String(productCategory).slice(0, 50),
-    price: productPrice ? parseFloat(productPrice) : null,
-    description: productDescription ? String(productDescription).slice(0, 2000) : '',
-    additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : '',
-    type: productType ? String(productType).slice(0, 100) : '',
-    specs: productSpecs
-      ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
-      : [],
-    image: req.file
-      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
-      : null,
-    imageId: generatedImageId,
-    createdAt: new Date().toISOString(),
-  }
-
-  products.push(product)
-  writeProducts(products)
-  res.status(201).json(product)
 })
 
-// Update product
-app.put('/api/admin/products/:id', requireAdmin, upload.single('productImage'), (req, res) => {
-  const products = readProducts()
-  const idx = products.findIndex(p => p.id === req.params.id)
-  if (idx === -1) return res.status(404).json({ message: 'Product not found' })
+// Update product (with optional image upload as base64)
+app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
+  console.log(`[PUT] /api/admin/products/${req.params.id}`)
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      console.warn(`[PUT] /api/admin/products/${req.params.id} not found`)
+      return res.status(404).json({ message: 'Product not found' })
+    }
 
-  const existing = products[idx]
-  const {
-    productName,
-    productCategory,
-    productPrice,
-    productDescription,
-    productAdditionalInfo,
-    productType,
-    productSpecs,
-    productImageId,
-    imageId,
-  } = req.body ?? {}
+    const {
+      productName,
+      productCategory,
+      productPrice,
+      productDescription,
+      productAdditionalInfo,
+      productType,
+      productSpecs,
+      productImageId,
+      imageId,
+      imageBase64,
+      imageContentType,
+    } = req.body ?? {}
 
-  const requestedImageId = productImageId ?? imageId
-  const requestedIdResult = validateRequestedImageId(requestedImageId, products, existing.id)
-  if (!requestedIdResult.ok) {
-    return res.status(400).json({ message: requestedIdResult.message })
-  }
-
-  // If a new image was uploaded, delete old file only when it is a file path.
-  // (Current products usually store image as data URL; trying fs.existsSync on
-  // those huge strings can fail on some platforms.)
-  if (
-    req.file &&
-    existing.image &&
-    typeof existing.image === 'string' &&
-    !existing.image.startsWith('data:') &&
-    !existing.image.startsWith('http')
-  ) {
-    const oldPath = path.join(UPLOADS_DIR, existing.image)
-    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath)
-  }
-
-  products[idx] = {
-    ...existing,
-    name: productName ? String(productName).slice(0, 200) : existing.name,
-    category: productCategory ? String(productCategory).slice(0, 50) : existing.category,
-    price: productPrice !== undefined ? parseFloat(productPrice) : existing.price,
-    description: productDescription ? String(productDescription).slice(0, 2000) : existing.description,
-    additionalInfo: productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : existing.additionalInfo,
-    type: productType ? String(productType).slice(0, 100) : existing.type,
-    specs: productSpecs
+    product.name = productName ? String(productName).slice(0, 200) : product.name;
+    product.category = productCategory ? String(productCategory).slice(0, 50) : product.category;
+    product.price = productPrice !== undefined ? parseFloat(productPrice) : product.price;
+    product.description = productDescription ? String(productDescription).slice(0, 2000) : product.description;
+    product.additionalInfo = productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : product.additionalInfo;
+    product.type = productType ? String(productType).slice(0, 100) : product.type;
+    product.specs = productSpecs
       ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
-      : existing.specs,
-    image: req.file
-      ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
-      : existing.image,
-    imageId: requestedIdResult.value
-      ?? (existing.image ? (existing.imageId ?? getNextImageId(products)) : null),
-    updatedAt: new Date().toISOString(),
-  }
+      : product.specs;
+    if (imageBase64 && imageContentType) {
+      try {
+        const buffer = Buffer.from(imageBase64, imageBase64.startsWith('data:') ? imageBase64.split(',')[1] : undefined ? 'base64' : 'base64')
+        product.image = { data: buffer, contentType: imageContentType }
+      } catch (e) {
+        console.warn('[admin/products] Invalid imageBase64')
+      }
+    }
+    product.imageId = productImageId ?? imageId ?? product.imageId;
+    product.updatedAt = new Date().toISOString();
 
-  writeProducts(products)
-  res.json(products[idx])
+    await product.save();
+    console.log(`[PUT] /api/admin/products/${req.params.id} updated`)
+    res.json(product)
+  } catch (err) {
+    console.error(`[PUT] /api/admin/products/${req.params.id} error:`, err)
+    res.status(500).json({ message: 'Failed to update product' })
+  }
+})
+// Serve product image by product id (public)
+app.get('/api/products/:id/image', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product || !product.image || !product.image.data) {
+      return res.status(404).json({ message: 'Image not found' })
+    }
+    res.set('Content-Type', product.image.contentType || 'image/jpeg')
+    res.send(product.image.data)
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch image' })
+  }
 })
 
 // Delete product
-app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
-  const products = readProducts()
-  const idx = products.findIndex(p => p.id === req.params.id)
-  if (idx === -1) return res.status(404).json({ message: 'Product not found' })
-
-  const [removed] = products.splice(idx, 1)
-
-  writeProducts(products)
-  res.json({ message: 'Product deleted', id: removed.id })
+app.delete('/api/admin/products/:id', requireAdmin, async (req, res) => {
+  console.log(`[DELETE] /api/admin/products/${req.params.id}`)
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id)
+    if (!product) {
+      console.warn(`[DELETE] /api/admin/products/${req.params.id} not found`)
+      return res.status(404).json({ message: 'Product not found' })
+    }
+    console.log(`[DELETE] Product deleted: ${product._id}`)
+    res.json({ message: 'Product deleted', id: product._id })
+  } catch (err) {
+    console.error(`[DELETE] /api/admin/products/${req.params.id} error:`, err)
+    res.status(500).json({ message: 'Failed to delete product' })
+  }
 })
 
 // ---------------------------------------------------------------------------
@@ -502,9 +559,10 @@ app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
   if (err.code === 'LIMIT_FILE_SIZE') {
+    console.warn('[error handler] File too large')
     return res.status(413).json({ message: 'Image must be smaller than 2 MB.' })
   }
-  console.error(err.message)
+  console.error('[error handler]', err.message)
   res.status(500).json({ message: err.message ?? 'Internal server error' })
 })
 

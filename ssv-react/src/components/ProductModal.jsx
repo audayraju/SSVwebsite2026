@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react'
+// import { uploadsUrl } from '../lib/api'
 import styles from './ProductModal.module.css'
 
 export default function ProductModal({ product, onClose }) {
@@ -43,14 +44,23 @@ export default function ProductModal({ product, onClose }) {
     }
   }, [product?.id])
 
+  // Debug: Log product object and _id
+  console.log('[ProductModal] product:', product)
+  if (product && product._id) {
+    console.log('[ProductModal] product._id:', product._id)
+  } else {
+    console.warn('[ProductModal] No _id found in product:', product)
+  }
+
   const {
     name, sku, price, description, specs = [], extra, category,
     image, product_image,
   } = product
 
-  const _img = image || product_image
-  const imgSrc = _img
-    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
+
+  // Use backend API endpoint for images
+  const imgSrc = product && product._id
+    ? `https://api-vert.vercel.app/api/products/${product._id}/image`
     : '/slides/pictures/logo.jpeg'
 
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${name}${sku ? ` (SKU: ${sku})` : ''}. Could you share more details?`)
