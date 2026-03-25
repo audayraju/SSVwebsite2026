@@ -2,12 +2,7 @@ import { useState } from 'react'
 
 import { useFavorites } from '../context/FavoritesContext'
 import { useNavigate } from 'react-router-dom'
-<<<<<<< HEAD
 import styles from './ProductCardCustom.module.css'
-=======
-// import { uploadsUrl } from '../lib/api'
-import styles from './ProductCard.module.css'
->>>>>>> 6f5c63a6b455baed35f6edef04fa11475ef16451
 
 
 // Modern e-commerce product card for collections page
@@ -32,7 +27,6 @@ export default function ProductCard({ product, onClick }) {
     navigate(`/products/${id}`)
   }
 
-<<<<<<< HEAD
   // Improved image src logic: prefer absolute, fallback to /uploads, fallback to logo
   let imgSrc = image || product_image || ''
   if (imgSrc.startsWith('http') || imgSrc.startsWith('data:')) {
@@ -42,13 +36,6 @@ export default function ProductCard({ product, onClick }) {
   } else {
     imgSrc = '/slides/pictures/logo.jpeg'
   }
-=======
-
-  // Use backend API endpoint for images
-  const imgSrc = product && product._id
-    ? `https://api-vert.vercel.app/api/products/${product._id}/image`
-    : '/slides/pictures/logo.jpeg'
->>>>>>> 6f5c63a6b455baed35f6edef04fa11475ef16451
 
 
   // Modern card layout (Tailwind CSS)
