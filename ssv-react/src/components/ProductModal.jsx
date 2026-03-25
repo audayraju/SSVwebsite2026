@@ -44,6 +44,14 @@ export default function ProductModal({ product, onClose }) {
     }
   }, [product?.id])
 
+  // Debug: Log product object and _id
+  console.log('[ProductModal] product:', product)
+  if (product && product._id) {
+    console.log('[ProductModal] product._id:', product._id)
+  } else {
+    console.warn('[ProductModal] No _id found in product:', product)
+  }
+
   const {
     name, sku, price, description, specs = [], extra, category,
     image, product_image,
