@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react'
+import { uploadsUrl } from '../lib/api'
 import styles from './ProductModal.module.css'
 
 export default function ProductModal({ product, onClose }) {
@@ -50,7 +51,7 @@ export default function ProductModal({ product, onClose }) {
 
   const _img = image || product_image
   const imgSrc = _img
-    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : `/uploads/${_img}`)
+    ? (_img.startsWith('http') || _img.startsWith('data:') ? _img : uploadsUrl(_img))
     : '/slides/pictures/logo.jpeg'
 
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${name}${sku ? ` (SKU: ${sku})` : ''}. Could you share more details?`)

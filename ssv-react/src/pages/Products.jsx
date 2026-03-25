@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import ProductCard from '../components/ProductCard'
 import ProductModal from '../components/ProductModal'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
+import { apiUrl } from '../lib/api'
 import styles from './Products.module.css'
 
 /* ── Static seed products (replaced by API data in production) ── */
@@ -53,7 +54,7 @@ export default function Products() {
     async function loadProducts() {
       try {
         setLoading(true)
-        const res = await fetch('/api/products')
+        const res = await fetch(apiUrl('/api/products'))
         if (!res.ok) throw new Error('API unavailable')
         const data = await res.json()
         if (Array.isArray(data) && data.length) setProducts(data)

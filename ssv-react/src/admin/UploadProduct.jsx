@@ -1,8 +1,10 @@
+
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import axios from 'axios'
 import { AdminSidebar } from './AdminDashboard'
+import { apiUrl, uploadsUrl } from '../lib/api'
 import styles from './Admin.module.css'
 
 const CATEGORIES = [
@@ -40,7 +42,7 @@ export default function UploadProduct() {
   useEffect(() => {
     if (!editId) return
     const token = sessionStorage.getItem('ssv_admin_token')
-    axios.get(`/api/admin/products/${editId}`, {
+    axios.get(apiUrl(`/api/admin/products/${editId}`), {
       headers: { Authorization: `Bearer ${token}` },
     }).then(r => {
       const p = r.data
@@ -54,7 +56,7 @@ export default function UploadProduct() {
         productSpecs: Array.isArray(p.specs) ? p.specs.join('\n') : (p.specs ?? ''),
         productImageId: p.imageId ?? '',
       })
-      if (p.image) setPreview(p.image.startsWith('data:') || p.image.startsWith('http') ? p.image : `/uploads/${p.image}`)
+      if (p.image) setPreview(p.image.startsWith('data:') || p.image.startsWith('http') ? p.image : uploadsUrl(p.image))
     }).catch(() => {
       setStatus({ msg: 'Failed to load product for editing.', ok: false })
     })
@@ -87,17 +89,35 @@ export default function UploadProduct() {
 
     try {
       const token = sessionStorage.getItem('ssv_admin_token')
-      const fd = new FormData()
-      Object.entries(form).forEach(([k, v]) => fd.append(k, v))
-      if (imageFile) fd.append('productImage', imageFile)
+      let imageBase64 = null
+      let imageContentType = null
+      if (imageFile) {
+        // Read file as base64
+        const fileData = await new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result)
+          reader.onerror = reject
+          reader.readAsDataURL(imageFile)
+        })
+        // fileData is a data URL: "data:image/jpeg;base64,..."
+        const [meta, base64] = String(fileData).split(',')
+        imageBase64 = base64
+        imageContentType = imageFile.type
+      }
 
-      const url = editId ? `/api/admin/products/${editId}` : '/api/admin/products'
+      const payload = {
+        ...form,
+        imageBase64,
+        imageContentType,
+      }
+
+      const url = editId ? apiUrl(`/api/admin/products/${editId}`) : apiUrl('/api/admin/products')
       const method = editId ? 'put' : 'post'
 
-      await axios[method](url, fd, {
+      await axios[method](url, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       })
 

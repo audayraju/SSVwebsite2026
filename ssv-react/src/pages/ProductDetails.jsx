@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import ImageGallery from '../components/ImageGallery'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
+import { apiUrl } from '../lib/api'
 import styles from './ProductDetails.module.css'
 
 /* Same seed as Products.jsx – in production this comes from API */
@@ -26,7 +27,7 @@ export default function ProductDetails() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`/api/products/${id}`)
+        const res = await fetch(apiUrl(`/api/products/${id}`))
         if (!res.ok) throw new Error()
         const data = await res.json()
         setProduct(data)
