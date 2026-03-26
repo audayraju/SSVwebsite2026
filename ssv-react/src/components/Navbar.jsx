@@ -84,6 +84,7 @@ export default function Navbar() {
     setTimeout(() => scrollToSection('contact'), 120);
   }
 
+
   function handleHomeClick(e) {
     e.preventDefault();
     // If already on home, force a full page reload to refresh content
@@ -119,8 +120,8 @@ export default function Navbar() {
         <div className={styles['nav-links']}>
           <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? 'active' : ''}>Home</a>
           <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
-          {/* Contact should scroll to Home#contact instead of opening a separate page */}
-          <a href="/#contact" onClick={handleContactClick} className={({ isActive }) => ''}>Contact</a>
+          {/* Contact opens the separate contact page */}
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
 
           {/* Dropdown grouping About + Services */}
           <div

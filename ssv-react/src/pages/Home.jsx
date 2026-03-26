@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Home.module.css'
-import Contact from './Contact'
+
 
 /* ── Carousel data ── */
 const SLIDES = [
@@ -121,79 +121,7 @@ export default function Home() {
       </section>
 
 
-      {/* ── SECTION 1 – image left / text right ── */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.imageBox}>
-            {/* Use the section-two image for Section One (left-hand hero) */}
-            <img src="/picture/section-three.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
-          </div>
-          <div className={styles.contentBox}>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              Timeless Jewellery Craftsmanship
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              Discover handcrafted gold, silver, and diamond designs made to
-              celebrate your most special moments with timeless elegance.
-            </motion.p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* ── SECTION 2 – text left / image right ── */}
-      <section className={`${styles.section} ${styles.sectionReverse}`}>
-        <div className={styles.container}>
-          <div className={styles.contentBox}>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              Pure Crafted Excellence
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              Each piece is thoughtfully designed to reflect elegance and precision,
-              using only the finest certified materials.
-            </motion.p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
-            </motion.div>
-          </div>
-          <div className={styles.imageBox}>
-            <img src="
-            /picture/section-twoo.jpeg" alt="SSV Jewellers collection" loading="lazy" />
-          </div>
-        </div>
-      </section>
 
       {/* ── PRODUCT GRID ── */}
       {/* Large section header (e.g. "DIAMOND JEWELLERY") */}
@@ -269,14 +197,80 @@ export default function Home() {
           ))}
         </motion.div>
       </section>
-      {/* add two line breaks between the last section and the embedded Contact */}
-      <br />
-      <br />
-      {/* ── CONTACT (embedded) ── */}
-      <div id="contact">
-        <Contact />
-      </div>
+     
+      {/* ── SECTION 1 – image left / text right ── */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.imageBox}>
+            {/* Use the section-two image for Section One (left-hand hero) */}
+            <img src="/picture/section-three.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
+          </div>
+          <div className={styles.contentBox}>
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Timeless Jewellery Craftsmanship
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Discover handcrafted gold, silver, and diamond designs made to
+              celebrate your most special moments with timeless elegance.
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
+            </motion.div>
+          </div>
+          <div className={styles.imageBox}>
+            <img src="/picture/section-twoo.jpeg" alt="SSV Jewellers collection" loading="lazy" />
+          </div>
+        </div>
+      </section>
 
+      {/* ── SECTION 2 – text left / image right ── */}
+      <section className={`${styles.section} ${styles.sectionReverse}`}>
+        <div className={styles.container}>
+          <div className={styles.contentBox}>
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Pure Crafted Excellence
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Each piece is thoughtfully designed to reflect elegance and precision,
+              using only the finest certified materials.
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      {/* removed embedded Contact — contact is now a separate page */}
 
     </>
   )

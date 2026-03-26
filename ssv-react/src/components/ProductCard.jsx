@@ -27,12 +27,14 @@ export default function ProductCard({ product, onClick }) {
     navigate(`/products/${id}`)
   }
 
-  // Improved image src logic: prefer absolute, fallback to /uploads, fallback to logo
+  // Improved image src logic: prefer absolute, fallback to /uploads, /picture/carousel-images, fallback to logo
   let imgSrc = image || product_image || ''
   if (imgSrc.startsWith('http') || imgSrc.startsWith('data:')) {
     // absolute or data url
+  } else if (imgSrc.startsWith('/picture/')) {
+    imgSrc = imgSrc // already correct for public folder
   } else if (imgSrc) {
-    imgSrc = `/uploads/${imgSrc.replace(/^\/+/, '')}`
+    imgSrc = `/uploads/${imgSrc.replace(/^\/+/,'')}`
   } else {
     imgSrc = '/slides/pictures/logo.jpeg'
   }
