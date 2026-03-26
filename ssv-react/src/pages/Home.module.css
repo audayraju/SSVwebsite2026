@@ -311,8 +311,8 @@
 
 .homeProductGrid {
   display: grid;
-  /* Force five cards per row on desktop while allowing responsive fallbacks */
-  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  /* Use auto-fit for automatic responsive fluid wrapping */
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: clamp(14px, 2.6vw, 24px);
   /* Allow wider grid to reduce side whitespace on large screens */
   max-width: 1320px;
@@ -395,10 +395,6 @@
     height: 260px;
   }
 
-  .homeProductGrid {
-    grid-template-columns: 1fr;
-  }
-
   .caption h2 {
     font-size: clamp(1.4rem, 5.2vw, 1.8rem);
   }
@@ -432,11 +428,6 @@
     height: 220px;
   }
 
-  .homeProductGrid {
-    grid-template-columns: 1fr;
-    padding: 0 12px;
-  }
-
   .caption h2 {
     font-size: clamp(1.1rem, 5vw, 1.35rem);
   }
@@ -465,10 +456,6 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   .viewGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .homeProductGrid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 

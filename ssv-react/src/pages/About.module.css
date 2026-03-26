@@ -73,7 +73,7 @@
 
 .specializationsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 }
 
@@ -156,7 +156,7 @@
 
 .featuresList {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   max-width: 900px;
   margin: 0 auto;
@@ -191,7 +191,7 @@
 /* Mission / Vision */
 .missionVision {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
   max-width: 900px;
   margin: 0 auto;
@@ -223,25 +223,7 @@
 }
 
 @media (max-width: 768px) {
-  .specializationsGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .featuresList {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .missionVision {
-    grid-template-columns: 1fr;
-  }
-
   .paraGroup {
     padding: 14px 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .featuresList {
-    grid-template-columns: 1fr;
   }
 }
