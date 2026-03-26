@@ -110,13 +110,14 @@ export default function Navbar() {
 
       {/* Main Navbar Row: 30/50/20 split */}
       <div className={styles.mainNavbarRow}>
-        <div className={styles.logoSection}>
-          <Link className={styles['logo-wrapper']} to="/" aria-label="Go to home page">
-            <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className={styles.logoImage} />
-            <span className={styles.logo}>SSV JEWELLERS</span>
-          </Link>
-          {/* favorites link moved to search section */}
-        </div>
+        <div className={styles.navInner}>
+          <div className={styles.logoSection}>
+            <Link className={styles['logo-wrapper']} to="/" aria-label="Go to home page">
+              <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className={styles.logoImage} />
+              <span className={styles.logo}>SSV JEWELLERS</span>
+            </Link>
+            {/* favorites link moved to search section */}
+          </div>
         <div className={styles['nav-links']}>
           <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? 'active' : ''}>Home</a>
           <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
@@ -158,6 +159,7 @@ export default function Navbar() {
             />
           </form>
           {/* favorites removed from nav */}
+        </div>
         </div>
       </div>
 
