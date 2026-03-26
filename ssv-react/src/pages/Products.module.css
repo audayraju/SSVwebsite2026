@@ -1,4 +1,6 @@
 /* Category bar wrapper — positions the scroll arrows relative to the bar */
+/* recent edits: added section hero image and 50-image thumbnail grid */
+
 .catBarWrapper {
   position: sticky;
   /* top: var(--products-sticky-top, 72px); */
@@ -141,6 +143,45 @@
   font-size: 0.52rem;
   max-width: 760px;
   line-height: 1.6;
+}
+
+/* Hero / section image above products grid */
+
+
+.sectionImage {
+  width: auto;
+  max-width: 270px;
+  height: clamp(160px, 28vw, 420px);
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+/* Grid of thumbnails (50 images) */
+.sectionImageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  max-width: 1320px;
+  margin: 12px auto;
+  padding-inline: clamp(8px, 2vw, 20px);
+}
+
+.sectionImageItem {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  /* square */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sectionImageItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .searchNote {

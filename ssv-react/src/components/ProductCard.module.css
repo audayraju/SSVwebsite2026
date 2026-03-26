@@ -8,6 +8,14 @@
   transition: transform 0.28s ease, box-shadow 0.28s ease;
 }
 
+/* Force the full card (including footer) to a fixed height for compact layout */
+.card,
+.cardOverlay {
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+}
+
 .cardOverlay {
   background: none;
   border-radius: 18px;
@@ -37,7 +45,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 32px 0 24px 0;
+  /* reduced padding so overlay content fits inside 230px card height */
+  padding: 14px 0 12px 0;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.12) 100%);
   color: #fff;
   display: flex;
@@ -49,34 +58,20 @@
 }
 
 .overlayName {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   color: #fff;
   text-align: center;
-  font-size: 1.1rem;
+  /* slightly smaller title to fit 230px card height */
+  font-size: 0.78rem;
   font-weight: 700;
   font-family: var(--font-display, 'Playfair Display', Georgia, serif);
-  line-height: 1.2;
+  line-height: 1.15;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
 }
 
 .overlayDetailsBtn {
-  border: none;
-  border-radius: 999px;
-  min-height: 38px;
-  min-width: 142px;
-  padding: 7px 22px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  color: #fff;
-  font-size: 1.04rem;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: filter 0.2s ease, transform 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  display: none !important;
+  /* hide overlay button per request */
 }
 
 .overlayDetailsBtn:hover {
@@ -93,6 +88,13 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 3.2;
+}
+
+/* Make the image area fill available vertical space inside the fixed-height card */
+.imgWrap,
+.imgWrapOverlay {
+  flex: 1 1 auto;
+  height: auto;
 }
 
 .imgWrap::after {
@@ -126,7 +128,7 @@
   margin: 0 0 2px;
   color: #111;
   text-align: center;
-  font-size: 0.96rem;
+  font-size: 0.82rem;
   font-weight: 700;
   font-family: var(--font-display, 'Playfair Display', Georgia, serif);
   line-height: 1.2;
@@ -144,24 +146,8 @@
 }
 
 .detailsBtn {
-  grid-column: 2;
-  justify-self: center;
-  border: 1px solid #d8d8d8;
-  border-radius: 10px;
-  min-height: 32px;
-  min-width: 142px;
-  padding: 4px 11px;
-  background: linear-gradient(90deg, #9b681e, #f4dd62);
-  color: #fff;
-  font-size: 0.82rem;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: filter 0.2s ease, transform 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  display: none !important;
+  /* hide details button in footer */
 }
 
 .detailsBtn:hover {

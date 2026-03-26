@@ -10,13 +10,14 @@
 h1,
 h2,
 h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cinzel', Georgia, serif;
   font-weight: 600;
   letter-spacing: 1px;
   color: #2c2c2c;
 }
 
 p {
+  
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
@@ -54,9 +55,9 @@ button.primary {
   --shadow-lg: 0 20px 60px rgba(30, 22, 32, 0.18);
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   --radius: 16px;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', 'Segoe UI', sans-serif;
-  --font-button: 'Poppins', 'Segoe UI', sans-serif;
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body: 'Open Sans', 'Segoe UI', sans-serif;
+  --font-button: 'Blackseas', 'Poppins', 'Segoe UI', sans-serif;
   --page-gutter: clamp(10px, 2.2vw, 24px);
   --section-gap: clamp(12px, 2vw, 28px);
 }
@@ -81,8 +82,8 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   overflow-x: clip;
-  padding-top: 0;
-  /* no fixed headers; mini-bar scrolls away */
+  /* account for fixed top mini-bar (36px) + main navbar height (64px) so content isn't hidden */
+  padding-top: calc(36px + 64px);
 }
 
 /* ---------- RESET ---------- */
@@ -264,7 +265,7 @@ section,
   line-height: 1.1;
   font-weight: 400;
   letter-spacing: 0.01em;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   border-radius: 999px;
   white-space: nowrap;
   overflow: hidden;
@@ -509,13 +510,13 @@ section,
 }
 
 .logo {
-  font-family: 'Bell MT', Georgia, serif;
+  font-family: var(--font-display);
   font-size: 19px;
   font-weight: 600;
   letter-spacing: 0.08em;
   color: #e7bd55;
   white-space: nowrap;
-  
+
 }
 
 /* small icon next to logo text */
@@ -608,7 +609,7 @@ section,
 .nav-links a {
   text-decoration: none;
   color: #ffffff;
-  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-family: 'Open Sans', 'Segoe UI', sans-serif;
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.05em;

@@ -23,7 +23,10 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log('[MongoDB] Connected'))
   .catch(err => {
     console.error('[MongoDB] Connection error:', err)
-    process.exit(1)
+    // Do not exit the process — keep the API running even if MongoDB is unavailable.
+    // Routes that require the database will return 5xx errors, but the server
+    // remains available for health checks and other non-DB endpoints.
+    // process.exit(1)
   })
 
 // Product schema (Cloudinary image)

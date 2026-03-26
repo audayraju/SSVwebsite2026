@@ -1,0 +1,465 @@
+/*
+    Modified: navbar font usage updated to use CSS variables
+    - Switched nav link font-family to use var(--font-display) so Cinzel is applied
+    - Made dropdown use var(--font-display) as well
+    - Adjusted top pill to use var(--font-body)
+    Changes made to address font rendering and branding consistency.
+*/
+
+/* Modern nav links for premium look */
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    /* reduced spacing between links */
+    font-family: var(--font-display);
+    font-size: 0.80rem;
+    /* decreased font size per request */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 55%;
+    max-width: 55%;
+    min-width: 200px;
+    /* allow nav-links to take available center space while keeping search at the end */
+    flex: 1 1 auto;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.18s, opacity 0.18s;
+    padding: 2px 0;
+    opacity: 0.96;
+    /* keep nav link labels uppercase to match branding */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.nav-links a:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--gold);
+    border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.22s cubic-bezier(.4, 0, .2, 1), opacity 0.18s;
+}
+
+
+/* Hover: reveal underline only for non-active links. Do NOT reveal underline on keyboard focus. */
+.nav-links a:hover {
+    outline: none;
+}
+
+/* Show underline only when hovering links that are NOT active/current */
+.nav-links a:not(.active):hover:after {
+    transform: scaleX(1);
+}
+
+/* Click (mouse down): hide underline immediately while the link is being clicked */
+.nav-links a:active:after {
+    transform: scaleX(0);
+}
+
+/* Active (current page): change text color to gold and hide underline by default */
+.nav-links a.active {
+    color: var(--gold);
+}
+
+.nav-links a.active:after {
+    transform: scaleX(0);
+}
+
+/* Ensure hovering the active (gold) link does NOT show the underline */
+.nav-links a.active:hover:after {
+    transform: scaleX(0);
+}
+
+/* Strong rule to ensure active link (Home) is gold and never shows underline */
+.nav-links a.active,
+.nav-links a.active:link,
+.nav-links a.active:visited {
+    color: var(--gold) !important;
+    text-decoration: none !important;
+}
+
+.nav-links a.active::after,
+.nav-links a.active:after {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+    pointer-events: none;
+}
+
+/* Improve keyboard focus visibility */
+.nav-links a:focus-visible {
+    box-shadow: 0 0 0 4px rgba(197, 164, 126, 0.12);
+    border-radius: 2px;
+}
+
+/* Theme: Modern Luxury (default) */
+.themeModern {
+    --maroon: #4b0b2f;
+    --gold: #c5a47e;
+    --text: #ffffff;
+}
+
+/* Theme: Traditional & Royal */
+.themeRoyal {
+    --maroon: #5a0b2f;
+    --gold: #d4b57a;
+    --text: #fff7ec;
+    background-image: radial-gradient(rgba(197, 164, 126, 0.02) 1px, transparent 1px);
+    background-size: 12px 12px;
+}
+
+/* Theme: Minimalist & Clean */
+.themeClean {
+    --maroon: #ffffff;
+    --gold: #b78f49;
+    --text: #3b0f2a;
+    background: var(--maroon);
+    color: var(--text);
+}
+
+/* Top pill bar */
+.topPillBar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    color: #560537;
+    font-family: var(--font-body);
+    font-size: 0.80rem;
+    padding: 6px 5%;
+    border-bottom: 1px solid #c5a47e22;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10002;
+    min-height: 36px;
+}
+
+.pillLeft {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* email and Visit Store spaced 30px */
+}
+
+.pillRight {
+    margin-left: auto;
+    /* push phone to far right */
+    display: flex;
+    align-items: center;
+}
+
+.pillItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+/* Main navbar row: 30/50/20 split */
+.mainNavbarRow {
+    display: flex;
+    align-items: center;
+    /* vertically center logo, links, search */
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 5%;
+    /* padding so content doesn't touch screen edges */
+    width: 100%;
+    background: #560537;
+    border-radius: 0;
+    gap: 0;
+    min-height: 64px;
+    flex-wrap: nowrap;
+}
+
+/* Make the main navbar stick to the top of the viewport when it reaches it
+   so the top pill bar can scroll away but the navbar remains visible. */
+.mainNavbarRow {
+    /* Keep the main navbar fixed below the mini/top pill bar */
+    position: fixed;
+    top: 36px;
+    /* height of the fixed mini bar */
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10001;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    /* thin gold bottom border to match brand accent */
+    border-bottom: 3px solid var(--gold);
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-basis: 20%;
+    min-width: 150px;
+    max-width: 20%;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.searchSection {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-basis: 25%;
+    max-width: 25%;
+    min-width: 140px;
+    margin-left: auto;
+    /* push search section to far right */
+    gap: 12px;
+}
+
+/* Favorite button removed from markup; styles cleaned up */
+
+.nav-links-row {
+    width: 100%;
+    background: #560537;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 0px solid #c5a47e;
+    margin-top: 0;
+    min-height: 48px;
+    padding: 0 32px 0 32px;
+    position: relative;
+
+}
+
+
+
+/* SSV Custom Navbar Styles */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #560537;
+    color: #fff;
+    padding: 18px 32px;
+    border-radius: 0;
+    box-shadow: 0 2px 16px rgba(86, 5, 55, 0.08);
+    text-align: center;
+    justify-content: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    /* reduce spacing between mark and text */
+    flex-direction: row;
+}
+
+.logo {
+    font-family: var(--font-display);
+    /* increased text size for the site title only */
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: var(--gold);
+    margin-left: 0;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+/* Responsive scaling for the logo text to keep the large style on desktop but fit on small screens */
+@media (max-width: 900px) {
+    .logo {
+        font-size: 1.15rem;
+    }
+}
+
+@media (min-width: 1400px) {
+
+    /* slightly larger on very wide screens */
+    .logo {
+        font-size: 1.9rem;
+    }
+}
+
+.logoImage {
+    height: 40px;
+    width: auto;
+    margin-right: 0px;
+    /* reduce right margin to tighten spacing */
+    display: inline-block;
+}
+
+/* Favorites link beside the logo */
+.favLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+    color: var(--gold);
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid var(--gold);
+    /* circular border */
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+}
+
+.favLink svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.favBadge {
+    position: absolute;
+    transform: translate(50%, -30%);
+    background: var(--gold);
+    color: #560537;
+    border-radius: 999px;
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+
+.search-box input {
+    border: 2px solid #c5a47e;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 1rem;
+    background: #fff;
+    color: #560537;
+    outline: none;
+    width: 800px;
+    max-width: 100%;
+    transition: border 0.2s;
+}
+
+/* Like button (outline) placed next to search */
+/* fav button styles removed since the icon was removed from markup */
+
+.search-box input:focus {
+    border-color: #560537;
+}
+
+/* fav button styles removed since the icon was removed from markup */
+
+@media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 8px;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .search-box input {
+        width: 120px;
+    }
+}
+
+@media (max-width: 900px) {
+    .mainNavbarRow {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 8px;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .search-box input {
+        width: 120px;
+    }
+
+    .topPillBar {
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 8px 6px 8px;
+    }
+}
+
+/* Dropdown styles for grouped menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownToggle {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.98rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+}
+
+.caret {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    /* white panel for strong contrast */
+    color: #3b0f2a;
+    /* dark maroon text */
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 10px 14px;
+    border-radius: 8px;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 9999;
+    /* ensure it sits above hero/images */
+}
+
+.dropdownMenu a {
+    color: #3b0f2a;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu a.active {
+    background: rgba(197, 164, 126, 0.06);
+    color: var(--gold);
+}
+
+.show {
+    display: flex;
+}

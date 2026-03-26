@@ -4,11 +4,12 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Home.module.css'
+import Contact from './Contact'
 
 /* ── Carousel data ── */
 const SLIDES = [
   {
-    img: '/picture/carousel-images/SSV_ Ads_Banners-03.jpg.jpeg',
+    img: '/picture/carousel-images/SSV_ Ad-1.jpg.jpeg',
     alt: 'Banner 1',
     title: 'Gold Heritage Collection',
     desc: 'Timeless handcrafted jewellery for every celebration.',
@@ -22,8 +23,7 @@ const SLIDES = [
     link: '/products?search=silver',
   },
   {
-    img:
-      '/picture/carousel-images/SSV_ Ads_Banners-02.jpg.jpeg',
+    img: '/picture/carousel-images/SSV_ Ads_Banners-02.jpg.jpeg',
     alt: 'Banner 3',
     title: 'Diamond Prestige Collection',
     desc: 'Brilliance that elevates every special moment.',
@@ -33,14 +33,29 @@ const SLIDES = [
 
 /* ── Home product cards ── */
 const HOME_PRODUCTS = [
-  { title: 'Gold Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
-  { title: 'Silver Collection', link: '/products?search=silver', img: '/picture/section-two.jpeg' },
-  { title: 'Diamond Collection', link: '/products?search=diamond', img: '/picture/section-three.jpeg' },
+  { title: 'Necklace Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
+  { title: 'Haram Collection', link: '/products?search=silver', img: '/picture/section-twoo.jpeg' },
+  { title: 'Chokers Collection', link: '/products?search=diamond', img: '/picture/section-three.jpeg' },
+  { title: 'Bangles Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
+  { title: 'CZ Collection', link: '/products?search=silver', img: '/picture/section-twoo.jpeg' },
+
+
+
 ]
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0)
   const timerRef = useRef(null)
+
+  // Scroll helper that accounts for fixed header padding
+  function scrollToIdWithOffset(id) {
+    if (!id) return
+    const el = document.getElementById(id)
+    if (!el) return
+    const bodyPadding = parseInt(getComputedStyle(document.body).paddingTop, 10) || 100
+    const top = el.getBoundingClientRect().top + window.scrollY - bodyPadding - 8
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
 
   const goTo = useCallback((idx) => {
     setActiveSlide(idx)
@@ -53,6 +68,20 @@ export default function Home() {
   useEffect(() => {
     timerRef.current = setInterval(() => setActiveSlide(s => (s + 1) % SLIDES.length), 5000)
     return () => clearInterval(timerRef.current)
+  }, [])
+
+  // On mount, handle deep link scrolling (e.g., /#contact) or ensure page is at top after reload
+  useEffect(() => {
+    // small delay to allow layout to stabilise
+    const id = window.location.hash ? window.location.hash.replace('#', '') : ''
+    setTimeout(() => {
+      if (id) {
+        scrollToIdWithOffset(id)
+      } else {
+        // ensure we are at top after a refresh
+        window.scrollTo({ top: 0 })
+      }
+    }, 120)
   }, [])
 
   return (
@@ -91,36 +120,13 @@ export default function Home() {
 
       </section>
 
-      {/* ── PRODUCT GRID ── */}
-      <section className={styles.productsSection} aria-label="Product collections">
-        <motion.div
-          className={styles.homeProductGrid}
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inViewViewport}
-        >
-          {HOME_PRODUCTS.map((p, i) => (
-            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
-                <img src={p.img} alt={p.title} loading="lazy" />
-              </Link>
-              <div className={styles.overlay}>
-                <h3>{p.title}</h3>
-                <div className={styles.cardActions}>
-                  <Link to={p.link} className={styles.knowBtn}>View details »</Link>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
 
       {/* ── SECTION 1 – image left / text right ── */}
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.imageBox}>
-            <img src="/picture/section-two.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
+            {/* Use the section-two image for Section One (left-hand hero) */}
+            <img src="/picture/section-three.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
           </div>
           <div className={styles.contentBox}>
             <motion.h2
@@ -183,10 +189,95 @@ export default function Home() {
             </motion.div>
           </div>
           <div className={styles.imageBox}>
-            <img src="/picture/section-three.jpeg" alt="SSV Jewellers collection" loading="lazy" />
+            <img src="
+            /picture/section-twoo.jpeg" alt="SSV Jewellers collection" loading="lazy" />
           </div>
         </div>
       </section>
+
+      {/* ── PRODUCT GRID ── */}
+      {/* Large section header (e.g. "DIAMOND JEWELLERY") */}
+      <div className={styles.productsHeader} aria-hidden="true">
+        <h2>GOLD JEWELLERY</h2>
+      </div>
+      <section className={styles.productsSection} aria-label="Product collections">
+        <motion.div
+          className={styles.homeProductGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
+          {HOME_PRODUCTS.map((p, i) => (
+            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
+              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+                <img src={p.img} alt={p.title} loading="lazy" />
+              </Link>
+              <div className={styles.overlay}>
+                <h3>{p.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Large section header (e.g. "SILVER JEWELLERY") */}
+      <div className={styles.productsHeader} aria-hidden="true">
+        <h2>SILVER JEWELLERY</h2>
+      </div>
+      <section className={styles.productsSection} aria-label="Product collections">
+        <motion.div
+          className={styles.homeProductGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
+          {HOME_PRODUCTS.map((p, i) => (
+            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
+              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+                <img src={p.img} alt={p.title} loading="lazy" />
+              </Link>
+              <div className={styles.overlay}>
+                <h3>{p.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+      {/* Large section header (e.g. "DIAMOND JEWELLERY") */}
+      <div className={styles.productsHeader} aria-hidden="true">
+        <h2>DIAMOND JEWELLERY</h2>
+      </div>
+      <section className={styles.productsSection} aria-label="Product collections">
+        <motion.div
+          className={styles.homeProductGrid}
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
+          {HOME_PRODUCTS.map((p, i) => (
+            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
+              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+                <img src={p.img} alt={p.title} loading="lazy" />
+              </Link>
+              <div className={styles.overlay}>
+                <h3>{p.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+      {/* add two line breaks between the last section and the embedded Contact */}
+      <br />
+      <br />
+      {/* ── CONTACT (embedded) ── */}
+      <div id="contact">
+        <Contact />
+      </div>
+
+
     </>
   )
 }

@@ -1,237 +1,167 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useFavorites } from '../context/FavoritesContext'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useRef } from 'react';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [favOpen, setFavOpen] = useState(false)
-  const [search, setSearch] = useState('')
-  const navigate = useNavigate()
-  const { favorites, removeFavorite } = useFavorites()
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef(null);
+  const [search, setSearch] = useState('');
+  const [placeholderText, setPlaceholderText] = useState('Search...');
+  const [suggestIndex, setSuggestIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [typing, setTyping] = useState(true);
 
-  const closeMenu = useCallback(() => setMenuOpen(false), [])
-  const closeFav = useCallback(() => setFavOpen(false), [])
-  const closePanels = useCallback(() => {
-    setMenuOpen(false)
-    setFavOpen(false)
-  }, [])
-
-  /* Auto-typing placeholder suggestions for the search box */
-  const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets']
-  const [suggestIndex, setSuggestIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [typing, setTyping] = useState(true)
-  const [placeholderText, setPlaceholderText] = useState('Search...')
+  const navigate = useNavigate();
+  const location = useLocation();
+  const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets'];
 
   useEffect(() => {
     if (search) {
-      setPlaceholderText('')
-      return
+      setPlaceholderText('');
+      return;
     }
-
-    let mounted = true
-    const word = suggestions[suggestIndex]
-
-    // typing forward
+    let mounted = true;
+    const word = suggestions[suggestIndex];
     if (typing && charIndex < word.length) {
       const t = setTimeout(() => {
-        if (!mounted) return
-        setCharIndex(ci => ci + 1)
-        setPlaceholderText(word.slice(0, charIndex + 1))
-      }, 100)
-      return () => { mounted = false; clearTimeout(t) }
+        if (!mounted) return;
+        setCharIndex(ci => ci + 1);
+        setPlaceholderText(word.slice(0, charIndex + 1));
+      }, 100);
+      return () => { mounted = false; clearTimeout(t); };
     }
-
-    // pause at end of word
     if (typing && charIndex === word.length) {
       const t = setTimeout(() => {
-        if (!mounted) return
-        setTyping(false)
-      }, 1400)
-      return () => { mounted = false; clearTimeout(t) }
+        if (!mounted) return;
+        setTyping(false);
+      }, 1400);
+      return () => { mounted = false; clearTimeout(t); };
     }
-
-    // deleting
     if (!typing && charIndex > 0) {
       const t = setTimeout(() => {
-        if (!mounted) return
-        setCharIndex(ci => ci - 1)
-        setPlaceholderText(word.slice(0, charIndex - 1))
-      }, 60)
-      return () => { mounted = false; clearTimeout(t) }
+        if (!mounted) return;
+        setCharIndex(ci => ci - 1);
+        setPlaceholderText(word.slice(0, charIndex - 1));
+      }, 60);
+      return () => { mounted = false; clearTimeout(t); };
     }
-
-    // move to next word
     if (!typing && charIndex === 0) {
       const t = setTimeout(() => {
-        if (!mounted) return
-        setTyping(true)
-        setSuggestIndex(i => (i + 1) % suggestions.length)
-      }, 400)
-      return () => { mounted = false; clearTimeout(t) }
+        if (!mounted) return;
+        setTyping(true);
+        setSuggestIndex(i => (i + 1) % suggestions.length);
+      }, 400);
+      return () => { mounted = false; clearTimeout(t); };
     }
-  }, [charIndex, typing, suggestIndex, search])
+  }, [charIndex, typing, suggestIndex, search]);
 
   function handleSearch(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (search.trim()) {
-      navigate(`/products?search=${encodeURIComponent(search.trim())}`)
-      setSearch('')
+      navigate(`/products?search=${encodeURIComponent(search.trim())}`);
+      setSearch('');
     }
   }
 
-  function scrollToTopNow() {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const bodyPadding = parseInt(getComputedStyle(document.body).paddingTop, 10) || 100;
+    const top = el.getBoundingClientRect().top + window.scrollY - bodyPadding - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  function handleContactClick(e) {
+    // Keep link semantics but perform SPA-friendly scroll to Home contact section
+    e.preventDefault();
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      scrollToSection('contact');
+      return;
+    }
+    // navigate home then scroll after a short delay
+    navigate('/');
+    setTimeout(() => scrollToSection('contact'), 120);
+  }
+
+  function handleHomeClick(e) {
+    e.preventDefault();
+    // If already on home, force a full page reload to refresh content
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      window.location.reload();
+      return;
+    }
+    navigate('/');
   }
 
   return (
-    <>
-      <div className="top-mini-bar" role="navigation" aria-label="Top quick links">
-        <div className="top-mini-inner">
-          <div className="top-pill">
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=ssvjewllers@gmail.com&su=Enquiry%20from%20Website&body=Hi%20SSV%20Jewellers%2C%0A%0AI%20am%20interested%20in%20your%20collections.%20Please%20share%20more%20details.%0A%0AThank%20you."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="top-pill-item mini-item"
-              aria-label="Email SSV Jewellers via Gmail"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#560537" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '5px', verticalAlign: 'middle', flexShrink: 0 }}>
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <polyline points="2,4 12,13 22,4" />
-              </svg>
-              ssvjewellers@gmail.com
-            </a>
-            <a href="/contact#store-map" className="top-pill-item mini-item" aria-label="Visit store location">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#560537" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '5px', verticalAlign: 'middle', flexShrink: 0 }}>
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              Visit Store
-            </a>
-            <a href="tel:+919876543211" className="top-pill-item mini-item" aria-label="Call now">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#560537" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '5px', verticalAlign: 'middle', flexShrink: 0 }}>
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.16a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.61.59A2 2 0 0 1 22 16.92z" />
-              </svg>
-              Call Now 9874563210
-            </a>
-          </div>
+    <div className={`${styles.navbarWrapper} ${styles.themeModern}`}>
+      {/* Top Pill Bar */}
+      <div className={styles.topPillBar}>
+        <div className={styles.pillLeft}>
+          <div className={styles.pillItem}><span role="img" aria-label="email">✉️</span> ssvjewellers@gmail.com</div>
+          <div className={styles.pillItem}><span role="img" aria-label="location">📍</span> Visit Store</div>
+        </div>
+        <div className={styles.pillRight}>
+          <div className={styles.pillItem}><span role="img" aria-label="phone">📞</span> Call Now 9874563210</div>
         </div>
       </div>
 
+      {/* Main Navbar Row: 30/50/20 split */}
+      <div className={styles.mainNavbarRow}>
+        <div className={styles.logoSection}>
+          <Link className={styles['logo-wrapper']} to="/" aria-label="Go to home page">
+            <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className={styles.logoImage} />
+            <span className={styles.logo}>SSV JEWELLERS</span>
+          </Link>
+          {/* favorites link moved to search section */}
+        </div>
+        <div className={styles['nav-links']}>
+          <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? 'active' : ''}>Home</a>
+          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
+          {/* Contact should scroll to Home#contact instead of opening a separate page */}
+          <a href="/#contact" onClick={handleContactClick} className={({ isActive }) => ''}>Contact</a>
 
-      <nav className="navbar">
-        {/* Hamburger menu */}
-        <div className="menu-wrap">
-          <button
-            type="button"
-            className={`menu-btn${menuOpen ? ' open' : ''}`}
-            onClick={() => {
-              setFavOpen(false)
-              setMenuOpen(v => !v)
-            }}
-            aria-label="Open navigation menu"
-            aria-expanded={menuOpen}
-            style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 6 }}
+          {/* Dropdown grouping About + Services */}
+          <div
+            className={styles.dropdown}
+            ref={moreRef}
+            onMouseEnter={() => setMoreOpen(true)}
+            onMouseLeave={() => setMoreOpen(false)}
           >
-            {/* Use stroked lines so they remain visible on any background */}
-            <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
-              <line x1="4" y1="7" x2="20" y2="7" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-              <line x1="4" y1="12" x2="20" y2="12" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-              <line x1="4" y1="17" x2="20" y2="17" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
-
-          <div className={`menu-dropdown${menuOpen ? ' open' : ''}`} role="menu">
             <button
               type="button"
-              className="menu-close-btn"
-              onClick={closeMenu}
-              aria-label="Close navigation menu"
-            >×</button>
-            <NavLink to="/about" role="menuitem" onClick={closeMenu}>About</NavLink>
-            <NavLink to="/services" role="menuitem" onClick={closeMenu}>Services</NavLink>
-            <NavLink to="/products" role="menuitem" onClick={() => { closeMenu(); scrollToTopNow() }}>Collections</NavLink>
-            <NavLink to="/contact" role="menuitem" onClick={() => { closeMenu(); scrollToTopNow() }}>Contact</NavLink>
+              className={styles.dropdownToggle}
+              aria-haspopup="true"
+              aria-expanded={moreOpen}
+              onClick={() => setMoreOpen(v => !v)}
+            >
+              More
+              <span aria-hidden="true" className={styles.caret}>▾</span>
+            </button>
+            <div className={`${styles.dropdownMenu} ${moreOpen ? styles.show : ''}`} role="menu">
+              <NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''} role="menuitem">About</NavLink>
+              <NavLink to="/services" className={({ isActive }) => isActive ? 'active' : ''} role="menuitem">Services</NavLink>
+            </div>
           </div>
         </div>
-
-        {/* Logo */}
-        <Link className="logo-wrapper" to="/" aria-label="Go to home page">
-          <img src="/picture/ssv-logo.png.png" alt="SSV Logo" className="navbarlogo" loading="lazy" style={{ height: '48px', width: 'auto', marginRight: '10px' }} />
-          <span className="logo">SSV JEWELLERS</span>
-        </Link>
-
-        {/* Desktop nav links */}
-        <div className="nav-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Home</NavLink>
-          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Collections</NavLink>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''} onClick={scrollToTopNow}>Contact</NavLink>
-        </div>
-
-        {/* Favourites + Search grouped on the right */}
-        <div className="nav-tools" aria-label="Favourites tools">
-          <form className="search-box" onSubmit={handleSearch}>
+        <div className={styles.searchSection}>
+          <form className={styles['search-box']} onSubmit={handleSearch}>
             <input
               type="text"
               placeholder={search ? '' : placeholderText}
               value={search}
               onChange={e => setSearch(e.target.value)}
               aria-label="Search jewellery"
+              style={{ width: '100%', maxWidth: '100%' }}
             />
           </form>
-          <button
-            type="button"
-            className="tool-btn fav-btn"
-            onClick={() => {
-              setMenuOpen(false)
-              setFavOpen(v => !v)
-            }}
-            aria-label="Open liked collections"
-          >
-            <i className="bi bi-heart" aria-hidden="true" />
-            {favorites.length > 0 && (
-              <span className="tool-count" aria-hidden="true">{favorites.length}</span>
-            )}
-          </button>
-
-          <div className={`nav-fav-panel${favOpen ? ' open' : ''}`} aria-hidden={!favOpen}>
-            <div className="nav-fav-header">
-              <h4>Liked Collections</h4>
-              <button className="nav-fav-close" onClick={closeFav}>×</button>
-            </div>
-            {favorites.length === 0 ? (
-              <p className="nav-fav-empty">No liked collections yet.</p>
-            ) : (
-              <div className="nav-fav-list">
-                {favorites.map(item => (
-                  <div
-                    className="nav-fav-item"
-                    key={item.id}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => { navigate(`/products/${item.id}`); closeFav(); }}
-                    onKeyDown={e => { if (e.key === 'Enter') { navigate(`/products/${item.id}`); closeFav(); } }}
-                  >
-                    <img src={item.image || '/slides/pictures/logo.jpeg'} alt={item.name} />
-                    <div className="nav-fav-meta">
-                      <div className="nav-fav-name">{item.name}</div>
-                      <button className="nav-fav-remove" onClick={e => { e.stopPropagation(); removeFavorite(item.id); }} aria-label={`Remove ${item.name}`}>Remove</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* favorites removed from nav */}
         </div>
-      </nav>
+      </div>
 
-      {/* Backdrop */}
-      <div
-        className={`menu-backdrop${menuOpen || favOpen ? ' open' : ''}`}
-        aria-hidden="true"
-        onClick={closePanels}
-      />
-    </>
-  )
+      {/* Nav links moved into main row for single-line layout */}
+    </div>
+  );
 }
+

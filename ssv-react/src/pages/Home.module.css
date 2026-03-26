@@ -5,6 +5,11 @@
   }
 }
 
+/* Fixes/notes:
+   - Removed an invalid standalone filter declaration that prevented build.
+   - Keep this file tidy; recent layout adjustments happened here.
+*/
+
 /* ── CAROUSEL ── */
 .carousel {
   width: 100%;
@@ -59,7 +64,7 @@
 }
 
 .caption h2 {
-  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+  font-size: clamp(1.0rem, 3.2vw, 2.4rem);
   margin-bottom: 8px;
   font-family: var(--font-display);
 }
@@ -87,7 +92,7 @@
   transform: translateY(-2px);
 }
 
-.viewBtn,
+
 .readMoreBtn,
 .knowBtn {
   display: inline-block;
@@ -95,7 +100,7 @@
   border-radius: 999px;
   background: linear-gradient(90deg, #9b681e, #f4dd62);
   color: #fff;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.78rem;
   text-decoration: none;
   transition: transform 0.25s ease;
@@ -195,7 +200,6 @@
   z-index: 2;
 }
 
-filter: grayscale(0%) brightness(1);
 
 
 .viewItem h3 {
@@ -215,7 +219,8 @@ filter: grayscale(0%) brightness(1);
 
 /* ── ALT SECTIONS ── */
 .section {
-  padding: clamp(24px, 3vw, 36px) clamp(12px, 3vw, 24px);
+  /* Reduced vertical padding to remove unnecessary whitespace between sections */
+  padding: clamp(12px, 2vw, 18px) clamp(10px, 2.6vw, 20px);
   background: none;
 }
 
@@ -224,7 +229,7 @@ filter: grayscale(0%) brightness(1);
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: clamp(22px, 4vw, 48px);
+  gap: clamp(12px, 3vw, 32px);
 }
 
 .reverse {
@@ -239,8 +244,8 @@ filter: grayscale(0%) brightness(1);
 }
 
 .imageBox img {
-  width: 100%;
-  height: 380px;
+  width: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
@@ -276,16 +281,44 @@ filter: grayscale(0%) brightness(1);
 
 /* ── PRODUCT SECTION ── */
 .productsSection {
-  padding: clamp(14px, 2.4vw, 20px) clamp(12px, 3vw, 16px) clamp(26px, 5vw, 40px);
+  /* Tighter section padding for product area */
+  padding: clamp(12px, 1.8vw, 16px) clamp(12px, 3vw, 16px) clamp(18px, 3.6vw, 28px);
+}
+
+/* Large centered heading placed before the product grid */
+.productsHeader {
+  text-align: center;
+  color: #560537;
+  /* increase top spacing so the section header has more room from the content above */
+  margin: clamp(28px, 6vw, 96px) 0 clamp(8px, 2vw, 20px);
+}
+
+@media (max-width: 600px) {
+  .productsHeader {
+    margin: clamp(18px, 6vw, 36px) 0 clamp(6px, 2vw, 12px);
+  }
+}
+
+.productsHeader h2 {
+  font-family: var(--font-display);
+  color: var(--dark);
+  font-size: clamp(2rem, 6vw, 4.2rem);
+  letter-spacing: 2px;
+  line-height: 0.8;
+  margin-top: 35px;
+  text-transform: uppercase;
 }
 
 .homeProductGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  /* Force five cards per row on desktop while allowing responsive fallbacks */
+  grid-template-columns: repeat(5, minmax(210px, 1fr));
   gap: clamp(14px, 2.6vw, 24px);
-  max-width: 960px;
+  /* Allow wider grid to reduce side whitespace on large screens */
+  max-width: 1320px;
   margin: 0 auto;
   width: 100%;
+  padding-inline: clamp(8px, 2vw, 20px);
 }
 
 .productCard {
@@ -332,8 +365,9 @@ filter: grayscale(0%) brightness(1);
 .overlay h3 {
   color: #fff;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  margin-bottom: 10px;
+  /* reduced title size to better fit compact cards */
+  font-size: 0.86rem;
+  margin-bottom: 6px;
 }
 
 .cardActions {
@@ -416,7 +450,7 @@ filter: grayscale(0%) brightness(1);
     font-size: 0.74rem;
   }
 
-  .viewBtn,
+
   .readMoreBtn,
   .knowBtn {
     padding: 4px 9px;

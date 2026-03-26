@@ -9,6 +9,15 @@ import { apiUrl } from '../lib/api'
 import styles from './Products.module.css'
 
 
+/*
+  Notes:
+  - Added a section hero image and a responsive grid of 50 thumbnails (repeating
+    `public/picture/section-one.jpeg`) to aid visual layout testing.
+  - Thumbnails are lazy-loaded and styled via `Products.module.css`.
+  - If you want unique images, replace the src paths in the gallery block.
+*/
+
+
 
 const CATEGORIES = ['all', 'ring', 'necklace', 'chain', 'bracelet', 'earring']
 
@@ -120,6 +129,20 @@ export default function Products() {
         </div>
 
         {/* mobile dropdown removed — filter handled via category bar */}
+
+        {/* Section hero image */}
+        <div className={styles.sectionImageWrap}>
+          <img src="/picture/section-one.jpeg" alt="Jewellery collection" className={styles.sectionImage} loading="lazy" />
+        </div>
+
+        {/* Gallery of 50 thumbnails (repeating the same image) */}
+        <div className={styles.sectionImageGrid}>
+          {Array.from({ length: 50 }).map((_, idx) => (
+            <div key={`sec-img-${idx}`} className={styles.sectionImageItem}>
+              <img src="/picture/section-one.jpeg" alt={`gallery ${idx + 1}`} loading="lazy" />
+            </div>
+          ))}
+        </div>
 
         <motion.div className={styles.textBg} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <h2>Our Jewellery Collections</h2>
