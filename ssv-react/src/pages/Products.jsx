@@ -1,188 +1,87 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
-import { motion } from 'framer-motion'
-import ProductCard from '../components/ProductCard'
-import ProductModal from '../components/ProductModal'
-import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
-import { apiUrl } from '../lib/api'
-import styles from './Products.module.css'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Products.module.css';
 
+const CATEGORIES = [
+    "All", 
+    "Necklaces", 
+    "Bangles", 
+    "Bracelets", 
+    "Rings", 
+    "Bridal Sets", 
+    "Chokers", 
+    "Light Weight Items"
+];
 
-/*
-  Notes:
-  - Added a section hero image and a responsive grid of 50 thumbnails (repeating
-    `public/picture/section-one.jpeg`) to aid visual layout testing.
-  - Thumbnails are lazy-loaded and styled via `Products.module.css`.
-  - If you want unique images, replace the src paths in the gallery block.
-*/
-
-
-
-const CATEGORIES = ['all', 'ring', 'necklace', 'chain', 'bracelet', 'earring']
+const products = [
+    { id: 1, name: 'Radha Krishna Haram', sku: 'SSV-HRM-001', price: '₹ 1,89,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
+    { id: 2, name: 'Classic Gold Bangles', sku: 'SSV-BNG-002', price: '₹ 85,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
+    { id: 3, name: 'Sterling Silver Bracelet', sku: 'SSV-BRC-003', price: '₹ 12,500', category: 'Bracelets', image: '/images/floral_kundan.png' },
+    { id: 4, name: 'Classic Diamond Ring', sku: 'SSV-RNG-004', price: '₹ 75,000', category: 'Rings', image: '/images/mango_kundan.png' },
+    { id: 5, name: 'Royal Antique Bridal Set', sku: 'SSV-BRL-005', price: '₹ 4,50,000', category: 'Bridal Sets', image: '/images/floral_kundan.png' },
+    { id: 6, name: 'Kundan Choker Necklace', sku: 'SSV-CHK-006', price: '₹ 1,20,000', category: 'Chokers', image: '/picture/section-three.jpeg' },
+    { id: 7, name: 'Elegant Everyday Chain', sku: 'SSV-LWT-007', price: '₹ 25,000', category: 'Light Weight Items', image: '/images/mango_kundan.png' },
+    { id: 8, name: 'Temple Jewelry Mango Haram', sku: 'SSV-HRM-008', price: '₹ 2,15,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
+    { id: 9, name: 'Diamond Encrusted Bangles', sku: 'SSV-BNG-009', price: '₹ 1,45,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
+    { id: 10, name: 'Floral Motif Ring', sku: 'SSV-RNG-010', price: '₹ 45,000', category: 'Rings', image: '/images/mango_kundan.png' },
+    { id: 11, name: 'Polki Diamond Choker', sku: 'SSV-CHK-011', price: '₹ 3,40,000', category: 'Chokers', image: '/picture/section-three.jpeg' },
+    { id: 12, name: 'Minimalist Gold Bracelet', sku: 'SSV-BRC-012', price: '₹ 18,000', category: 'Bracelets', image: '/images/floral_kundan.png' },
+    { id: 13, name: 'South Indian Bridal Collection', sku: 'SSV-BRL-013', price: '₹ 5,80,000', category: 'Bridal Sets', image: '/images/floral_kundan.png' },
+    { id: 14, name: 'Lightweight Jhumka Earrings', sku: 'SSV-LWT-014', price: '₹ 15,500', category: 'Light Weight Items', image: '/images/mango_kundan.png' },
+    { id: 15, name: 'Long Guttapusalu Haram', sku: 'SSV-HRM-015', price: '₹ 1,75,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
+    { id: 16, name: 'Traditional Kadas', sku: 'SSV-BNG-016', price: '₹ 95,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
+];
 
 export default function Products() {
-  console.log('Products component render start')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [products, setProducts] = useState([])
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [showLeftArrow, setShowLeftArrow] = useState(false)
-  const [showRightArrow, setShowRightArrow] = useState(true)
-  const catBarRef = useRef(null)
+    const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const searchQuery = searchParams.get('search') || ''
+    const filteredProducts = selectedCategory === "All" 
+        ? products 
+        : products.filter(p => p.category === selectedCategory);
 
-  const handleCatScroll = useCallback(() => {
-    const el = catBarRef.current
-    if (!el) return
-    setShowLeftArrow(el.scrollLeft > 4)
-    setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth - 4)
-  }, [])
-
-  const scrollCat = useCallback((dir) => {
-    const el = catBarRef.current
-    if (!el) return
-    el.scrollBy({ left: dir === 'right' ? 140 : -140, behavior: 'smooth' })
-  }, [])
-
-  // Always fetch from API, never use static products
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        setLoading(true)
-        const res = await fetch(apiUrl('/api/products'))
-        if (!res.ok) throw new Error('API unavailable')
-        const data = await res.json()
-        setProducts(Array.isArray(data) ? data : [])
-      } catch {
-        setProducts([])
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadProducts()
-  }, [])
-
-  /* Apply category + search filter */
-  const filtered = useMemo(() => {
-    return products.filter(p => {
-      const matchCat = activeCategory === 'all' || p.category === activeCategory
-      const matchSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase())
-      return matchCat && matchSearch
-    })
-  }, [products, activeCategory, searchQuery])
-
-  function clearSearch() {
-    setSearchParams({})
-  }
-
-  return (
-    <>
-      <Helmet>
-        <title>Jewellery Collections | SSV Jewellers</title>
-        <meta name="description" content="Explore our curated collection of gold, silver and diamond jewellery at SSV Jewellers." />
-        <meta property="og:title" content="Jewellery Collections | SSV Jewellers" />
-        <link rel="canonical" href="https://ssvjewellers.com/products" />
-      </Helmet>
-
-      <motion.div className={styles.content} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-        {/* Category Filter Bar */}
-        <div className={styles.catBarWrapper}>
-          {showLeftArrow && (
-            <button
-              className={`${styles.catScrollBtn} ${styles.catScrollLeft}`}
-              onClick={() => scrollCat('left')}
-              aria-label="Scroll categories left"
-            >
-              &#8249;
-            </button>
-          )}
-          <div
-            className={styles.categoryBar}
-            ref={catBarRef}
-            onScroll={handleCatScroll}
-          >
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                className={`${styles.catItem}${activeCategory === cat ? ` ${styles.catActive}` : ''}`}
-                onClick={() => setActiveCategory(cat)}
-              >
-                <div className={styles.catIconWrap}>
-                  <img src="/slides/pictures/logo.jpeg" alt={cat} loading="lazy" />
-                </div>
-                <span className={styles.catLabel}>{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's'}</span>
-              </button>
-            ))}
-          </div>
-          {showRightArrow && (
-            <button
-              className={`${styles.catScrollBtn} ${styles.catScrollRight}`}
-              onClick={() => scrollCat('right')}
-              aria-label="Scroll categories right"
-            >
-              &#8250;
-            </button>
-          )}
-        </div>
-
-        {/* mobile dropdown removed — filter handled via category bar */}
-
-        {/* Section hero image */}
-        <div className={styles.sectionImageWrap}>
-          <img src="/picture/section-one.jpeg" alt="Jewellery collection" className={styles.sectionImage} loading="lazy" />
-        </div>
-
-        {/* Gallery of 50 thumbnails (repeating the same image) */}
-        <div className={styles.sectionImageGrid}>
-          {Array.from({ length: 50 }).map((_, idx) => (
-            <div key={`sec-img-${idx}`} className={styles.sectionImageItem}>
-              <img src="/picture/section-one.jpeg" alt={`gallery ${idx + 1}`} loading="lazy" />
+    return (
+        <div className={styles.productsPage}>
+            {/* Category Filter Pills */}
+            <div className={styles.categoryFilter}>
+                {CATEGORIES.map(cat => (
+                    <button 
+                        key={cat} 
+                        className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
+                        onClick={() => setSelectedCategory(cat)}
+                    >
+                        {cat}
+                    </button>
+                ))}
             </div>
-          ))}
+
+            <div className={styles.productsGrid}>
+                {filteredProducts.map((product) => (
+                    <div key={product.id} className={styles.productCard}>
+                        <Link to={`/products/${product.id}`} className={styles.imageLink} style={{ display: 'block' }}>
+                            <div className={styles.imageContainer}>
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className={styles.productImage}
+                                />
+                                <button className={styles.wishlistButton} aria-label="Add to Wishlist" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </Link>
+                        <div className={styles.productInfo}>
+                            <h3 className={styles.productName}>{product.name}</h3>
+                            <p className={styles.productSku}>{product.sku}</p>
+                            <p className={styles.productPrice}>{product.price}</p>
+                            <div className={styles.categoryTagArea}>
+                                <span className={styles.categoryTag}>{product.category}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-
-        <motion.div className={styles.textBg} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <h2>Our Jewellery Collections</h2>
-          <p>Explore a curated selection of jewellery designed to complement every style and occasion.</p>
-          {searchQuery && (
-            <p className={styles.searchNote}>
-              Showing results for: <strong>"{searchQuery}"</strong>
-              <button className={styles.clearSearch} onClick={clearSearch}>✕ Clear</button>
-            </p>
-          )}
-        </motion.div>
-
-        {loading ? (
-          <div className={styles.loadingWrap}>
-            <div className="spinner" />
-          </div>
-        ) : filtered.length === 0 ? (
-          <p className={styles.noResults}>No products found. Try a different filter.</p>
-        ) : (
-          <motion.div className={styles.productsGrid} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-            {filtered.map(product => (
-              <motion.div key={product.id} variants={fadeUp}>
-                <ProductCard
-                  product={product}
-                  onClick={() => setSelectedProduct(product)}
-                  overlayStyle={true}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-      </motion.div>
-
-      {/* Product Detail Modal */}
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
-      )}
-    </>
-  )
+    );
 }

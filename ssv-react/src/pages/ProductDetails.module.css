@@ -1,172 +1,225 @@
-.wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 28px 20px 60px;
+.detailsPage {
+    padding: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .backBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 20px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--brand);
-  text-decoration: none;
-  background: #fff;
-  border: 1px solid rgba(86, 5, 55, 0.12);
-  border-radius: 50%;
-  box-shadow: 0 6px 18px rgba(30, 22, 32, 0.08);
-  transition: color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 24px;
+    font-family: inherit;
+    transition: color 0.2s, transform 0.2s;
 }
 
 .backBtn:hover {
-  color: var(--gold);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(30, 22, 32, 0.12);
+    color: #bfa14a;
+    transform: translateX(-4px);
 }
 
-.backIcon {
-  width: 18px;
-  height: 18px;
-  display: block;
+.container {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: flex-start;
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
 }
 
-.infoCol {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 0;
+.imageSection {
+    flex: 1;
+    min-width: 50%;
 }
 
-.badge {
-  display: inline-block;
-  padding: 4px 12px;
-  background: rgba(86, 5, 55, 0.08);
-  color: #560537;
-  font-size: 0.72rem;
-  font-weight: 600;
-  border-radius: 20px;
-  text-transform: capitalize;
-  align-self: flex-start;
-  margin: 0;
+.mainImage {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    cursor: zoom-in;
+    transition: opacity 0.2s;
 }
 
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 700;
-  color: var(--dark);
-  line-height: 1.15;
-  margin: 0;
+.mainImage:hover {
+    opacity: 0.95;
 }
 
-.sku {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  margin: 0;
+.infoSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-top: 10px;
 }
 
-.price {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--gold);
-  margin: 0;
+.productTitle {
+    font-family: 'Playfair Display', Cambria, 'Times New Roman', serif;
+    font-size: 1.65rem;
+    color: #5c4b4f;
+    margin: 0 0 10px 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
 }
 
-.desc {
-  font-size: 0.95rem;
-  color: var(--mid);
-  line-height: 1.8;
-  margin: 0;
+.productSku {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0 0 12px 0;
 }
 
-.specBox {
-  background: var(--off-white);
-  border-radius: 10px;
-  padding: 16px 18px;
+.divider {
+    height: 1px;
+    background-color: #eaeaea;
+    width: 100%;
+    margin: 16px 0;
 }
 
-.specBox h3 {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--dark);
-  margin-bottom: 10px;
-  margin-top: 0;
+.productDescription {
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #444;
+    margin: 0;
 }
 
-.specBox ul {
-  padding-left: 18px;
-  margin: 0;
+.priceRequestBtn {
+    width: 100%;
+    background-color: #584444;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
+    border-radius: 4px;
 }
 
-.specBox li {
-  font-size: 0.88rem;
-  color: var(--mid);
-  line-height: 1.8;
+.priceRequestBtn:hover {
+    background-color: #413232;
 }
 
-.extra {
-  background: rgba(201, 168, 76, 0.08);
-  border-left: 3px solid var(--gold);
-  border-radius: 0 8px 8px 0;
-  padding: 10px 14px;
+.accordionsInline {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
-.extra p {
-  font-size: 0.85rem;
-  color: var(--mid);
-  margin: 0;
+.dropdownBox {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.2s;
 }
 
-.waBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  border-radius: 30px;
-  background: #25d366;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
-  align-self: flex-start;
-  margin-top: 4px;
+.dropdownBox span {
+    font-size: 0.65rem;
+    color: #666;
 }
 
-.waBtn:hover {
-  background: #1ebe5c;
-  transform: translateY(-2px);
+.dropdownBox:hover {
+    background-color: #f9f9f9;
 }
 
-.notFound {
-  text-align: center;
-  padding: 80px 20px;
+.accordionFull {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
 }
 
-.notFound h2 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--dark);
-  margin-bottom: 20px;
+.accordionFull span {
+    font-size: 0.65rem;
+    color: #666;
 }
 
-@media (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
+.accordionFull:hover {
+    background-color: #f9f9f9;
+}
+
+/* Modal Zoom Styles */
+.zoomModalOpen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    cursor: zoom-out;
+}
+
+.zoomedImage {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zoomedImageActive {
+    transform: scale(2.5);
+    cursor: move;
+}
+
+.closeZoomBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: white;
+    color: black;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    transition: background-color 0.2s;
+}
+
+.closeZoomBtn:hover {
+    background: #e0e0e0;
 }

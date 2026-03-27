@@ -1,3 +1,45 @@
+/* ── LUXURY SECTION HEADER ── */
+.luxuryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 auto 18px auto;
+  width: 100%;
+}
+
+.luxuryLine {
+  flex: 1 1 60px;
+  height: 1.5px;
+  background: linear-gradient(0deg, #e7c873 100%, #f4f1e6 90%);
+  opacity: 0.7;
+  border: none;
+  max-width: 120px;
+}
+
+.luxuryDot {
+  width: 8px;
+  height: 8px;
+  background: #e7c873;
+  border-radius: 50%;
+  margin: 0 10px;
+  box-shadow: 0 0 2px #bfa14a44;
+}
+
+.luxuryTitle {
+  font-family: 'Inter', sans-serif;
+  color: #bfa14a;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #bfa14a 60%, #e7c873 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  padding: 0 8px;
+}
 /* Swap image and text in section 2 for mobile */
 @media (max-width: 768px) {
   .sectionReverse .container {
@@ -237,17 +279,26 @@
 }
 
 .imageBox {
-  flex: 1;
+  flex: 0 0 340px;
+  max-width: 340px;
+  min-width: 220px;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
 
 .imageBox img {
-  width: auto;
+  width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-width: 340px;
+  max-height: 340px;
+  object-fit: contain;
   display: block;
+  margin: 0 auto;
   transition: transform 0.5s ease;
 }
 
@@ -327,6 +378,12 @@
   overflow: hidden;
   aspect-ratio: 3/4;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
 .productCard img {
@@ -356,6 +413,7 @@
   padding: clamp(14px, 2.2vw, 20px) clamp(12px, 2vw, 16px);
   opacity: 0;
   transition: opacity 0.35s ease;
+  pointer-events: none;
 }
 
 .productCard:hover .overlay {
@@ -392,7 +450,15 @@
   }
 
   .imageBox img {
-    height: 260px;
+    width: 100%;
+    max-width: 400px;
+    /* or whatever fits your design */
+    height: auto;
+    max-height: 350px;
+    /* adjust as needed */
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
   }
 
   .caption h2 {
@@ -475,4 +541,56 @@
   .homeProductGrid {
     max-width: 1320px;
   }
+}
+
+/* Modal Zoom Styles */
+.zoomModalOpen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    cursor: zoom-out;
+}
+
+.zoomedImage {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zoomedImageActive {
+    transform: scale(2.5);
+    cursor: move;
+}
+
+.closeZoomBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: white;
+    color: black;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    transition: background-color 0.2s;
+}
+
+.closeZoomBtn:hover {
+    background: #e0e0e0;
 }

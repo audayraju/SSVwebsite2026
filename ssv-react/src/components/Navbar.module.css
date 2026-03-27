@@ -133,18 +133,19 @@
 .topPillBar {
     display: flex;
     align-items: center;
-    background: #fff;
-    color: #560537;
-    font-family: var(--font-body);
-    font-size: 0.80rem;
+    background: #f8f6f7; /* premium darker maroon */
+    color: #6f0653;      /* soft gold */
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
     padding: 6px 5%;
-    border-bottom: 1px solid #c5a47e22;
+    border-bottom: 1px solid rgba(231, 200, 115, 0.15);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10002;
-    min-height: 36px;
+    min-height: 32px;
 }
 
 .pillLeft {
@@ -170,19 +171,20 @@
 
 /* Main navbar outer wrapper */
 .mainNavbarRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    background: #560537;
+    background: #4A042E; /* Rich deep wine */
     border-radius: 0;
-    min-height: 64px;
     position: fixed;
-    top: 36px;
+    top: 32px; /* matches topPillBar height */
     left: 0;
     right: 0;
     z-index: 10001;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-    border-bottom: 3px solid var(--gold);
-    display: flex;
-    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(231, 200, 115, 0.2);
+    min-height: 72px;
 }
 
 /* Inner centered content */
@@ -190,7 +192,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1600px;  /* increased limit for wide monitors */
+    max-width: 1400px;
     width: 100%;
     margin: 0 auto;
     padding: 0 5%;
@@ -338,16 +340,26 @@
 
 
 .search-box input {
-    border: 2px solid #c5a47e;
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 1rem;
-    background: #fff;
-    color: #560537;
+    border: 1px solid rgba(231, 200, 115, 0.4);
+    border-radius: 24px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.05); /* sleek dark transparent look */
+    color: #fff;
     outline: none;
-    width: 800px;
+    width: 250px;
     max-width: 100%;
-    transition: border 0.2s;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-box input:focus {
+    border-color: #e7c873;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Like button (outline) placed next to search */
@@ -408,36 +420,37 @@
 
 .dropdownMenu {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 14px);
     left: 50%;
     transform: translateX(-50%);
-    background: #ffffff;
-    /* white panel for strong contrast */
-    color: #3b0f2a;
-    /* dark maroon text */
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 10px 14px;
-    border-radius: 8px;
+    background: #4A042E;
+    color: #fff;
+    border: 1px solid rgba(231, 200, 115, 0.2);
+    padding: 12px;
+    border-radius: 6px;
     min-width: 180px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     display: none;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     z-index: 9999;
-    /* ensure it sits above hero/images */
 }
 
 .dropdownMenu a {
-    color: #3b0f2a;
+    color: #fff;
     text-decoration: none;
-    padding: 8px 10px;
+    padding: 10px 14px;
     border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .dropdownMenu a:hover,
 .dropdownMenu a.active {
-    background: rgba(197, 164, 126, 0.06);
-    color: var(--gold);
+    background: rgba(231, 200, 115, 0.15);
+    color: #e7c873;
 }
 
 .show {
