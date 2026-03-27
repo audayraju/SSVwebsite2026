@@ -105,9 +105,9 @@ export default function ProductList() {
                 {products.map(product => (
                   <li key={product.id} className={styles.productItem}>
                     <div className={styles.productItemImage}>
-                      {product._id ? (
+                      {product.imageUrl ? (
                         <img
-                          src={`https://api-vert.vercel.app/api/products/${product._id}/image`}
+                          src={product.imageUrl}
                           alt={product.name}
                           loading="lazy"
                           width={64}

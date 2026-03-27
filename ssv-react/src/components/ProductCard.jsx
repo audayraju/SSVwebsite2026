@@ -16,6 +16,7 @@ export default function ProductCard({ product, onClick }) {
     category,
     image,
     product_image,
+    imageUrl,
   } = product
 
   const liked = isFavorite(id)
@@ -28,7 +29,7 @@ export default function ProductCard({ product, onClick }) {
   }
 
   // Improved image src logic: prefer absolute, fallback to /uploads, /picture/carousel-images, fallback to logo
-  let imgSrc = image || product_image || ''
+  let imgSrc = imageUrl || image || product_image || ''
   if (imgSrc.startsWith('http') || imgSrc.startsWith('data:')) {
     // absolute or data url
   } else if (imgSrc.startsWith('/picture/')) {

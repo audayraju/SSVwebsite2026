@@ -89,35 +89,28 @@ export default function UploadProduct() {
 
     try {
       const token = sessionStorage.getItem('ssv_admin_token')
-      let imageBase64 = null
-      let imageContentType = null
+      
+      const formData = new FormData()
+      formData.append('name', form.productName)
+      formData.append('category', form.productCategory)
+      formData.append('price', form.productPrice)
+      formData.append('description', form.productDescription)
+      formData.append('additionalInformation', form.productAdditionalInfo)
+      formData.append('type', form.productType)
+      formData.append('specifications', form.productSpecs)
+      formData.append('imageId', form.productImageId)
+      
       if (imageFile) {
-        // Read file as base64
-        const fileData = await new Promise((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => resolve(reader.result)
-          reader.onerror = reject
-          reader.readAsDataURL(imageFile)
-        })
-        // fileData is a data URL: "data:image/jpeg;base64,..."
-        const [meta, base64] = String(fileData).split(',')
-        imageBase64 = base64
-        imageContentType = imageFile.type
-      }
-
-      const payload = {
-        ...form,
-        imageBase64,
-        imageContentType,
+        formData.append('image', imageFile)
       }
 
       const url = editId ? apiUrl(`/api/admin/products/${editId}`) : apiUrl('/api/admin/products')
       const method = editId ? 'put' : 'post'
 
-      await axios[method](url, payload, {
+      await axios[method](url, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+          // Axios automatically sets 'Content-Type': 'multipart/form-data' when sending FormData
         },
       })
 

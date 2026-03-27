@@ -189,27 +189,27 @@ function sortProductsByImageId(products) {
 // ---------------------------------------------------------------------------
 // Auth helpers
 // ---------------------------------------------------------------------------
+const jwt = require('jsonwebtoken')
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+if (!ADMIN_PASSWORD) {
+  console.error('[Startup Error] NO ADMIN_PASSWORD SET IN .env!');
+  console.error('The server refuses to start with a hardcoded backdoor password.');
+  process.exit(1);
+}
+
 const ADMIN_USER = (process.env.ADMIN_USERNAME ?? 'ssvadmin').trim()
 // Pre-hash the password at startup so every comparison is constant-time
-const ADMIN_HASH = bcrypt.hashSync((process.env.ADMIN_PASSWORD ?? 'SSV@Admin2025').trim(), 10)
+const ADMIN_HASH = bcrypt.hashSync(ADMIN_PASSWORD.trim(), 10)
 const TOKEN_SECRET = (process.env.TOKEN_SECRET ?? 'changeme').trim()
 
-// Simple HMAC token — avoids a JWT library dependency
 function signToken(payload) {
-  const data = Buffer.from(JSON.stringify(payload)).toString('base64url')
-  const sig = crypto.createHmac('sha256', TOKEN_SECRET).update(data).digest('base64url')
-  return `${data}.${sig}`
+  return jwt.sign(payload, TOKEN_SECRET, { expiresIn: '12h' })
 }
 
 function verifyToken(token) {
-  if (!token) return null
-  const [data, sig] = token.split('.')
-  if (!data || !sig) return null
-  const expected = crypto.createHmac('sha256', TOKEN_SECRET).update(data).digest('base64url')
-  // Constant-time comparison to prevent timing attacks
-  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null
   try {
-    return JSON.parse(Buffer.from(data, 'base64url').toString('utf8'))
+    return jwt.verify(token, TOKEN_SECRET)
   } catch {
     return null
   }
@@ -473,8 +473,8 @@ app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req
   }
 })
 
-// Update product (with optional image upload as base64)
-app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
+// Update product (with optional image upload via Cloudinary)
+app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (req, res) => {
   console.log(`[PUT] /api/admin/products/${req.params.id}`)
   try {
     const product = await Product.findById(req.params.id)
@@ -484,38 +484,47 @@ app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
     }
 
     const {
-      productName,
-      productCategory,
-      productPrice,
-      productDescription,
-      productAdditionalInfo,
-      productType,
-      productSpecs,
-      productImageId,
+      name,
+      category,
+      price,
+      description,
+      additionalInformation,
+      type,
+      specifications,
       imageId,
-      imageBase64,
-      imageContentType,
     } = req.body ?? {}
 
-    product.name = productName ? String(productName).slice(0, 200) : product.name;
-    product.category = productCategory ? String(productCategory).slice(0, 50) : product.category;
-    product.price = productPrice !== undefined ? parseFloat(productPrice) : product.price;
-    product.description = productDescription ? String(productDescription).slice(0, 2000) : product.description;
-    product.additionalInfo = productAdditionalInfo ? String(productAdditionalInfo).slice(0, 1000) : product.additionalInfo;
-    product.type = productType ? String(productType).slice(0, 100) : product.type;
-    product.specs = productSpecs
-      ? String(productSpecs).split('\n').map(s => s.trim()).filter(Boolean)
-      : product.specs;
-    if (imageBase64 && imageContentType) {
-      try {
-        const buffer = Buffer.from(imageBase64, imageBase64.startsWith('data:') ? imageBase64.split(',')[1] : undefined ? 'base64' : 'base64')
-        product.image = { data: buffer, contentType: imageContentType }
-      } catch (e) {
-        console.warn('[admin/products] Invalid imageBase64')
+    product.name = name ? String(name).slice(0, 200) : product.name;
+    product.category = category ? String(category).slice(0, 50) : product.category;
+    product.price = price !== undefined ? parseFloat(price) : product.price;
+    product.description = description ? String(description).slice(0, 2000) : product.description;
+    product.additionalInformation = additionalInformation ? String(additionalInformation).slice(0, 1000) : product.additionalInformation;
+    product.type = type ? String(type).slice(0, 100) : product.type;
+    product.specifications = specifications
+      ? String(specifications).split('\n').map(s => s.trim()).filter(Boolean)
+      : product.specifications;
+      
+    product.imageId = imageId ?? product.imageId;
+    product.updatedAt = new Date().toISOString();
+
+    if (req.file) {
+      // Wipe the old image from Cloudinary if it exists
+      if (product.imagePublicId) {
+        try {
+          await cloudinary.uploader.destroy(product.imagePublicId);
+          console.log(`[Cloudinary] Deleted old product image: ${product.imagePublicId}`);
+        } catch (e) {
+          console.error(`[Cloudinary] Failed to delete old image ${product.imagePublicId}`, e);
+        }
+      }
+      product.imageUrl = req.file.path;
+      product.imagePublicId = req.file.filename;
+      
+      // Clear out the broken buffer data if this product has it from previous versions
+      if (product.image) {
+        product.image = undefined;
       }
     }
-    product.imageId = productImageId ?? imageId ?? product.imageId;
-    product.updatedAt = new Date().toISOString();
 
     await product.save();
     console.log(`[PUT] /api/admin/products/${req.params.id} updated`)
