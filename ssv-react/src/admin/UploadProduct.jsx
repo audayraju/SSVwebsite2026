@@ -89,28 +89,42 @@ export default function UploadProduct() {
 
     try {
       const token = sessionStorage.getItem('ssv_admin_token')
-      
-      const formData = new FormData()
-      formData.append('name', form.productName)
-      formData.append('category', form.productCategory)
-      formData.append('price', form.productPrice)
-      formData.append('description', form.productDescription)
-      formData.append('additionalInformation', form.productAdditionalInfo)
-      formData.append('type', form.productType)
-      formData.append('specifications', form.productSpecs)
-      formData.append('imageId', form.productImageId)
+      let imageBase64 = null
+      let imageContentType = null
       
       if (imageFile) {
-        formData.append('image', imageFile)
+        // Read file as base64 to bypass Vercel serverless multer payload corruption
+        const fileData = await new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result)
+          reader.onerror = reject
+          reader.readAsDataURL(imageFile)
+        })
+        const [meta, base64] = String(fileData).split(',')
+        imageBase64 = `data:${imageFile.type};base64,${base64}` // Send full data URI for Cloudinary
+        imageContentType = imageFile.type
+      }
+
+      const payload = {
+        name: form.productName,
+        category: form.productCategory,
+        price: form.productPrice,
+        description: form.productDescription,
+        additionalInformation: form.productAdditionalInfo,
+        type: form.productType,
+        specifications: form.productSpecs,
+        imageId: form.productImageId,
+        imageBase64,
+        imageContentType
       }
 
       const url = editId ? apiUrl(`/api/admin/products/${editId}`) : apiUrl('/api/admin/products')
       const method = editId ? 'put' : 'post'
 
-      await axios[method](url, formData, {
+      await axios[method](url, payload, {
         headers: {
-          Authorization: `Bearer ${token}`
-          // Axios automatically sets 'Content-Type': 'multipart/form-data' when sending FormData
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
       })
 

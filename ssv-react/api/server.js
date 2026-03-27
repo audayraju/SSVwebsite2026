@@ -430,17 +430,20 @@ async function generateImageId() {
   return `IMG-${String(num).padStart(6, '0')}`
 }
 
-// Admin product upload (Cloudinary, multer, multipart/form-data)
-app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req, res) => {
+// Admin product upload (Cloudinary, base64 payload to bypass Vercel serverless multer payload corruption)
+app.post('/api/admin/products', requireAdmin, async (req, res) => {
   try {
-    const { name, category, price, description, additionalInformation, type, specifications, imageId } = req.body
+    const { name, category, price, description, additionalInformation, type, specifications, imageId, imageBase64 } = req.body
     if (!name || !category) return res.status(400).json({ message: 'Name and category are required.' })
     if (!price || isNaN(price) || Number(price) <= 0) return res.status(400).json({ message: 'Price must be positive.' })
-    if (!req.file) return res.status(400).json({ message: 'Product image is required.' })
+    if (!imageBase64) return res.status(400).json({ message: 'Product image is required.' })
 
-    // Cloudinary result
-    const imageUrl = req.file.path
-    const imagePublicId = req.file.filename
+    // Cloudinary Base64 Upload
+    const uploadRes = await cloudinary.uploader.upload(imageBase64, {
+      folder: 'products'
+    });
+    const imageUrl = uploadRes.secure_url;
+    const imagePublicId = uploadRes.public_id;
 
     // Auto-generate imageId if not provided
     let finalImageId = imageId
@@ -473,8 +476,8 @@ app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req
   }
 })
 
-// Update product (with optional image upload via Cloudinary)
-app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (req, res) => {
+// Update product (with optional image upload via Cloudinary base64 payload to bypass Vercel serverless limits)
+app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
   console.log(`[PUT] /api/admin/products/${req.params.id}`)
   try {
     const product = await Product.findById(req.params.id)
@@ -492,6 +495,7 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (
       type,
       specifications,
       imageId,
+      imageBase64
     } = req.body ?? {}
 
     product.name = name ? String(name).slice(0, 200) : product.name;
@@ -507,7 +511,11 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (
     product.imageId = imageId ?? product.imageId;
     product.updatedAt = new Date().toISOString();
 
-    if (req.file) {
+    if (imageBase64) {
+      const uploadRes = await cloudinary.uploader.upload(imageBase64, {
+        folder: 'products'
+      });
+      
       // Wipe the old image from Cloudinary if it exists
       if (product.imagePublicId) {
         try {
@@ -517,8 +525,8 @@ app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (
           console.error(`[Cloudinary] Failed to delete old image ${product.imagePublicId}`, e);
         }
       }
-      product.imageUrl = req.file.path;
-      product.imagePublicId = req.file.filename;
+      product.imageUrl = uploadRes.secure_url;
+      product.imagePublicId = uploadRes.public_id;
       
       // Clear out the broken buffer data if this product has it from previous versions
       if (product.image) {
