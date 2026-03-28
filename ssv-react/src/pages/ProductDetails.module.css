@@ -1,221 +1,285 @@
 .detailsPage {
-    padding: 2rem 1rem;
-    max-width: 900px;
+    height: 100vh;
+    background: white;
+    color:black;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 0.8; }
+}
+
+.contentWrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 30px 5% 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .backBtn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: transparent;
-    border: none;
-    color: #666;
-    font-size: 0.95rem;
-    font-weight: 500;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #0d0d0d;
+    padding: 8px 16px;
+    border-radius: 999px;
     cursor: pointer;
-    padding: 0;
-    margin-bottom: 24px;
-    font-family: inherit;
-    transition: color 0.2s, transform 0.2s;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    align-self: flex-start;
 }
 
 .backBtn:hover {
-    color: #bfa14a;
-    transform: translateX(-4px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--brass-light);
+    transform: translateX(-5px);
 }
 
-.container {
-    display: flex;
-    gap: 32px;
-    align-items: flex-start;
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    flex: 1;
+    min-height: 0;
 }
 
 @media (max-width: 900px) {
-    .container {
-        flex-direction: column;
+    .mainGrid {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: auto;
     }
+    .detailsPage { height: auto; min-height: 100vh; overflow-y: auto; }
 }
 
+/* ── IMAGE SECTION ── */
 .imageSection {
-    flex: 1;
-    min-width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.imageFrame {
+    position: relative;
+    overflow: hidden;
+    max-height: 90%;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .mainImage {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: zoom-in;
-    transition: opacity 0.2s;
 }
 
-.mainImage:hover {
-    opacity: 0.95;
-}
-
+/* ── INFO SECTION ── */
 .infoSection {
-    flex: 1;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding-top: 10px;
+    align-items: center;
+    min-height: 0;
+}
+
+.infoGlass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 25px 35px;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.infoGlass::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Webkit */
+}
+
+.categoryTag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--brass-light);
+    margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .productTitle {
-    font-family: 'Playfair Display', Cambria, 'Times New Roman', serif;
-    font-size: 1.65rem;
-    color: #5c4b4f;
-    margin: 0 0 10px 0;
-    font-weight: 500;
+    font-family: var(--font-display, 'Cinzel', serif);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    color: #090909;
+    letter-spacing: 1px;
+}
+
+.skuTag {
+    font-size: 0.7rem;
+    color: black;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.skuTag span {
+    color: #070707;
+}
+
+.servicePromise {
+    margin-top: 15px;
+}
+
+.promiseTitle {
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-family: var(--font-display);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1.3;
+    letter-spacing: 1px;
 }
 
-.productSku {
-    font-family: inherit;
+.servicePromise p {
     font-size: 0.85rem;
-    color: #666;
-    margin: 0 0 12px 0;
+    line-height: 1.6;
+    color: #444;
 }
 
-.divider {
-    height: 1px;
-    background-color: #eaeaea;
-    width: 100%;
-    margin: 16px 0;
+.priceContainer {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: none;
+}
+
+.priceLabel {
+    display: block;
+    font-size: 0.75rem;
+    color: black;
+    margin-bottom: 4px;
+}
+
+.productPrice {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e7c873;
+}
+
+.enquireBtn {
+    background: green;
+    color: #faf5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(155, 104, 30, 0.3);
+}
+
+.enquireBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 104, 30, 0.4);
 }
 
 .productDescription {
-    font-family: inherit;
-    font-size: 0.95rem;
-    color: #444;
+    margin-top: 5px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.productDescription p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #333;
     margin: 0;
 }
 
-.priceRequestBtn {
-    width: 100%;
-    background-color: #584444;
-    color: #fff;
-    padding: 12px;
-    border: none;
-    font-size: 0.95rem;
+/* ── SPEC GRID ── */
+.specGrid {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 8px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background-color 0.2s;
-    margin-bottom: 20px;
-    border-radius: 4px;
+    margin-top: 20px;
 }
 
-.priceRequestBtn:hover {
-    background-color: #413232;
-}
-
-.accordionsInline {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-    width: 100%;
-}
-
-.dropdownBox {
-    flex: 1;
-    border: 1px solid #ccc;
-    padding: 10px 12px;
+.specRow {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    color: #333;
-    font-size: 0.85rem;
-    cursor: pointer;
-    background: transparent;
-    transition: background-color 0.2s;
+    font-size: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.dropdownBox span {
-    font-size: 0.65rem;
-    color: #666;
+.specLabel {
+    color: rgba(255, 255, 255, 0.4);
 }
 
-.dropdownBox:hover {
-    background-color: #f9f9f9;
+.specValue {
+    color: #fff;
+    font-weight: 500;
 }
 
-.accordionFull {
-    width: 100%;
-    border: 1px solid #ccc;
-    padding: 10px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #333;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background: transparent;
-    transition: background-color 0.2s;
-    margin-bottom: 20px;
-}
-
-.accordionFull span {
-    font-size: 0.65rem;
-    color: #666;
-}
-
-.accordionFull:hover {
-    background-color: #f9f9f9;
-}
-
-/* Modal Zoom Styles */
+/* ── ZOOM MODAL ── */
 .zoomModalOpen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.9);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 999999;
+    justify-content: center;
     cursor: zoom-out;
 }
 
 .zoomedImage {
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.3s ease;
 }
 
 .zoomedImageActive {
-    transform: scale(2.5);
-    cursor: move;
+    transform: scale(2);
 }
 
 .closeZoomBtn {
     position: absolute;
     top: 30px;
     right: 30px;
-    background: white;
-    color: black;
-    border: none;
-    width: 40px;
-    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 9999999;
     transition: background-color 0.2s;
 }

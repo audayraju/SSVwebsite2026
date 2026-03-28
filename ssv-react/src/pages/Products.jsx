@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Products.module.css';
 
 const CATEGORIES = [
@@ -13,74 +13,115 @@ const CATEGORIES = [
     "Light Weight Items"
 ];
 
-const products = [
-    { id: 1, name: 'Radha Krishna Haram', sku: 'SSV-HRM-001', price: '₹ 1,89,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
-    { id: 2, name: 'Classic Gold Bangles', sku: 'SSV-BNG-002', price: '₹ 85,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
-    { id: 3, name: 'Sterling Silver Bracelet', sku: 'SSV-BRC-003', price: '₹ 12,500', category: 'Bracelets', image: '/images/floral_kundan.png' },
-    { id: 4, name: 'Classic Diamond Ring', sku: 'SSV-RNG-004', price: '₹ 75,000', category: 'Rings', image: '/images/mango_kundan.png' },
-    { id: 5, name: 'Royal Antique Bridal Set', sku: 'SSV-BRL-005', price: '₹ 4,50,000', category: 'Bridal Sets', image: '/images/floral_kundan.png' },
-    { id: 6, name: 'Kundan Choker Necklace', sku: 'SSV-CHK-006', price: '₹ 1,20,000', category: 'Chokers', image: '/picture/section-three.jpeg' },
-    { id: 7, name: 'Elegant Everyday Chain', sku: 'SSV-LWT-007', price: '₹ 25,000', category: 'Light Weight Items', image: '/images/mango_kundan.png' },
-    { id: 8, name: 'Temple Jewelry Mango Haram', sku: 'SSV-HRM-008', price: '₹ 2,15,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
-    { id: 9, name: 'Diamond Encrusted Bangles', sku: 'SSV-BNG-009', price: '₹ 1,45,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
-    { id: 10, name: 'Floral Motif Ring', sku: 'SSV-RNG-010', price: '₹ 45,000', category: 'Rings', image: '/images/mango_kundan.png' },
-    { id: 11, name: 'Polki Diamond Choker', sku: 'SSV-CHK-011', price: '₹ 3,40,000', category: 'Chokers', image: '/picture/section-three.jpeg' },
-    { id: 12, name: 'Minimalist Gold Bracelet', sku: 'SSV-BRC-012', price: '₹ 18,000', category: 'Bracelets', image: '/images/floral_kundan.png' },
-    { id: 13, name: 'South Indian Bridal Collection', sku: 'SSV-BRL-013', price: '₹ 5,80,000', category: 'Bridal Sets', image: '/images/floral_kundan.png' },
-    { id: 14, name: 'Lightweight Jhumka Earrings', sku: 'SSV-LWT-014', price: '₹ 15,500', category: 'Light Weight Items', image: '/images/mango_kundan.png' },
-    { id: 15, name: 'Long Guttapusalu Haram', sku: 'SSV-HRM-015', price: '₹ 1,75,000', category: 'Necklaces', image: '/images/floral_kundan.png' },
-    { id: 16, name: 'Traditional Kadas', sku: 'SSV-BNG-016', price: '₹ 95,000', category: 'Bangles', image: '/picture/section-one.jpeg' },
-];
+import { products as productList } from '../data/productData';
+
+const products = productList;
 
 export default function Products() {
-    const [selectedCategory, setSelectedCategory] = useState("All");
+    const location = useLocation();
+    const navigate = useNavigate();
+    
+    // Extract category and search query from URL
+    const searchParams = new URLSearchParams(location.search);
+    const categoryFromUrl = searchParams.get('category');
+    const searchTerm = searchParams.get('search') || '';
 
-    const filteredProducts = selectedCategory === "All" 
-        ? products 
-        : products.filter(p => p.category === selectedCategory);
+    // Initialize category with URL param if it exists, otherwise "All"
+    const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "All");
+    
+    // Synchronize state if URL changes (e.g. clicking a link while already on the page)
+    React.useEffect(() => {
+        if (categoryFromUrl) {
+            setSelectedCategory(categoryFromUrl);
+        }
+    }, [categoryFromUrl]);
+
+    const filteredProducts = products.filter(p => {
+        const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
+        
+        if (!searchTerm) return matchesCategory;
+
+        const searchTokens = searchTerm.toLowerCase().split(/\s+/).filter(Boolean);
+        
+        const matchesSearch = searchTokens.every(token => {
+            const matchName = p.name.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token));
+            const matchCat = p.category.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token));
+            const matchDesc = p.description ? p.description.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token)) : false;
+            return matchName || matchCat || matchDesc;
+        });
+        
+        return matchesCategory && matchesSearch;
+    });
 
     return (
         <div className={styles.productsPage}>
-            {/* Category Filter Pills */}
-            <div className={styles.categoryFilter}>
-                {CATEGORIES.map(cat => (
-                    <button 
-                        key={cat} 
-                        className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
-                        onClick={() => setSelectedCategory(cat)}
-                    >
-                        {cat}
-                    </button>
-                ))}
-            </div>
+            {/* ── PRODUCTS HERO ── */}
+            <section className={styles.productsHero}>
+                <div className={styles.heroContent}>
+                    <span className={styles.heroLabel}>Our Collection</span>
+                    <h1><span className={styles.goldText}>Exquisite</span> Jewellers</h1>
+                    <p>Explore our curated catalog of handcrafted gold, silver, and diamond masterpieces, each designed to capture the essence of elegance.</p>
+                </div>
+                <div className={styles.heroGlow} />
+            </section>
 
-            <div className={styles.productsGrid}>
-                {filteredProducts.map((product) => (
-                    <div key={product.id} className={styles.productCard}>
-                        <Link to={`/products/${product.id}`} className={styles.imageLink} style={{ display: 'block' }}>
-                            <div className={styles.imageContainer}>
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className={styles.productImage}
-                                />
-                                <button className={styles.wishlistButton} aria-label="Add to Wishlist" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </Link>
-                        <div className={styles.productInfo}>
-                            <h3 className={styles.productName}>{product.name}</h3>
-                            <p className={styles.productSku}>{product.sku}</p>
-                            <p className={styles.productPrice}>{product.price}</p>
-                            <div className={styles.categoryTagArea}>
-                                <span className={styles.categoryTag}>{product.category}</span>
-                            </div>
-                        </div>
+            <div className={styles.contentWrapper}>
+                {/* Category Filter Pills */}
+                <div className={styles.filterSection}>
+                    <div className={styles.categoryFilter}>
+                        {CATEGORIES.map(cat => (
+                            <button 
+                                key={cat} 
+                                className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
+                                onClick={() => {
+                                    setSelectedCategory(cat);
+                                    if (location.search) {
+                                        navigate('/products', { replace: true });
+                                    }
+                                }}
+                            >
+                                {cat}
+                            </button>
+                        ))}
                     </div>
-                ))}
+                </div>
+
+                {filteredProducts.length > 0 ? (
+                    <div className={styles.productsGrid}>
+                        {filteredProducts.map((product) => (
+                            <div key={product.id} className={styles.productCard}>
+                                <Link to={`/products/${product.id}`} className={styles.imageLink}>
+                                    <div className={styles.imageContainer}>
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            className={styles.productImage}
+                                        />
+                                    </div>
+                                </Link>
+                                <div className={styles.productInfo}>
+                                    <div className={styles.infoTop}>
+                                        <span className={styles.productCategory}>{product.category}</span>
+                                        <span className={styles.productSku}>{product.sku}</span>
+                                    </div>
+                                    <h3 className={styles.productName}>{product.name}</h3>
+                                    <div className={styles.infoBottom}>
+                                        <p className={styles.productPrice}>{product.price}</p>
+                                        <Link to={`/products/${product.id}`} className={styles.enquireLink}>
+                                            Enquire
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className={styles.noResults}>
+                        <h3>No matches found for "{searchTerm}"</h3>
+                        <p>Try exploring our featured categories or adjust your search.</p>
+                        <button onClick={() => navigate('/products')} className={styles.resetBtn}>View All Products</button>
+                    </div>
+                )}
             </div>
         </div>
     );

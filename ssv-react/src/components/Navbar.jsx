@@ -11,14 +11,27 @@ export default function Navbar() {
   const [suggestIndex, setSuggestIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [typing, setTyping] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets'];
 
+  const announcementItems = [
+    <React.Fragment key="1">
+      <strong>NOTE:</strong>  We accept all types of custom designs in Gold and Silver to match your style and preferences.
+    </React.Fragment>,
+    <React.Fragment key="2">
+      <strong>Gold Ornaments:</strong> Gold Wastage Only 8% VA | No Making Charges
+    </React.Fragment>,
+    <React.Fragment key="3">
+      <strong>Silver Ornaments:</strong> Lower and more reasonable prices compared to other markets.
+    </React.Fragment>,
+  ];
+
   useEffect(() => {
-    if (search) {
-      setPlaceholderText('');
+    if (search || isFocused) {
+      setPlaceholderText(search ? '' : 'Search...');
       return;
     }
     let mounted = true;
@@ -54,13 +67,37 @@ export default function Navbar() {
       }, 400);
       return () => { mounted = false; clearTimeout(t); };
     }
-  }, [charIndex, typing, suggestIndex, search]);
+  }, [charIndex, typing, suggestIndex, search, isFocused]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get('search');
+    if (searchParam !== null) {
+      setSearch(searchParam);
+    } else {
+      setSearch('');
+    }
+  }, [location.search]);
+
+  function handleSearchChange(e) {
+    const newVal = e.target.value;
+    setSearch(newVal);
+    // Instant real-time filtering if on products page
+    if (location.pathname === '/products') {
+      if (newVal.trim() === '') {
+        navigate('/products', { replace: true });
+      } else {
+        navigate(`/products?search=${encodeURIComponent(newVal.trimStart())}`, { replace: true });
+      }
+    }
+  }
 
   function handleSearch(e) {
     e.preventDefault();
     if (search.trim()) {
       navigate(`/products?search=${encodeURIComponent(search.trim())}`);
-      setSearch('');
+    } else {
+      navigate('/products');
     }
   }
 
@@ -85,6 +122,13 @@ export default function Navbar() {
   }
 
 
+  function handleNavClick(e) {
+    const href = e.currentTarget.getAttribute('href');
+    if (window.location.pathname === href) {
+      window.location.reload();
+    }
+  }
+
   function handleHomeClick(e) {
     e.preventDefault();
     // If already on home, force a full page reload to refresh content
@@ -95,20 +139,37 @@ export default function Navbar() {
     navigate('/');
   }
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  function handleMobileToggle() {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  }
+
   return (
     <div className={`${styles.navbarWrapper} ${styles.themeModern}`}>
-      {/* Top Pill Bar */}
-      <div className={styles.topPillBar}>
-        <div className={styles.pillLeft}>
-          <div className={styles.pillItem}><span role="img" aria-label="email">✉️</span> ssvjewellers@gmail.com</div>
-          <div className={styles.pillItem}><span role="img" aria-label="location">📍</span> Visit Store</div>
-        </div>
-        <div className={styles.pillRight}>
-          <div className={styles.pillItem}><span role="img" aria-label="phone">📞</span> Call Now 9874563210</div>
+      {/* Required fixed announcement at top */}
+      <div className="footer-announcement" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 10002 }} aria-label="Custom design announcement">
+        <div className="footer-announcement__viewport">
+          <div className="footer-announcement__track">
+            {[0, 1].map(loopIndex => (
+              <div
+                key={loopIndex}
+                className="footer-announcement__group"
+                aria-hidden={loopIndex === 1 ? 'true' : undefined}
+              >
+                <span className="footer-announcement__spacer" aria-hidden="true" />
+                {announcementItems.map((item, itemIndex) => (
+                  <p key={`${loopIndex}-${itemIndex}`} className="footer-announcement__text">
+                    {item}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Main Navbar Row: 30/50/20 split */}
+      {/* Main Navbar Row */}
       <div className={styles.mainNavbarRow}>
         <div className={styles.navInner}>
           <div className={styles.logoSection}>
@@ -116,54 +177,66 @@ export default function Navbar() {
               <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className={styles.logoImage} />
               <span className={styles.logo}>SSV JEWELLERS</span>
             </Link>
-            {/* favorites link moved to search section */}
           </div>
-        <div className={styles['nav-links']}>
-          <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? 'active' : ''}>Home</a>
-          <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
-          {/* Contact opens the separate contact page */}
-          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink>
 
-          {/* Dropdown grouping About + Services */}
-          <div
-            className={styles.dropdown}
-            ref={moreRef}
-            onMouseEnter={() => setMoreOpen(true)}
-            onMouseLeave={() => setMoreOpen(false)}
-          >
-            <button
-              type="button"
-              className={styles.dropdownToggle}
-              aria-haspopup="true"
-              aria-expanded={moreOpen}
-              onClick={() => setMoreOpen(v => !v)}
+          <div className={styles['nav-links']}>
+            <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? styles.active : ''}>Home</a>
+            <NavLink onClick={handleNavClick} to="/products" className={({ isActive }) => isActive ? styles.active : ''}>Products</NavLink>
+            <NavLink onClick={handleNavClick} to="/contact" className={({ isActive }) => isActive ? styles.active : ''}>Contact</NavLink>
+
+            <div
+              className={styles.dropdown}
+              ref={moreRef}
+              onMouseEnter={() => setMoreOpen(true)}
+              onMouseLeave={() => setMoreOpen(false)}
             >
-              More
-              <span aria-hidden="true" className={styles.caret}>▾</span>
-            </button>
-            <div className={`${styles.dropdownMenu} ${moreOpen ? styles.show : ''}`} role="menu">
-              <NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''} role="menuitem">About</NavLink>
-              <NavLink to="/services" className={({ isActive }) => isActive ? 'active' : ''} role="menuitem">Services</NavLink>
+              <button
+                type="button"
+                className={`${styles.dropdownToggle} ${['/about', '/services'].includes(location.pathname) ? styles.active : ''}`}
+                aria-haspopup="true"
+                aria-expanded={moreOpen}
+                onClick={() => setMoreOpen(v => !v)}
+              >
+                More <span aria-hidden="true" className={styles.caret}>▾</span>
+              </button>
+              <div className={`${styles.dropdownMenu} ${moreOpen ? styles.show : ''}`} role="menu">
+                <NavLink onClick={handleNavClick} to="/about" className={({ isActive }) => isActive ? styles.active : ''} role="menuitem">About</NavLink>
+                <NavLink onClick={handleNavClick} to="/services" className={({ isActive }) => isActive ? styles.active : ''} role="menuitem">Services</NavLink>
+              </div>
             </div>
           </div>
+
+          <div className={styles.searchSection}>
+            <button className={styles.mobileMenuBtn} onClick={handleMobileToggle} aria-label="Toggle navigation menu">
+              <i className={isMobileMenuOpen ? "bi bi-x-large" : "bi bi-list"}></i>
+            </button>
+            <form className={styles['search-box']} onSubmit={handleSearch}>
+              <i className={`bi bi-search ${styles.searchIcon}`} aria-hidden="true" onClick={() => document.getElementById('navbar-search-input').focus()}></i>
+              <input
+                id="navbar-search-input"
+                type="text"
+                placeholder={isFocused ? 'Search...' : (search ? '' : placeholderText)}
+                value={search}
+                onChange={handleSearchChange}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                aria-label="Search jewellery"
+              />
+            </form>
+          </div>
         </div>
-        <div className={styles.searchSection}>
-          <form className={styles['search-box']} onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder={search ? '' : placeholderText}
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              aria-label="Search jewellery"
-              style={{ width: '100%', maxWidth: '100%' }}
-            />
-          </form>
-          {/* favorites removed from nav */}
-        </div>
+
+        {/* Mobile Menu Overlay */}
+        <div className={`${styles.mobileOverlay} ${isMobileMenuOpen ? styles.mobileOverlayOpen : ''}`}>
+          <div className={styles.mobileNavLinks}>
+            <NavLink to="/" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Home</NavLink>
+            <NavLink to="/products" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Products</NavLink>
+            <NavLink to="/contact" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Contact</NavLink>
+            <NavLink to="/about" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>About</NavLink>
+            <NavLink to="/services" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Services</NavLink>
+          </div>
         </div>
       </div>
-
-      {/* Nav links moved into main row for single-line layout */}
     </div>
   );
 }

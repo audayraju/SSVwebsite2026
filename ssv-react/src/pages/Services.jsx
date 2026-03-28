@@ -45,53 +45,75 @@ export default function Services() {
         <link rel="canonical" href="https://ssvjewellers.com/services" />
       </Helmet>
 
-      <motion.div className={styles.content} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-        <motion.div className={styles.servicesHeader} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <h1>Our Services</h1>
-          <p className={styles.subtitle}>Comprehensive jewelry solutions tailored to your needs</p>
-          <div className={styles.servicesIntro}>
-            <p>
-              At SSV Jewellers, we offer a wide range of professional services to ensure your
-              jewelry remains beautiful, secure, and valuable. Our expert team is dedicated to
-              providing exceptional service with attention to detail.
-            </p>
-          </div>
-        </motion.div>
+      {/* ── SERVICES HEADER ── */}
+      <section className={styles.servicesHero}>
+          <motion.div className={styles.heroContent} variants={fadeUp} initial="hidden" animate="visible" viewport={inViewViewport}>
+              <h1>Exceptional <span className={styles.goldText}>Services</span></h1>
+              <p>Preserving the beauty and value of your precious collections with expert care.</p>
+          </motion.div>
+      </section>
 
+      <motion.div className={styles.content} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+        
+        {/* ── SERVICES GRID ── */}
         <div className={styles.servicesPanel}>
           <motion.div className={styles.servicesGrid} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
             {SERVICES.map(s => (
               <motion.div key={s.title} className={styles.serviceCard} variants={fadeUp}>
-                <div className={styles.serviceIcon}>{s.icon}</div>
-                <div className={styles.serviceTitle}>{s.title}</div>
+                <div className={styles.serviceHeader}>
+                    <div className={styles.serviceIcon}>{s.icon}</div>
+                    <div className={styles.serviceTitle}>{s.title}</div>
+                </div>
                 <div className={styles.serviceDescription}>{s.desc}</div>
                 <div className={styles.serviceFeatures}>
-                  <ul>{s.features.map(f => <li key={f}>{f}</li>)}</ul>
+                  <ul>{s.features.map(f => <li key={f}><span>{f}</span></li>)}</ul>
+                </div>
+                <div className={styles.cardFooter}>
+                    <a href="tel:+919177396962" className={styles.serviceBtn}>Enquire Now</a>
                 </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
-        {/* FAQ */}
-        <motion.div className={styles.faqSection} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <motion.h2 variants={fadeUp}>Frequently Asked Questions</motion.h2>
-          {FAQS.map((faq, i) => (
-            <motion.div key={i} className={styles.faqItem} variants={fadeUp}>
-              <button
-                className={styles.faqQuestion}
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                aria-expanded={openFaq === i}
-              >
-                <span>{faq.q}</span>
-                <span className={`${styles.faqArrow}${openFaq === i ? ` ${styles.faqArrowOpen}` : ''}`}>▼</span>
-              </button>
-              {openFaq === i && (
-                <div className={styles.faqAnswer}>{faq.a}</div>
-              )}
+        {/* ── FAQ SECTION ── */}
+        <section className={styles.faqWrapper}>
+            <motion.div className={styles.faqSection} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+              <motion.h2 className={styles.faqTitle} variants={fadeUp}>Common Questions</motion.h2>
+              <div className={styles.faqList}>
+                  {FAQS.map((faq, i) => (
+                    <motion.div key={i} className={`${styles.faqItem} ${openFaq === i ? styles.faqOpen : ''}`} variants={fadeUp}>
+                      <button
+                        className={styles.faqQuestion}
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        aria-expanded={openFaq === i}
+                      >
+                        <span className={styles.faqQText}>{faq.q}</span>
+                        <div className={styles.faqToggle}>
+                           <div className={styles.toggleLine}></div>
+                           <div className={`${styles.toggleLine} ${styles.toggleVertical}`}></div>
+                        </div>
+                      </button>
+                      <div className={styles.faqAnswerWrapper}>
+                           <div className={styles.faqAnswer}>{faq.a}</div>
+                      </div>
+                    </motion.div>
+                  ))}
+              </div>
             </motion.div>
-          ))}
-        </motion.div>
+        </section>
+
+        {/* ── FOOTER CTA ── */}
+        <section className={styles.servicesCTA}>
+            <motion.div className={styles.ctaBox} variants={fadeUp}>
+                <h2>Have a specific requirement?</h2>
+                <p>Visit our store or contact us to discuss your custom jewelry project.</p>
+                <div className={styles.ctaButtons}>
+                    <a href="tel:+919177396962" className={styles.primaryCTA}>Contact Us</a>
+                    <a href="/contact#store-map" className={styles.secondaryCTA}>View Map</a>
+                </div>
+            </motion.div>
+        </section>
       </motion.div>
     </>
   )
