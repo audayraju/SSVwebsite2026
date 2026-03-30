@@ -48,7 +48,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: clamp(500px, 85vh, 900px);
+  height: auto;
   background: var(--dark-bg);
   overflow: hidden;
 }
@@ -56,12 +56,12 @@
 .heroViewport {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .heroSlide {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,29 +69,39 @@
 
 .heroImage {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.65) contrast(1.1);
+  height: auto;
+  display: block;
+  filter: brightness(0.85) contrast(1.05);
 }
 
 .heroOverlay {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 80px;
-  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 8%;
+  z-index: 2;
+  background: linear-gradient(to right, rgba(15, 10, 12, 0.4) 0%, rgba(15, 10, 12, 0.1) 60%, transparent 100%);
 }
 
 .heroContent {
   width: 100%;
-  max-width: 900px;
+  max-width: 1400px;
+  margin: 0 auto;
   color: #fff;
-  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.heroBody {
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 20px;
+  border-left: 2px solid var(--gold-primary);
+  padding-left: 30px;
+  box-shadow: -10px 0 20px -10px rgba(191, 161, 74, 0.3);
 }
 
 .heroLabel {
@@ -99,20 +109,21 @@
   font-family: var(--font-body);
   color: var(--gold-light);
   text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 0.85rem;
-  margin-bottom: 15px;
+  letter-spacing: 6px;
+  font-size: 0.95rem;
   font-weight: 600;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .heroTitle {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1.2;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-size: clamp(2.5rem, 6vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 .heroSlogan {
@@ -170,13 +181,12 @@
 /* ── HERO CONTROLS ── */
 .heroControls {
   position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
+  bottom: 60px;
+  left: 8%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 30px;
+  justify-content: flex-start;
+  gap: 25px;
   z-index: 10;
 }
 
@@ -222,7 +232,7 @@
 
 /* ── CATEGORIES SECTION ── */
 .categoriesSection {
-  padding: 80px 5%;
+  padding: 40px 5%;
   background: #fff;
 }
 
@@ -332,7 +342,7 @@
 
 /* ── COLLECTIONS ── */
 .productsSection {
-  padding: 80px 5%;
+  padding: 40px 5%;
 }
 
 .collectionCarousel {
@@ -353,14 +363,12 @@
 
 .collectionSlide {
   flex: 0 0 100%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  margin-right: 0;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .collectionSlide {
-    grid-template-columns: repeat(3, 1fr);
+    flex: 0 0 100%;
   }
 }
 
@@ -394,14 +402,13 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 25px 15px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  padding: 15px 10px;
+  opacity: 1;
 }
 
 .productCard:hover .overlay {
@@ -412,15 +419,22 @@
   color: #fff;
   font-family: var(--font-display);
   font-size: 1rem;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .viewLink {
-  color: var(--gold-light);
-  font-size: 0.8rem;
+  color: #e7c873;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 500;
 }
 
 .collectionControl {
@@ -436,11 +450,25 @@
   cursor: pointer;
   z-index: 5;
   font-size: 24px;
-  color: var(--gold-primary);
-  display: flex;
+  color: #c5a044; /* Gold secondary color for better contrast */
+  display: flex !important;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .collectionControl {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+    .collectionPrev { left: 8px; }
+    .collectionNext { right: 8px; }
+    
+    .productsSection {
+        padding: 20px 10px;
+    }
 }
 
 .collectionControl:hover {
@@ -494,24 +522,32 @@
 /* ── CTA BANNER ── */
 .ctaBanner {
   padding: 100px 5%;
-  background: linear-gradient(rgba(15, 10, 12, 0.8), rgba(15, 10, 12, 0.8)), url('/picture/carousel-images/SSV_ Ads_Banners-03.jpg.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background: linear-gradient(135deg, #1a1518 0%, #2d2429 100%);
+  border-top: 1px solid rgba(191, 161, 74, 0.2);
+  border-bottom: 1px solid rgba(191, 161, 74, 0.2);
   text-align: center;
   color: #fff;
+  position: relative;
+  z-index: 10;
 }
 
 .ctaContent h2 {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.5rem);
   margin-bottom: 20px;
+  background: var(--gold-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .ctaContent p {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin-bottom: 50px;
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .ctaActions {
@@ -523,24 +559,24 @@
 /* ── BUTTONS ── */
 .luxuryButton {
   display: inline-block;
-  padding: 18px 45px;
-  background: var(--gold-gradient);
-  color: var(--text-primary);
+  padding: 16px 40px;
+  background: var(--gold-primary);
+  color: #fff;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 0.9rem;
-  border-radius: 4px;
+  font-size: 0.85rem;
+  border-radius: 2px;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(191, 161, 74, 0.3);
-  border: none;
+  border: 1px solid var(--gold-light);
   cursor: pointer;
 }
 
 .luxuryButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(191, 161, 74, 0.5);
+  background: var(--gold-light);
+  color: var(--dark-bg);
+  transform: translateY(-2px);
 }
 
 .outlineButton {
@@ -590,8 +626,8 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .hero { height: 70vh; }
-  .categoryGrid { grid-template-columns: 1fr; }
+  .hero { height: auto; }
+  .categoryGrid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
   .promiseContainer { grid-template-columns: 1fr; gap: 20px; }
   .storyContainer { grid-template-columns: 1fr; gap: 40px; }
   .ctaActions { flex-direction: column; }
@@ -599,8 +635,12 @@
 
 @media (max-width: 600px) {
   .heroOverlay { padding: 0 20px; justify-content: center; text-align: center; }
-  .heroContent h1 { font-size: 2.2rem; }
+  .heroContent { justify-content: center; }
+  .heroBody { border-left: none; padding-left: 0; align-items: center; text-align: center; }
+  .heroLabel { letter-spacing: 4px; font-size: 0.8rem; }
+  .heroTitle { font-size: 2.2rem; }
   .luxuryButton, .outlineButton, .outlineButtonLight { padding: 14px 30px; font-size: 0.8rem; width: 100%; text-align: center; }
   .collectionCarousel { padding: 0 10px; }
   .collectionControl { display: none; }
+  .heroControls { left: 0; right: 0; justify-content: center; bottom: 40px; }
 }

@@ -1,40 +1,35 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Home.module.css'
 
 /* ── CAROUSEL DATA ── */
 const SLIDES = [
   {
-    img: '/picture/hero-generated/hero_silver.png',
-    alt: 'Silver Jewellery Collection',
-    label: 'Silver Jewellery Collection',
-    title: 'Trendy Silver Designs',
-    slogan: 'Premium Quality Finish | Very Low Making Charges',
-    desc: 'Visit our store today and find the perfect silver bridal set that completes your wedding look.',
-    footer: 'BEST SHINE. BEST PRICE.',
-    link: '/products?category=Silver',
-  },
-  {
-    img: '/picture/hero-generated/hero_gold.png',
-    alt: 'Gold Jewellery Collection',
-    label: 'Sri Shakthi Vinayaka Jewellers',
-    title: 'Gold Jewellery',
-    slogan: 'All Types of Gold & Silver Orders Accepted',
-    subSlogan: 'Silver Jewellery | Gems Jewellery',
-    offers: 'Gold Orders: 8%- 9% Wastage | Zero Making Charges',
+    img: '/picture/carousel-images/SSV_Ads_Banners-01.jpg.jpeg',
+    alt: 'Luxury Gold Collection',
+    label: 'Sri Shakthi Vinayaka',
+    title: 'Luxury Gold Collection',
+    desc: 'Explore our exquisite handcrafted gold designs made for every occasion.',
     link: '/products?category=Gold',
   },
   {
-    img: '/picture/hero-generated/hero_bridal.png',
-    alt: 'Bridal Gold Collection',
-    label: 'Special Bridal Offer',
-    title: 'Your dream bridal look starts with the perfect jewellery',
-    slogan: '8% VA On Gold Ornaments | No Making Charges',
-    desc: 'Make your wedding moments even more special with timeless Gold Designs crafted for modern brides.',
-    link: '/products?category=Gold&search=bridal',
+    img: '/picture/carousel-images/SSV_ Ads_Banners-02.jpg.jpeg',
+    alt: 'Modern Silver Artistry',
+    label: 'Pure Silver Art',
+    title: 'Elegant Silver Collection',
+    desc: 'Exquisite silver bridal sets and articles that complement your unique style.',
+    link: '/products?category=Silver',
+  },
+  {
+    img: '/picture/carousel-images/SSV_ Ads_Banners-03.jpg.jpeg',
+    alt: 'Diamond Boutique',
+    label: 'Certified Brilliance',
+    title: 'Diamond Boutique',
+    desc: 'Discover the sparkle of infinity with our certified diamond collection.',
+    link: '/products?category=Diamonds',
   },
 ]
 
@@ -89,52 +84,31 @@ function CollectionCarousel({ title, items, activeIdx, next, prev, windowWidth }
         </div>
       </div>
 
-      {windowWidth > 768 ? (
-        <div className={styles.collectionCarousel}>
-          <div className={styles.collectionViewport}>
-            <motion.div 
-              className={styles.collectionTrack}
-              animate={{ x: `-${activeIdx * 100}%` }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              {items.map((p, i) => (
-                <div key={i} className={styles.collectionSlide}>
-                  <div className={styles.productCard}>
-                    <Link to={p.link} className={styles.productCardLink}>
-                      <img src={p.img} alt={p.title} loading="lazy" />
-                      <div className={styles.overlay}>
-                        <h3>{p.title}</h3>
-                        <span className={styles.viewLink}>View Collection →</span>
-                      </div>
-                    </Link>
-                  </div>
+      <div className={styles.collectionCarousel}>
+        <div className={styles.collectionViewport}>
+          <motion.div 
+            className={styles.collectionTrack}
+            animate={{ x: `-${activeIdx * 100}%` }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            {items.map((p, i) => (
+              <div key={i} className={styles.collectionSlide}>
+                <div className={styles.productCard}>
+                  <Link to={p.link} className={styles.productCardLink}>
+                    <img src={p.img} alt={p.title} loading="lazy" />
+                    <div className={styles.overlay}>
+                      <h3>{p.title}</h3>
+                      <span className={styles.viewLink}>View Collection →</span>
+                    </div>
+                  </Link>
                 </div>
-              ))}
-            </motion.div>
-          </div>
-          <button className={`${styles.collectionControl} ${styles.collectionPrev}`} onClick={prev}>‹</button>
-          <button className={`${styles.collectionControl} ${styles.collectionNext}`} onClick={next}>›</button>
+              </div>
+            ))}
+          </motion.div>
         </div>
-      ) : (
-        <motion.div
-          className={styles.homeProductGrid}
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inViewViewport}
-        >
-          {items.map((p, i) => (
-            <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <Link to={p.link} className={styles.productCardLink}>
-                <img src={p.img} alt={p.title} loading="lazy" />
-                <div className={styles.overlay}>
-                  <h3>{p.title}</h3>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
+        <button className={`${styles.collectionControl} ${styles.collectionPrev}`} onClick={prev}>‹</button>
+        <button className={`${styles.collectionControl} ${styles.collectionNext}`} onClick={next}>›</button>
+      </div>
     </section>
   )
 }
@@ -161,9 +135,6 @@ export default function Home() {
     return () => clearInterval(timerRef.current)
   }, [])
 
-  const prev = useCallback(() => setActiveSlide(s => (s - 1 + SLIDES.length) % SLIDES.length), [])
-  const next = useCallback(() => setActiveSlide(s => (s + 1) % SLIDES.length), [])
-
   const currentSlide = SLIDES[activeSlide]
 
   return (
@@ -176,54 +147,8 @@ export default function Home() {
       {/* ── HERO SECTION ── */}
       <section className={styles.hero} aria-label="Featured Collection">
         <div className={styles.heroViewport}>
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={activeSlide}
-              className={styles.heroSlide}
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-            >
-              <img src={currentSlide.img} alt={currentSlide.alt} className={styles.heroImage} />
-              <div className={styles.heroOverlay}>
-                <motion.div 
-                  className={styles.heroContent}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                >
-                  <span className={styles.heroLabel}>{currentSlide.label}</span>
-                  <h1 className={styles.heroTitle}>{currentSlide.title}</h1>
-                  
-                  {currentSlide.slogan && <p className={styles.heroSlogan}>{currentSlide.slogan}</p>}
-                  {currentSlide.subSlogan && <p className={styles.heroSubSlogan}>{currentSlide.subSlogan}</p>}
-                  {currentSlide.offers && <div className={styles.heroOffers}>{currentSlide.offers}</div>}
-                  {currentSlide.desc && <p className={styles.heroDesc}>{currentSlide.desc}</p>}
-                  {currentSlide.footer && <div className={styles.heroFooterText}>{currentSlide.footer}</div>}
-                  
-                  <div className={styles.heroActions}>
-                    <Link to={currentSlide.link} className={styles.luxuryButton}>
-                      Explore Collection
-                    </Link>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className={styles.heroControls}>
-            <button onClick={prev} className={styles.heroArrow}>‹</button>
-            <div className={styles.heroDots}>
-              {SLIDES.map((_, i) => (
-                <button 
-                  key={i} 
-                  className={`${styles.heroDot} ${i === activeSlide ? styles.heroDotActive : ''}`}
-                  onClick={() => setActiveSlide(i)}
-                />
-              ))}
-            </div>
-            <button onClick={next} className={styles.heroArrow}>›</button>
+          <div className={styles.heroSlide}>
+            <img src={currentSlide.img} alt={currentSlide.alt} className={styles.heroImage} />
           </div>
         </div>
       </section>
