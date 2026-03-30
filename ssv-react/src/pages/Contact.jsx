@@ -93,29 +93,34 @@ export default function Contact() {
 
       {/* ── HERO ── */}
       <section className={styles.hero}>
+        <div className={styles.heroOrbs}></div>
         <motion.div className={styles.heroLeft} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <h1>Luminous<br />Handmade Jewelry</h1>
+          <div className={styles.heroBadges}>
+            <span className={styles.heroBadge}>✨ Certified & Hallmarked</span>
+            <span className={styles.heroBadge}>🏭 Manufacturers / Wholesale</span>
+          </div>
+          <h1><span className={styles.goldText}>Luxury Gold & Diamond Jewellery</span></h1>
           <p>Premium wholesale &amp; retail jewellery crafted with perfection and elegance.</p>
           <div className={styles.heroActions}>
-            <a href="tel:+919876543210" className={styles.callBtn}>
-              <span>📞 Contact Now</span>
+            <a href="tel:+919177396962" className={styles.callBtn}>
+              📞 Contact Now
             </a>
           </div>
         </motion.div>
 
         <motion.div className={styles.heroRight} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <img src="/slides/03.png" alt="SSV Jewellers jewellery display" loading="lazy" />
+          <img src="/slides/contact_hero.png" alt="SSV Jewellers luxury bridal collection display" loading="lazy" />
           <div className={styles.socialIcons}>
-            <a href="https://www.facebook.com/ssvjeweller" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <a href="https://facebook.com/profile.php?id=61584739588200" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i className="bi bi-facebook" aria-hidden="true" />
             </a>
-            <a href="https://www.instagram.com/ssvjeweller" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/ssv_jewellers_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i className="bi bi-instagram" aria-hidden="true" />
             </a>
-            <a href="https://www.youtube.com/@ssvjeweller" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <a href="https://www.youtube.com/@SSV_Jewellers" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
               <i className="bi bi-youtube" aria-hidden="true" />
             </a>
-            <a href="https://wa.me/916281049201" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <a href="https://wa.me/9177396962" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <i className="bi bi-whatsapp" aria-hidden="true" />
             </a>
           </div>
@@ -124,7 +129,13 @@ export default function Contact() {
 
       {/* ── MAP ── */}
       <motion.section id="store-map" className={styles.mapSection} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-        <h2>Visit Our Store</h2>
+        <div className={styles.sectionTitleWrapper}>
+          <span className={styles.titleLine}></span>
+          <span className={styles.titleDot}></span>
+          <h2>VISIT OUR STORE</h2>
+          <span className={styles.titleDot}></span>
+          <span className={styles.titleLine}></span>
+        </div>
         <motion.iframe
           variants={fadeUp}
           src="https://www.google.com/maps?q=CG35%2B3XW%2C%20Sri%20shakthi%20Vinayaka%20Jewellers%2C%20Vidya%20Nagar%2C%20Ram%20Nagar%20Gundu%2C%20Adikmet%2C%20Hyderabad%2C%20Telangana%20500044&output=embed"

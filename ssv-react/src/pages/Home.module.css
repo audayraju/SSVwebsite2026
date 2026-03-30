@@ -1,3 +1,45 @@
+/* ── LUXURY SECTION HEADER ── */
+.luxuryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 auto 18px auto;
+  width: 100%;
+}
+
+.luxuryLine {
+  flex: 1 1 60px;
+  height: 1.5px;
+  background: linear-gradient(0deg, #e7c873 100%, #f4f1e6 90%);
+  opacity: 0.7;
+  border: none;
+  max-width: 120px;
+}
+
+.luxuryDot {
+  width: 8px;
+  height: 8px;
+  background: #e7c873;
+  border-radius: 50%;
+  margin: 0 10px;
+  box-shadow: 0 0 2px #bfa14a44;
+}
+
+.luxuryTitle {
+  font-family: 'Inter', sans-serif;
+  color: #bfa14a;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #bfa14a 60%, #e7c873 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  padding: 0 8px;
+}
 /* Swap image and text in section 2 for mobile */
 @media (max-width: 768px) {
   .sectionReverse .container {
@@ -49,30 +91,96 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(1.05);
+  filter: saturate(1.1) brightness(0.9);
 }
 
+.carouselContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 8%;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(20, 13, 19, 0.6) 0%, transparent 60%);
+}
 
+.carouselContent::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(220, 179, 107, 0.1) 1.2px, transparent 1.2px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.captionGlow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(155, 104, 30, 0.2) 0%, transparent 70%);
+  transform: translate(-30%, -50%);
+  pointer-events: none;
+  filter: blur(60px);
+  animation: pulseGlow 8s infinite alternate ease-in-out;
+}
 
 .caption {
-  position: absolute;
-  left: clamp(12px, 4vw, 64px);
-  bottom: clamp(16px, 5vw, 80px);
-  z-index: 2;
-  max-width: min(92%, 760px);
-  color: #fff;
+  position: relative;
+  z-index: 3;
+  max-width: 600px;
+}
+
+.categoryLabel {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.85rem;
+  color: #e7c873;
+  margin-bottom: 16px;
+  font-weight: 600;
 }
 
 .caption h2 {
-  font-size: clamp(1.0rem, 3.2vw, 2.4rem);
-  margin-bottom: 8px;
-  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.2rem);
+  margin-bottom: 24px;
+  font-family: var(--font-display, 'Cinzel', serif);
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: 1px;
 }
 
 .caption p {
-  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   line-height: 1.6;
-  margin-bottom: 14px;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+}
+
+.luxuryHeroBtn {
+  display: inline-block;
+  padding: 18px 45px;
+  background: var(--gold-gradient);
+  color: #1a1a1a;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(155, 104, 30, 0.3);
+}
+
+.luxuryHeroBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(155, 104, 30, 0.5);
+  filter: brightness(1.1);
 }
 
 .carouselBtn {
@@ -237,17 +345,26 @@
 }
 
 .imageBox {
-  flex: 1;
+  flex: 0 0 340px;
+  max-width: 340px;
+  min-width: 220px;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
 
 .imageBox img {
-  width: auto;
+  width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-width: 340px;
+  max-height: 340px;
+  object-fit: contain;
   display: block;
+  margin: 0 auto;
   transition: transform 0.5s ease;
 }
 
@@ -300,25 +417,42 @@
 }
 
 .productsHeader h2 {
-  font-family: var(--font-display);
-  color: var(--dark);
-  font-size: clamp(2rem, 6vw, 4.2rem);
-  letter-spacing: 2px;
-  line-height: 0.8;
-  margin-top: 35px;
+  font-family: var(--font-display, 'Cinzel', serif);
+  color: var(--navy);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: 4px;
+  line-height: 1.1;
+  margin-top: 15px;
   text-transform: uppercase;
 }
 
 .homeProductGrid {
   display: grid;
-  /* Use auto-fit for automatic responsive fluid wrapping */
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: clamp(14px, 2.6vw, 24px);
   /* Allow wider grid to reduce side whitespace on large screens */
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   padding-inline: clamp(8px, 2vw, 20px);
+}
+
+@media (max-width: 1024px) {
+  .homeProductGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .homeProductGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .homeProductGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .productCard {
@@ -327,19 +461,27 @@
   overflow: hidden;
   aspect-ratio: 3/4;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  box-shadow: 0 16px 40px rgba(155, 104, 30, 0.28), 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-8px);
 }
 
 .productCard img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.productImageLink {
+.productCardLink {
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  text-decoration: none;
 }
 
 .productCard:hover img {
@@ -349,13 +491,14 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 5, 15, 0.80), transparent 55%);
+  background: linear-gradient(to top, rgba(20, 13, 19, 0.9) 0%, transparent 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(14px, 2.2vw, 20px) clamp(12px, 2vw, 16px);
+  align-items: center;
+  padding: 30px 20px;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: all 0.4s ease;
 }
 
 .productCard:hover .overlay {
@@ -364,10 +507,11 @@
 
 .overlay h3 {
   color: #fff;
-  font-family: var(--font-display);
-  /* reduced title size to better fit compact cards */
-  font-size: 0.86rem;
-  margin-bottom: 6px;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
 .cardActions {
@@ -392,7 +536,15 @@
   }
 
   .imageBox img {
-    height: 260px;
+    width: 100%;
+    max-width: 400px;
+    /* or whatever fits your design */
+    height: auto;
+    max-height: 350px;
+    /* adjust as needed */
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
   }
 
   .caption h2 {
@@ -475,4 +627,60 @@
   .homeProductGrid {
     max-width: 1320px;
   }
+}
+
+/* Modal Zoom Styles */
+.zoomModalOpen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    cursor: zoom-out;
+}
+
+.zoomedImage {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zoomedImageActive {
+    transform: scale(2.5);
+    cursor: move;
+}
+
+.closeZoomBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: white;
+    color: black;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    transition: background-color 0.2s;
+}
+
+.closeZoomBtn:hover {
+    background: #e0e0e0;
+}
+@keyframes pulseGlow {
+  0% { transform: translate(-30%, -50%) scale(1); opacity: 0.2; }
+  100% { transform: translate(-30%, -50%) scale(1.2); opacity: 0.35; }
 }

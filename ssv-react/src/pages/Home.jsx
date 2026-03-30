@@ -4,8 +4,6 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
 import styles from './Home.module.css'
-
-
 /* ── Carousel data ── */
 const SLIDES = [
   {
@@ -33,14 +31,11 @@ const SLIDES = [
 
 /* ── Home product cards ── */
 const HOME_PRODUCTS = [
-  { title: 'Necklace Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
-  { title: 'Haram Collection', link: '/products?search=silver', img: '/picture/section-twoo.jpeg' },
-  { title: 'Chokers Collection', link: '/products?search=diamond', img: '/picture/section-three.jpeg' },
-  { title: 'Bangles Collection', link: '/products?search=gold', img: '/picture/section-one.jpeg' },
-  { title: 'CZ Collection', link: '/products?search=silver', img: '/picture/section-twoo.jpeg' },
-
-
-
+  { title: 'Necklaces', link: '/products?category=Necklaces', img: '/picture/section-one.jpeg' },
+  { title: 'Harams', link: '/products?category=Necklaces&search=Haram', img: '/picture/section-twoo.jpeg' },
+  { title: 'Chokers', link: '/products?category=Chokers', img: '/picture/section-three.jpeg' },
+  { title: 'Bangles', link: '/products?category=Bangles', img: '/picture/section-one.jpeg' },
+  { title: 'CZ Items', link: '/products?category=All&search=CZ', img: '/picture/section-twoo.jpeg' },
 ]
 
 export default function Home() {
@@ -95,6 +90,7 @@ export default function Home() {
         <link rel="canonical" href="https://ssvjewellers.com/" />
       </Helmet>
 
+
       {/* ── CAROUSEL ── */}
       <section className={styles.carousel} aria-label="Featured jewellery carousel">
         <div className={styles.viewport}>
@@ -109,7 +105,11 @@ export default function Home() {
                 aria-hidden={i !== activeSlide}
               >
                 <img src={slide.img} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-                {/* Removed View details button from top of carousel */}
+                
+                {/* Figma-style Dynamic Background Overlays (Grid & Glow only) */}
+                <div className={styles.carouselContent}>
+                  <div className={styles.captionGlow} />
+                </div>
               </article>
             ))}
           </div>
@@ -117,7 +117,6 @@ export default function Home() {
           <button className={`${styles.control} ${styles.prev}`} onClick={prev} aria-label="Previous slide">‹</button>
           <button className={`${styles.control} ${styles.next}`} onClick={next} aria-label="Next slide">›</button>
         </div>
-
       </section>
 
 
@@ -126,7 +125,14 @@ export default function Home() {
       {/* ── PRODUCT GRID ── */}
       {/* Large section header (e.g. "DIAMOND JEWELLERY") */}
       <div className={styles.productsHeader} aria-hidden="true">
-        <h2>GOLD JEWELLERY</h2>
+        <div className={styles.luxuryHeader}>
+          <span className={styles.luxuryLine} aria-hidden="true"></span>
+          <span className={styles.luxuryDot} aria-hidden="true"></span>
+          <span className={styles.luxuryTitle}>Pure Craftsmanship</span>
+          <span className={styles.luxuryDot} aria-hidden="true"></span>
+          <span className={styles.luxuryLine} aria-hidden="true"></span>
+        </div>
+        <h2>GOLD COLLECTION</h2>
       </div>
       <section className={styles.productsSection} aria-label="Product collections">
         <motion.div
@@ -138,12 +144,12 @@ export default function Home() {
         >
           {HOME_PRODUCTS.map((p, i) => (
             <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+              <Link to={p.link} className={styles.productCardLink} aria-label={`Open ${p.title} details`}>
                 <img src={p.img} alt={p.title} loading="lazy" />
+                <div className={styles.overlay}>
+                  <h3>{p.title}</h3>
+                </div>
               </Link>
-              <div className={styles.overlay}>
-                <h3>{p.title}</h3>
-              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -151,7 +157,14 @@ export default function Home() {
 
       {/* Large section header (e.g. "SILVER JEWELLERY") */}
       <div className={styles.productsHeader} aria-hidden="true">
-        <h2>SILVER JEWELLERY</h2>
+        <div className={styles.luxuryHeader}>
+          <span className={styles.luxuryLine} aria-hidden="true"></span>
+          <span className={styles.luxuryDot} aria-hidden="true"></span>
+          <span className={styles.luxuryTitle}>Timeless Elegance</span>
+          <span className={styles.luxuryDot} aria-hidden="true"></span>
+          <span className={styles.luxuryLine} aria-hidden="true"></span>
+        </div>
+        <h2>SILVER COLLECTION</h2>
       </div>
       <section className={styles.productsSection} aria-label="Product collections">
         <motion.div
@@ -163,12 +176,12 @@ export default function Home() {
         >
           {HOME_PRODUCTS.map((p, i) => (
             <motion.div key={i} className={styles.productCard} variants={fadeUp}>
-              <Link to={p.link} className={styles.productImageLink} aria-label={`Open ${p.title} details`}>
+              <Link to={p.link} className={styles.productCardLink} aria-label={`Open ${p.title} details`}>
                 <img src={p.img} alt={p.title} loading="lazy" />
+                <div className={styles.overlay}>
+                  <h3>{p.title}</h3>
+                </div>
               </Link>
-              <div className={styles.overlay}>
-                <h3>{p.title}</h3>
-              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -197,14 +210,19 @@ export default function Home() {
           ))}
         </motion.div>
       </section>
-     
+
       {/* ── SECTION 1 – image left / text right ── */}
       <section className={styles.section}>
         <div className={styles.container}>
+
           <div className={styles.imageBox}>
-            {/* Use the section-two image for Section One (left-hand hero) */}
-            <img src="/picture/section-three.jpeg" alt="SSV Jewellers craftsmanship" loading="lazy" />
+            <img
+              src="/picture/section-three.jpeg"
+              alt="SSV Jewellers craftsmanship"
+              loading="lazy"
+            />
           </div>
+
           <div className={styles.contentBox}>
             <motion.h2
               variants={fadeUp}
@@ -214,6 +232,7 @@ export default function Home() {
             >
               Timeless Jewellery Craftsmanship
             </motion.h2>
+
             <motion.p
               variants={fadeUp}
               initial="hidden"
@@ -223,24 +242,17 @@ export default function Home() {
               Discover handcrafted gold, silver, and diamond designs made to
               celebrate your most special moments with timeless elegance.
             </motion.p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              <Link to="/about" className={styles.readMoreBtn}>View details »</Link>
-            </motion.div>
+
           </div>
-          <div className={styles.imageBox}>
-            <img src="/picture/section-twoo.jpeg" alt="SSV Jewellers collection" loading="lazy" />
-          </div>
+
         </div>
       </section>
+
 
       {/* ── SECTION 2 – text left / image right ── */}
       <section className={`${styles.section} ${styles.sectionReverse}`}>
         <div className={styles.container}>
+
           <div className={styles.contentBox}>
             <motion.h2
               variants={fadeUp}
@@ -250,6 +262,7 @@ export default function Home() {
             >
               Pure Crafted Excellence
             </motion.h2>
+
             <motion.p
               variants={fadeUp}
               initial="hidden"
@@ -259,15 +272,17 @@ export default function Home() {
               Each piece is thoughtfully designed to reflect elegance and precision,
               using only the finest certified materials.
             </motion.p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={inViewViewport}
-            >
-              <Link to="/products" className={styles.readMoreBtn}>View details »</Link>
-            </motion.div>
+
           </div>
+
+          <div className={styles.imageBox}>
+            <img
+              src="/picture/section-twoo.jpeg"
+              alt="SSV Jewellers collection"
+              loading="lazy"
+            />
+          </div>
+
         </div>
       </section>
       {/* removed embedded Contact — contact is now a separate page */}

@@ -2,7 +2,7 @@ export default function FloatingButtons() {
   return (
     <div className="floating-buttons">
       <a
-        href="https://wa.me/916281049201"
+        href="https://wa.me/9177396962"
         target="_blank"
         rel="noopener noreferrer"
         className="float-btn whatsapp"
@@ -11,7 +11,7 @@ export default function FloatingButtons() {
         <i className="bi bi-whatsapp" aria-hidden="true" />
       </a>
       <a
-        href="tel:+91916281049201"
+        href="tel:+919177396962"
         className="float-btn call"
         aria-label="Call us"
       >

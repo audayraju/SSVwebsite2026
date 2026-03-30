@@ -9,9 +9,9 @@
 /* Modern nav links for premium look */
 .nav-links {
     display: flex;
-    gap: 2rem;
-    /* reduced spacing between links */
-    font-family: var(--font-display);
+    gap: 3.5rem;
+    /* increased spacing between links */
+    font-family: INTER, sans-serif;
     font-size: 0.80rem;
     /* decreased font size per request */
     font-weight: 500;
@@ -23,6 +23,12 @@
     min-width: 200px;
     /* allow nav-links to take available center space while keeping search at the end */
     flex: 1 1 auto;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
 }
 
 .nav-links a {
@@ -38,24 +44,10 @@
     cursor: pointer;
 }
 
-.nav-links a:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    height: 1px;
-    background: var(--gold);
-    border-radius: 1px;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.22s cubic-bezier(.4, 0, .2, 1), opacity 0.18s;
-}
-
-
-/* Hover: reveal underline only for non-active links. Do NOT reveal underline on keyboard focus. */
-.nav-links a:hover {
+/* Hover: simply turn text gold */
+.nav-links a:hover,
+.dropdownToggle:hover {
+    color: #dcb36b;
     outline: none;
 }
 
@@ -70,29 +62,35 @@
 }
 
 /* Active (current page): change text color to gold and hide underline by default */
-.nav-links a.active {
-    color: var(--gold);
+.nav-links a.active,
+.active {
+    color:#dcb36b;;
 }
 
-.nav-links a.active:after {
+.nav-links a.active:after,
+.active:after {
     transform: scaleX(0);
 }
 
 /* Ensure hovering the active (gold) link does NOT show the underline */
-.nav-links a.active:hover:after {
+.nav-links a.active:hover:after,
+.active:hover:after {
     transform: scaleX(0);
 }
 
 /* Strong rule to ensure active link (Home) is gold and never shows underline */
 .nav-links a.active,
 .nav-links a.active:link,
-.nav-links a.active:visited {
-    color: var(--gold) !important;
+.nav-links a.active:visited,
+.active {
+    color: #dcb36b !important;
     text-decoration: none !important;
 }
 
 .nav-links a.active::after,
-.nav-links a.active:after {
+.nav-links a.active:after,
+.active::after,
+.active:after {
     opacity: 0 !important;
     transform: scaleX(0) !important;
     pointer-events: none;
@@ -113,8 +111,8 @@
 
 /* Theme: Traditional & Royal */
 .themeRoyal {
-    --maroon: #5a0b2f;
-    --gold: #d4b57a;
+     background:  #4A042E;
+    --gold:#dcb36b;
     --text: #fff7ec;
     background-image: radial-gradient(rgba(197, 164, 126, 0.02) 1px, transparent 1px);
     background-size: 12px 12px;
@@ -123,66 +121,31 @@
 /* Theme: Minimalist & Clean */
 .themeClean {
     --maroon: #ffffff;
-    --gold: #b78f49;
+    --gold: #dcb36b;
     --text: #3b0f2a;
     background: var(--maroon);
     color: var(--text);
 }
 
-/* Top pill bar */
-.topPillBar {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    color: #560537;
-    font-family: var(--font-body);
-    font-size: 0.80rem;
-    padding: 6px 5%;
-    border-bottom: 1px solid #c5a47e22;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10002;
-    min-height: 36px;
-}
 
-.pillLeft {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    /* email and Visit Store spaced 30px */
-}
-
-.pillRight {
-    margin-left: auto;
-    /* push phone to far right */
-    display: flex;
-    align-items: center;
-}
-
-.pillItem {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-}
 
 /* Main navbar outer wrapper */
 .mainNavbarRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    background: #560537;
+    background: #4f063a;
+    /* Rich deep wine */
     border-radius: 0;
-    min-height: 64px;
     position: fixed;
-    top: 36px;
+    top: 32px;
+    /* matches topPillBar height */
     left: 0;
     right: 0;
     z-index: 10001;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-    border-bottom: 3px solid var(--gold);
-    display: flex;
-    justify-content: center;
+  
+    min-height: 72px;
 }
 
 /* Inner centered content */
@@ -190,12 +153,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1600px;  /* increased limit for wide monitors */
+    max-width: 1400px;
     width: 100%;
     margin: 0 auto;
     padding: 0 5%;
     gap: 0;
     flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+    .navInner {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 15px;
+    }
 }
 
 .logoSection {
@@ -207,6 +178,16 @@
     max-width: 20%;
     padding-left: 0;
     margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .logoSection {
+        flex-basis: auto;
+        max-width: 100%;
+        min-width: 0;
+        justify-content: center;
+        width: 100%;
+    }
 }
 
 .searchSection {
@@ -221,6 +202,17 @@
     gap: 12px;
 }
 
+@media (max-width: 768px) {
+    .searchSection {
+        flex-basis: auto;
+        max-width: 100%;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        gap: 10px;
+    }
+}
+
 /* Favorite button removed from markup; styles cleaned up */
 
 .nav-links-row {
@@ -229,7 +221,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 0px solid #c5a47e;
+    border-bottom: 0px solid #dcb36b;
     margin-top: 0;
     min-height: 48px;
     padding: 0 32px 0 32px;
@@ -337,48 +329,124 @@
 
 
 
-.search-box input {
-    border: 2px solid #c5a47e;
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 1rem;
-    background: #fff;
-    color: #560537;
-    outline: none;
-    width: 800px;
-    max-width: 100%;
-    transition: border 0.2s;
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-/* Like button (outline) placed next to search */
-/* fav button styles removed since the icon was removed from markup */
+.searchIcon {
+    position: absolute;
+    right: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.search-box:focus-within .searchIcon {
+    color: #e7c873;
+}
+
+.search-box input {
+    border: 1px solid rgba(231, 200, 115, 0.4);
+    border-radius: 24px;
+    padding: 8px 36px 8px 18px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    /* sleek dark transparent look */
+    color: #fff;
+    outline: none;
+    width: 250px;
+    max-width: 100%;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
 
 .search-box input:focus {
-    border-color: #560537;
+    border-color: #e7c873;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.search-box input:focus {
+    border-color: #e7c873;
 }
 
 /* fav button styles removed since the icon was removed from markup */
 
-@media (max-width: 900px) {
-    .navInner {
-        flex-direction: column;
-        gap: 12px;
-        padding: 12px 8px;
-    }
-
-    .nav-links {
-        gap: 18px;
-    }
-
+@media (max-width: 768px) {
     .search-box input {
-        width: 120px;
+        width: 100%;
+        max-width: 300px;
     }
+}
 
-    .topPillBar {
-        flex-direction: column;
-        gap: 4px;
-        padding: 8px 8px 6px 8px;
+.mobileMenuBtn {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(235, 209, 151, 0.4);
+    color: var(--gold);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .mobileMenuBtn {
+        display: flex;
     }
+}
+
+/* Mobile Overlay */
+.mobileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(86, 5, 55, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.mobileOverlayOpen {
+    transform: translateX(0);
+}
+
+.mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.mobileNavLinks a {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.mobileNavLinks a.active {
+    color: var(--gold);
 }
 
 /* Dropdown styles for grouped menu */
@@ -390,15 +458,24 @@
 .dropdownToggle {
     background: transparent;
     border: none;
+    padding: 2px 0;
+    margin: 0;
     color: var(--text);
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: 0.98rem;
+    font-size: 0.80rem;
+    /* Match the regular nav links size */
+    letter-spacing: 1px;
+    /* Match the regular nav links spacing */
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     text-transform: uppercase;
+}
+
+.dropdownToggle.active {
+    color: var(--gold) !important;
 }
 
 .caret {
@@ -408,36 +485,37 @@
 
 .dropdownMenu {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 14px);
     left: 50%;
     transform: translateX(-50%);
-    background: #ffffff;
-    /* white panel for strong contrast */
-    color: #3b0f2a;
-    /* dark maroon text */
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 10px 14px;
-    border-radius: 8px;
+    background: #4A042E;
+    color: #fff;
+    border: 1px solid rgba(231, 200, 115, 0.2);
+    padding: 12px;
+    border-radius: 6px;
     min-width: 180px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     display: none;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     z-index: 9999;
-    /* ensure it sits above hero/images */
 }
 
 .dropdownMenu a {
-    color: #3b0f2a;
+    color: #fff;
     text-decoration: none;
-    padding: 8px 10px;
+    padding: 10px 14px;
     border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .dropdownMenu a:hover,
 .dropdownMenu a.active {
-    background: rgba(197, 164, 126, 0.06);
-    color: var(--gold);
+    background: rgba(231, 200, 115, 0.15);
+    color: #e7c873;
 }
 
 .show {

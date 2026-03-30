@@ -1,123 +1,157 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
-import { motion } from 'framer-motion'
-import ImageGallery from '../components/ImageGallery'
-import { fadeUp, staggerParent, inViewViewport } from '../components/motionPresets'
-import { apiUrl } from '../lib/api'
-import styles from './ProductDetails.module.css'
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import styles from './ProductDetails.module.css';
 
-/* Same seed as Products.jsx – in production this comes from API */
-const SEED_PRODUCTS = [
-  { id: 1, name: 'Radha Krishna Haram', category: 'necklace', sku: 'SSV-HRM-001', price: '₹ 1,89,000', product_image: '/slides/pictures/logo.jpeg', description: 'Traditional temple haram with intricate Radha Krishna motif work, handcrafted for bridal and festive wear.', specs: ['22K Gold', 'Approx. 52 g', 'Temple Craft Detailing', 'Handcrafted Finish'], extra: 'Hallmark certified. Customisation available on request.' },
-  { id: 2, name: 'Classic Diamond Ring', category: 'ring', sku: 'SSV-RNG-002', price: '₹ 75,000', product_image: '/slides/pictures/logo.jpeg', description: 'Brilliant-cut solitaire diamond ring set in 18K white gold.', specs: ['18K White Gold', '0.5 ct Diamond', 'GIA Certified', 'VS1 Clarity'], extra: '' },
-  { id: 3, name: 'Sterling Silver Bracelet', category: 'bracelet', sku: 'SSV-BRC-003', price: '₹ 12,500', product_image: '/slides/pictures/logo.jpeg', description: '925 sterling silver bracelet with contemporary leaf motif.', specs: ['925 Sterling Silver', '20 cm length', 'Polished Finish'], extra: 'Available in custom sizes.' },
-  { id: 4, name: 'Gold Chain Necklace', category: 'chain', sku: 'SSV-CHN-004', price: '₹ 55,000', product_image: '/slides/pictures/logo.jpeg', description: '22K gold rope chain, durable and lightweight for daily wear.', specs: ['22K Gold', '45 cm', 'Rope Design'], extra: '' },
-  { id: 5, name: 'Pearl Drop Earrings', category: 'earring', sku: 'SSV-ERR-005', price: '₹ 22,000', product_image: '/slides/pictures/logo.jpeg', description: 'South-sea pearl earrings with 18K gold setting.', specs: ['18K Gold', 'South-sea Pearl', 'Push-back Closure'], extra: '' },
-  { id: 6, name: 'Kundan Necklace Set', category: 'necklace', sku: 'SSV-KND-006', price: '₹ 98,000', product_image: '/slides/pictures/logo.jpeg', description: 'Exquisite Kundan necklace set with matching earrings.', specs: ['22K Gold', 'Kundan Work', 'Meenakari Back'], extra: 'Comes in velvet box.' },
-  { id: 7, name: 'Sapphire Ring', category: 'ring', sku: 'SSV-RNG-007', price: '₹ 45,000', product_image: '/slides/pictures/logo.jpeg', description: 'Natural blue sapphire ring set in 18K yellow gold.', specs: ['18K Gold', 'Natural Sapphire', 'GIA Certified'], extra: '' },
-  { id: 8, name: 'Gold Bangle Set', category: 'bracelet', sku: 'SSV-BNG-008', price: '₹ 1,20,000', product_image: '/slides/pictures/logo.jpeg', description: 'Set of 6 plain gold bangles, hallmark certified.', specs: ['22K Gold', 'Set of 6', 'Hallmark Certified'], extra: '' },
-]
+import { products } from '../data/productData';
 
 export default function ProductDetails() {
-  const { id } = useParams()
-  const [product, setProduct] = useState(null)
-  const [loading, setLoading] = useState(true)
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const product = products.find(p => p.id === id) || products[0];
+    
+    const [isZoomed, setIsZoomed] = useState(false);
+    const [isInnerZoomed, setIsInnerZoomed] = useState(false);
+    const [transformOrigin, setTransformOrigin] = useState('50% 50%');
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch(apiUrl(`/api/products/${id}`))
-        if (!res.ok) throw new Error()
-        const data = await res.json()
-        setProduct(data)
-      } catch {
-        const found = SEED_PRODUCTS.find(p => String(p.id) === String(id))
-        setProduct(found || null)
-      } finally {
-        setLoading(false)
-      }
-    }
-    load()
-  }, [id])
+    const toggleZoom = () => {
+        setIsZoomed(!isZoomed);
+        setIsInnerZoomed(false); // Reset tight zoom on close
+    };
 
-  if (loading) return <div className="page-loader"><div className="spinner" /></div>
-  if (!product) return (
-    <div className={styles.notFound}>
-      <h2>Product not found</h2>
-      <Link to="/products" className={styles.backBtn} aria-label="Back to collections" title="Back to collections">
-        <svg className={styles.backIcon} viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-          <path d="M11.75 4.75 6.5 10l5.25 5.25" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </Link>
-    </div>
-  )
+    // Close zoom when Esc key is pressed, or navigate back if zoom is already closed
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                if (isZoomed) {
+                    toggleZoom();
+                } else {
+                    navigate(-1);
+                }
+            }
+        };
+        
+        window.addEventListener('keydown', handleKeyDown);
+        
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isZoomed, navigate]);
 
-  // Use backend API endpoint for images
-  const imgSrc = product && product.imageUrl
-    ? product.imageUrl
-    : '/slides/pictures/logo.jpeg'
+    // Use backend API endpoint for images
+    const imgSrc = product && product.imageUrl
+        ? product.imageUrl
+        : '/slides/pictures/logo.jpeg';
 
-  const images = [imgSrc]
-  const waMsg = encodeURIComponent(`Hi, I'm interested in ${product.name} (${product.sku || ''}). Could you give more details?`)
-  const waLink = `https://wa.me/916281049201?text=${waMsg}`
+    const handleImageClick = (e) => {
+        e.stopPropagation(); // prevent modal close on image click
+    };
 
-  return (
-    <>
-      <Helmet>
-        <title>{product.name} | SSV Jewellers</title>
-        <meta name="description" content={product.description || `${product.name} – SSV Jewellers luxury jewellery collection.`} />
-        <meta property="og:title" content={`${product.name} | SSV Jewellers`} />
-        <meta property="og:image" content={imgSrc} />
-        <link rel="canonical" href={`https://ssvjewellers.com/products/${id}`} />
-      </Helmet>
+    const handleDoubleTap = (e) => {
+        e.stopPropagation();
+        setIsInnerZoomed(!isInnerZoomed);
+        if (!isInnerZoomed) {
+             handleMouseMove(e);
+        } else {
+             setTransformOrigin('50% 50%');
+        }
+    };
 
-      <motion.div className={styles.wrapper} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-        <Link to="/products" className={styles.backBtn} aria-label="Back to collections" title="Back to collections">
-          <svg className={styles.backIcon} viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-            <path d="M11.75 4.75 6.5 10l5.25 5.25" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
+    const handleMouseMove = (e) => {
+        if (!isInnerZoomed) return;
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+        setTransformOrigin(`${x}% ${y}%`);
+    };
 
-        <motion.div className={styles.layout} variants={staggerParent} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          {/* Gallery */}
-          <motion.div className={styles.galleryCol} variants={fadeUp}>
-            <ImageGallery images={images} alt={product.name} />
-          </motion.div>
+    const handleTouchMove = (e) => {
+        if (!isInnerZoomed || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const x = (touch.clientX / window.innerWidth) * 100;
+        const y = (touch.clientY / window.innerHeight) * 100;
+        setTransformOrigin(`${x}% ${y}%`);
+    };
 
-          {/* Info */}
-          <motion.div className={styles.infoCol} variants={fadeUp}>
-            <span className={styles.badge}>{product.category}</span>
-            <h1 className={styles.title}>{product.name}</h1>
-            {product.sku && <p className={styles.sku}>{product.sku}</p>}
-            {product.imageId && <p className={styles.sku}>Image ID: {product.imageId}</p>}
-            {product.price && <p className={styles.price}>{product.price}</p>}
+    const [activeAccordion, setActiveAccordion] = useState('description');
 
-            <p className={styles.desc}>{product.description}</p>
+    const toggleAccordion = (id) => {
+        setActiveAccordion(activeAccordion === id ? null : id);
+    };
 
-            {product.specs && product.specs.length > 0 && (
-              <div className={styles.specBox}>
-                <h3>Specifications</h3>
-                <ul>
-                  {(Array.isArray(product.specs) ? product.specs : product.specs.split('|')).map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
+    return (
+        <div className={styles.detailsPage}>
+            {/* FIGMA Pattern Backgrounds */}
+            {/* Decorative backgrounds removed */}
+
+            <div className={styles.contentWrapper}>
+                <button className={styles.backBtn} onClick={() => navigate(-1)} aria-label="Go back">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                    <span>Back to Collection</span>
+                </button>
+                
+                <div className={styles.mainGrid}>
+                    {/* LEFT: Image Section */}
+                    <div className={styles.imageSection}>
+                        <div className={styles.imageFrame}>
+                            <img 
+                                src={product.image} 
+                                alt={product.name} 
+                                className={styles.mainImage} 
+                                onClick={toggleZoom}
+                            />
+                        </div>
+                    </div>
+
+                    {/* RIGHT: Info Section */}
+                    <div className={styles.infoSection}>
+                        <div className={styles.infoGlass}>
+                            <span className={styles.categoryTag}>{product.category}</span>
+                            <h1 className={styles.productTitle}>{product.name}</h1>
+                            <p className={styles.skuTag}>SKU: <span>{product.sku}</span></p>
+                            
+                            <div className={styles.priceContainer}>
+                                <span className={styles.priceLabel}>Estimated Price</span>
+                                <h2 className={styles.productPrice}>{product.price}</h2>
+                            </div>
+
+                            <div className={styles.productDescription}>
+                                <p>{product.description}</p>
+                            </div>
+
+                            <a 
+                                href={`https://wa.me/9177396962?text=Hi, I am interested in ${product.name} (SKU: ${product.sku})`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.enquireBtn}
+                            >
+                                <svg className={styles.whatsappIcon} width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                                </svg>
+                                <span>Enquire on WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Fullscreen Zoom Modal */}
+            {isZoomed && (
+                <div 
+                    className={styles.zoomModalOpen} 
+                    onClick={toggleZoom}
+                    onMouseMove={handleMouseMove}
+                    onTouchMove={handleTouchMove}
+                >
+                    <button className={styles.closeZoomBtn} onClick={toggleZoom}>✕</button>
+                    <img 
+                        src={product.image} 
+                        alt="Zoomed Product" 
+                        className={`${styles.zoomedImage} ${isInnerZoomed ? styles.zoomedImageActive : ''}`}
+                        style={{ transformOrigin }}
+                        onClick={handleImageClick}
+                        onDoubleClick={handleDoubleTap}
+                    />
+                </div>
             )}
-
-            {product.extra && (
-              <div className={styles.extra}>
-                <p>{product.extra}</p>
-              </div>
-            )}
-
-            <a href={waLink} className={styles.waBtn} target="_blank" rel="noopener noreferrer">
-              <i className="bi bi-whatsapp" aria-hidden="true" /> Enquire on WhatsApp
-            </a>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </>
-  )
+        </div>
+    );
 }
