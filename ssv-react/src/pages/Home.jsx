@@ -166,10 +166,13 @@ export default function Home() {
 
       {/* ── SHOP BY CATEGORY ── */}
       <section className={styles.categoriesSection}>
-        <div className={styles.luxuryHeader}>
-          <span className={styles.luxuryLine}></span>
+        <div className={styles.luxuryHeaderVertical}>
           <span className={styles.luxuryTitle}>Shop By Category</span>
-          <span className={styles.luxuryLine}></span>
+          <div className={styles.luxuryDivider}>
+            <span className={styles.luxuryLine}></span>
+            <span className={styles.luxuryStar}>✦</span>
+            <span className={styles.luxuryLine}></span>
+          </div>
         </div>
         <div className={styles.categoryGrid}>
           {MAIN_CATEGORIES.map((cat, i) => (

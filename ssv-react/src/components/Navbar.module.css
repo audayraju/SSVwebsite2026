@@ -265,9 +265,26 @@
 .logo-wrapper {
     display: flex;
     align-items: center;
-    gap: 1px;
-    /* reduce spacing between mark and text */
+    gap: 8px; /* give some space between image and text block */
     flex-direction: row;
+    text-decoration: none;
+}
+
+.logoTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.logoSubtext {
+    font-family: inherit;
+    font-size: 0.6rem;
+    color: #c5a47e; /* matching gold tone */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    margin-top: 1px;
 }
 
 .logo {

@@ -27,6 +27,32 @@
   width: 100%;
 }
 
+.luxuryHeaderVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.luxuryDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  gap: 15px;
+}
+
+.luxuryStar {
+  color: var(--gold-primary);
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+
 .luxuryLine {
   flex: 1;
   height: 1px;
@@ -368,7 +394,12 @@
 
 @media (max-width: 768px) {
   .collectionSlide {
-    padding: 0 5px;
+    padding: 0 10px;
+  }
+  .productCard {
+    width: 75%;
+    margin: 0 auto;
+    aspect-ratio: 1/1.15;
   }
 }
 

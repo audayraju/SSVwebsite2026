@@ -172,7 +172,10 @@ export default function Navbar() {
           <div className={styles.logoSection}>
             <Link className={styles['logo-wrapper']} to="/" aria-label="Go to home page">
               <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Logo" className={styles.logoImage} />
-              <span className={styles.logo}>SSV JEWELLERS</span>
+              <div className={styles.logoTextContainer}>
+                <span className={styles.logo}>SSV JEWELLERS</span>
+                <span className={styles.logoSubtext}>Wholesaler & Manufacturer</span>
+              </div>
             </Link>
           </div>
 
