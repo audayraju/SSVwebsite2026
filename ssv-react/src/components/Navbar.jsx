@@ -13,6 +13,7 @@ export default function Navbar() {
   const [charIndex, setCharIndex] = useState(0);
   const [typing, setTyping] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -224,8 +225,41 @@ export default function Navbar() {
         </div>
       </div>
       
+      {/* Mobile Search Overlay */}
+      {mobileSearchOpen && (
+        <div className={styles.mobileSearchDropdown}>
+           <form className={styles['search-box']} onSubmit={(e) => { setMobileSearchOpen(false); handleSearch(e); }} style={{ width: '100%', maxWidth: 'none' }}>
+             <i 
+                className={`bi bi-search ${styles.searchIcon}`} 
+                aria-hidden="true" 
+                onClick={(e) => { setMobileSearchOpen(false); handleSearch(e); }}
+              ></i>
+             <input
+               id="mobile-navbar-search-input"
+               type="text"
+               placeholder="Search..."
+               value={search}
+               onChange={handleSearchChange}
+               onFocus={() => {
+                 if (location.pathname !== '/products') {
+                   navigate('/products');
+                 }
+               }}
+               onBlur={() => {
+                 setTimeout(() => {
+                   setMobileSearchOpen(false);
+                 }, 200);
+               }}
+               autoFocus
+               style={{ width: '100%', maxWidth: 'none' }}
+               aria-label="Search jewellery"
+             />
+           </form>
+        </div>
+      )}
+
       {/* Mobile-only Bottom Navigation */}
-      <MobileBottomNav />
+      <MobileBottomNav onSearchClick={() => setMobileSearchOpen(v => !v)} isSearchOpen={mobileSearchOpen} />
     </div>
   );
 }

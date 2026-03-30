@@ -201,22 +201,32 @@
 
 @media (max-width: 768px) {
     .searchSection {
-        position: static;
-        flex-basis: auto;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        min-width: 100px;
+        display: none;
     }
     
-    .search-box {
-        position: relative;
-        width: 120px;
+    .mobileSearchDropdown {
+        display: flex;
+        position: fixed;
+        /* Place it below the fixed navbar */
+        top: 104px; 
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        padding: 12px 20px;
+        z-index: 10000;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-top: 1px solid rgba(0,0,0,0.05);
     }
-
-    .search-box input {
-        padding: 6px 12px 6px 28px;
-        font-size: 0.85rem;
+    .mobileSearchDropdown .search-box {
+        position: relative;
+        width: 100%;
+        max-width: none;
+    }
+    .mobileSearchDropdown .search-box input {
+        width: 100%;
+        max-width: none;
+        padding: 8px 36px 8px 18px;
+        font-size: 0.95rem;
     }
 }
 

@@ -362,13 +362,13 @@
 }
 
 .collectionSlide {
-  flex: 0 0 100%;
-  margin-right: 0;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .collectionSlide {
-    flex: 0 0 100%;
+    padding: 0 5px;
   }
 }
 
@@ -641,6 +641,5 @@
   .heroTitle { font-size: 2.2rem; }
   .luxuryButton, .outlineButton, .outlineButtonLight { padding: 14px 30px; font-size: 0.8rem; width: 100%; text-align: center; }
   .collectionCarousel { padding: 0 10px; }
-  .collectionControl { display: none; }
   .heroControls { left: 0; right: 0; justify-content: center; bottom: 40px; }
 }

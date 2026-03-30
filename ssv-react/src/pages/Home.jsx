@@ -74,6 +74,13 @@ const DIAMOND_COLLECTION = [
 
 /* ── SUB-COMPONENT: COLLECTION CAROUSEL ── */
 function CollectionCarousel({ title, items, activeIdx, next, prev, windowWidth }) {
+  const isMobile = windowWidth <= 768;
+  const isTablet = windowWidth > 768 && windowWidth <= 1024;
+  const visibleCount = isMobile ? 1 : isTablet ? 3 : 5;
+  const maxIdx = Math.max(0, items.length - visibleCount);
+  const currentIdx = Math.min(activeIdx, maxIdx);
+  const itemWidth = 100 / visibleCount;
+
   return (
     <section className={styles.productsSection} aria-label={`${title} collection`}>
       <div className={styles.sectionHeader}>
@@ -88,11 +95,11 @@ function CollectionCarousel({ title, items, activeIdx, next, prev, windowWidth }
         <div className={styles.collectionViewport}>
           <motion.div 
             className={styles.collectionTrack}
-            animate={{ x: `-${activeIdx * 100}%` }}
+            animate={{ x: `-${currentIdx * itemWidth}%` }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             {items.map((p, i) => (
-              <div key={i} className={styles.collectionSlide}>
+              <div key={i} className={styles.collectionSlide} style={{ flex: `0 0 ${itemWidth}%`, maxWidth: `${itemWidth}%` }}>
                 <div className={styles.productCard}>
                   <Link to={p.link} className={styles.productCardLink}>
                     <img src={p.img} alt={p.title} loading="lazy" />
@@ -106,8 +113,12 @@ function CollectionCarousel({ title, items, activeIdx, next, prev, windowWidth }
             ))}
           </motion.div>
         </div>
-        <button className={`${styles.collectionControl} ${styles.collectionPrev}`} onClick={prev}>‹</button>
-        <button className={`${styles.collectionControl} ${styles.collectionNext}`} onClick={next}>›</button>
+        {maxIdx > 0 && (
+          <>
+            <button className={`${styles.collectionControl} ${styles.collectionPrev}`} onClick={prev}>‹</button>
+            <button className={`${styles.collectionControl} ${styles.collectionNext}`} onClick={next}>›</button>
+          </>
+        )}
       </div>
     </section>
   )

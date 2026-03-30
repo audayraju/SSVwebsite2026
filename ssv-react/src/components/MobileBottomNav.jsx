@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './MobileBottomNav.module.css';
 
-const MobileBottomNav = () => {
+const MobileBottomNav = ({ onSearchClick, isSearchOpen }) => {
     const location = useLocation();
 
     return (
@@ -15,10 +15,10 @@ const MobileBottomNav = () => {
                 <i className="bi bi-gem"></i>
                 <span>Collection</span>
             </NavLink>
-            <NavLink to="/products?search=" className={({ isActive }) => `${styles.navItem} ${location.search.includes('search') ? styles.active : ''}`}>
+            <button onClick={onSearchClick} className={`${styles.navItem} ${isSearchOpen ? styles.active : ''}`} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
                 <i className="bi bi-search"></i>
                 <span>Search</span>
-            </NavLink>
+            </button>
             <NavLink to="/contact" className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ''}`}>
                 <i className="bi bi-envelope"></i>
                 <span>Contact</span>
