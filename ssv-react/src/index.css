@@ -962,9 +962,8 @@ section,
 .footer-announcement {
   width: 100%;
   overflow: hidden;
-  background: linear-gradient(90deg, #f7f2ea 0%, #fdfaf5 50%, #f7f2ea 100%);
-  border-top: 1px solid rgba(201, 168, 76, 0.2);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+  background: #4f063a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-announcement__viewport {
@@ -1002,13 +1001,13 @@ section,
   font-size: 0.76rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: #4d3b46;
+  color: #ffffff;
   padding-right: 56px;
 }
 
 .footer-announcement__text strong {
   font-weight: 600;
-  color: #2f2028;
+  color: #ffffff;
   margin-right: 5px;
 }
 
@@ -1372,8 +1371,8 @@ section,
 /* Make floating button slightly smaller on small screens */
 @media (max-width: 480px) {
   .floating-buttons {
-    right: 12px;
-    bottom: 14px;
+    right: 16px;
+    bottom: 100px;
   }
 
   .float-btn {
@@ -1385,8 +1384,8 @@ section,
 
 @media (max-width: 640px) {
   .navbar {
-    padding: 8px 10px;
-    gap: 8px;
+    padding: 8px 15px;
+    gap: 12px;
   }
 
   .logo {

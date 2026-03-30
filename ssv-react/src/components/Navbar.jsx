@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
+import MobileBottomNav from './MobileBottomNav';
 
 export default function Navbar() {
   const [moreOpen, setMoreOpen] = useState(false);
@@ -139,11 +140,6 @@ export default function Navbar() {
     navigate('/');
   }
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  function handleMobileToggle() {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  }
 
   return (
     <div className={`${styles.navbarWrapper} ${styles.themeModern}`}>
@@ -207,11 +203,12 @@ export default function Navbar() {
           </div>
 
           <div className={styles.searchSection}>
-            <button className={styles.mobileMenuBtn} onClick={handleMobileToggle} aria-label="Toggle navigation menu">
-              <i className={isMobileMenuOpen ? "bi bi-x-large" : "bi bi-list"}></i>
-            </button>
             <form className={styles['search-box']} onSubmit={handleSearch}>
-              <i className={`bi bi-search ${styles.searchIcon}`} aria-hidden="true" onClick={() => document.getElementById('navbar-search-input').focus()}></i>
+              <i 
+                className={`bi bi-search ${styles.searchIcon}`} 
+                aria-hidden="true" 
+                onClick={handleSearch}
+              ></i>
               <input
                 id="navbar-search-input"
                 type="text"
@@ -225,18 +222,10 @@ export default function Navbar() {
             </form>
           </div>
         </div>
-
-        {/* Mobile Menu Overlay */}
-        <div className={`${styles.mobileOverlay} ${isMobileMenuOpen ? styles.mobileOverlayOpen : ''}`}>
-          <div className={styles.mobileNavLinks}>
-            <NavLink to="/" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Home</NavLink>
-            <NavLink to="/products" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Products</NavLink>
-            <NavLink to="/contact" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Contact</NavLink>
-            <NavLink to="/about" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>About</NavLink>
-            <NavLink to="/services" onClick={() => { setIsMobileMenuOpen(false); }} className={({ isActive }) => isActive ? styles.active : ''}>Services</NavLink>
-          </div>
-        </div>
       </div>
+      
+      {/* Mobile-only Bottom Navigation */}
+      <MobileBottomNav />
     </div>
   );
 }
