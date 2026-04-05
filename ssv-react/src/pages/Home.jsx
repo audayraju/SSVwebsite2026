@@ -142,7 +142,7 @@ export default function Home() {
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setActiveSlide(s => (s + 1) % SLIDES.length)
-    }, 8000)
+    }, 3000)
     return () => clearInterval(timerRef.current)
   }, [])
 

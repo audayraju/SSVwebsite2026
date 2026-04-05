@@ -106,7 +106,7 @@ export default function Products() {
                                     </div>
                                     <h3 className={styles.productName}>{product.name}</h3>
                                     <div className={styles.infoBottom}>
-                                        <p className={styles.productPrice}>{product.price}</p>
+                                        <p className={styles.productPrice}>{product.price || product.GMS || 'Contact for price'}</p>
                                         <Link to={`/products/${product.id}`} className={styles.enquireLink}>
                                             Enquire
                                         </Link>

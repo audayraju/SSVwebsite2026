@@ -8,7 +8,13 @@ export default function ProductDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const product = products.find(p => p.id === id) || products[0];
-    
+    const descriptionText = product.description || '';
+    const specialityPrefix = 'Speciality:';
+    const hasSpecialityPrefix = descriptionText.startsWith(specialityPrefix);
+    const descriptionBody = hasSpecialityPrefix
+        ? descriptionText.slice(specialityPrefix.length).trim()
+        : descriptionText;
+
     const [isZoomed, setIsZoomed] = useState(false);
     const [isInnerZoomed, setIsInnerZoomed] = useState(false);
     const [transformOrigin, setTransformOrigin] = useState('50% 50%');
@@ -29,13 +35,24 @@ export default function ProductDetails() {
                 }
             }
         };
-        
+
         window.addEventListener('keydown', handleKeyDown);
-        
+
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [isZoomed, navigate]);
+
+    useEffect(() => {
+        if (!isZoomed) return;
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+        };
+    }, [isZoomed]);
 
     // Use backend API endpoint for images
     const imgSrc = product && product.imageUrl
@@ -50,9 +67,9 @@ export default function ProductDetails() {
         e.stopPropagation();
         setIsInnerZoomed(!isInnerZoomed);
         if (!isInnerZoomed) {
-             handleMouseMove(e);
+            handleMouseMove(e);
         } else {
-             setTransformOrigin('50% 50%');
+            setTransformOrigin('50% 50%');
         }
     };
 
@@ -84,18 +101,18 @@ export default function ProductDetails() {
 
             <div className={styles.contentWrapper}>
                 <button className={styles.backBtn} onClick={() => navigate(-1)} aria-label="Go back">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
                     <span>Back to Collection</span>
                 </button>
-                
+
                 <div className={styles.mainGrid}>
                     {/* LEFT: Image Section */}
                     <div className={styles.imageSection}>
                         <div className={styles.imageFrame}>
-                            <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className={styles.mainImage} 
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className={styles.mainImage}
                                 onClick={toggleZoom}
                             />
                         </div>
@@ -106,18 +123,34 @@ export default function ProductDetails() {
                         <div className={styles.infoGlass}>
                             <span className={styles.categoryTag}>{product.category}</span>
                             <h1 className={styles.productTitle}>{product.name}</h1>
-                            <p className={styles.skuTag}>SKU: <span>{product.sku}</span></p>
-                            
-                            <div className={styles.priceContainer}>
-                                <span className={styles.priceLabel}>Estimated Price</span>
-                                <h2 className={styles.productPrice}>{product.price}</h2>
+                            <div className={styles.metaList}>
+                                <p className={styles.skuTag}>SKU: <span>{product.sku}</span></p>
+                                {product.GMS && (
+                                    <p className={styles.skuTag}>Weight: <span>{product.GMS}</span></p>
+                                )}
                             </div>
+
+                            {product.price && (
+                                <div className={styles.priceContainer}>
+                                    <span className={styles.priceLabel}>Price</span>
+                                    <h2 className={styles.productPrice}>{product.price}</h2>
+                                </div>
+                            )}
 
                             <div className={styles.productDescription}>
-                                <p>{product.description}</p>
+                                <p>
+                                    {hasSpecialityPrefix ? (
+                                        <>
+                                            <span className={styles.specialityLabel}>{specialityPrefix}</span>{' '}
+                                            {descriptionBody}
+                                        </>
+                                    ) : (
+                                        descriptionText
+                                    )}
+                                </p>
                             </div>
 
-                            <a 
+                            <a
                                 href={`https://wa.me/9177396962?text=Hi, I am interested in ${product.name} (SKU: ${product.sku})`}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -135,16 +168,16 @@ export default function ProductDetails() {
 
             {/* Fullscreen Zoom Modal */}
             {isZoomed && (
-                <div 
-                    className={styles.zoomModalOpen} 
+                <div
+                    className={styles.zoomModalOpen}
                     onClick={toggleZoom}
                     onMouseMove={handleMouseMove}
                     onTouchMove={handleTouchMove}
                 >
                     <button className={styles.closeZoomBtn} onClick={toggleZoom}>✕</button>
-                    <img 
-                        src={product.image} 
-                        alt="Zoomed Product" 
+                    <img
+                        src={product.image}
+                        alt="Zoomed Product"
                         className={`${styles.zoomedImage} ${isInnerZoomed ? styles.zoomedImageActive : ''}`}
                         style={{ transformOrigin }}
                         onClick={handleImageClick}

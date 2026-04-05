@@ -1,7 +1,7 @@
 .detailsPage {
     height: 100vh;
     background: white;
-    color:black;
+    color: black;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -9,8 +9,15 @@
 }
 
 @keyframes pulseGlow {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.3); opacity: 0.8; }
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.3);
+        opacity: 0.8;
+    }
 }
 
 .contentWrapper {
@@ -62,7 +69,12 @@
         height: auto;
         overflow-y: auto;
     }
-    .detailsPage { height: auto; min-height: 100vh; overflow-y: auto; }
+
+    .detailsPage {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
 }
 
 /* ── IMAGE SECTION ── */
@@ -102,50 +114,61 @@
 }
 
 .infoGlass {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(18, 18, 18, 0.08);
     border-radius: 20px;
-    padding: 25px 35px;
+    padding: 30px 34px;
     width: 100%;
     max-height: 100%;
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
 }
 
 .infoGlass::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Webkit */
+    display: none;
+    /* Chrome/Safari/Webkit */
 }
 
 .categoryTag {
     display: inline-block;
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--brass-light);
-    margin-bottom: 8px;
-    font-weight: 600;
+    color: #a37a1f;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .productTitle {
     font-family: var(--font-display, 'Cinzel', serif);
-    font-size: 1.25rem;
-    line-height: 1.2;
-    margin-bottom: 4px;
+    font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+    line-height: 1.15;
+    margin-bottom: 16px;
     color: #090909;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
+}
+
+.metaList {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .skuTag {
-    font-size: 0.7rem;
-    color: black;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
+    font-size: 1.02rem;
+    color: #1f1f1f;
+    letter-spacing: 0.4px;
+    margin: 0;
+    line-height: 1.45;
 }
 
 .skuTag span {
-    color: #070707;
+    color: #101010;
+    font-weight: 600;
 }
 
 .servicePromise {
@@ -168,23 +191,27 @@
 }
 
 .priceContainer {
-    margin-bottom: 0;
-    padding-bottom: 10px;
-    border-bottom: none;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid rgba(18, 18, 18, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.85);
 }
 
 .priceLabel {
     display: block;
-    font-size: 0.75rem;
-    color: black;
+    font-size: 0.78rem;
+    color: #444;
     margin-bottom: 4px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
 }
 
 .productPrice {
     font-family: 'Inter', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.42rem;
     font-weight: 700;
-    color: #e7c873;
+    color: #94620f;
 }
 
 .enquireBtn {
@@ -199,7 +226,8 @@
     text-decoration: none;
     font-weight: 700;
     font-size: 0.9rem;
-    margin-bottom: 25px;
+    margin-top: 18px;
+    margin-bottom: 0;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(155, 104, 30, 0.3);
 }
@@ -210,16 +238,43 @@
 }
 
 .productDescription {
-    margin-top: 5px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
+    padding: 16px 18px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: #fcfcfc;
 }
 
 .productDescription p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #333;
+    font-size: 1.03rem;
+    line-height: 1.62;
+    color: #2f2f2f;
     margin: 0;
+}
+
+.specialityLabel {
+    color: #8c5f16;
+    font-weight: 700;
+    letter-spacing: 0.25px;
+}
+
+@media (max-width: 900px) {
+    .infoGlass {
+        padding: 24px 20px;
+        border-radius: 16px;
+    }
+
+    .productTitle {
+        margin-bottom: 12px;
+    }
+
+    .skuTag {
+        font-size: 0.95rem;
+    }
+
+    .productDescription p {
+        font-size: 1rem;
+    }
 }
 
 /* ── SPEC GRID ── */
@@ -252,7 +307,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
+    z-index: 2147483646;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -280,7 +335,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    z-index: 9999999;
+    z-index: 2147483647;
     transition: background-color 0.2s;
 }
 
