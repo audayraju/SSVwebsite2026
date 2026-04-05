@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Column 1: Brand & Connect */}
           <div className="footer-col brand-col">
             <Link to="/" className="footer-brand-link">
-              <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Jewellers Logo" className="footer-logo-img" />
+              <img src="/slides/pictures/logo-removebg-preview.png" alt="SSV Jewellers Logo" className="footer-logo-img" loading="lazy" decoding="async" />
               <h3 className="footer-brand-name">SSV JEWELLERS</h3>
             </Link>
             <p className="brand-desc">
@@ -42,6 +42,7 @@ export default function Footer() {
             <h4 className="footer-subtitle">Customer Care</h4>
             <ul className="footer-list">
               <li><a href="tel:+919177396962">+91 9177396962</a></li>
+              <li><a href="tel:+919515346355">+91 95153 46355</a></li>
               <li>📍 Address:
 Shobha Pavani Arcade, Opp. Durgabai Deshmukh Hospital, Vidyanagar, Hyderabad – 500041
 

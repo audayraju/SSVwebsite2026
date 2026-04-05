@@ -6,13 +6,15 @@ const PRODUCTS_PER_PAGE = 12;
 
 const CATEGORIES = [
     "All", 
+    "Mala",
     "Necklaces", 
     "Bangles", 
     "Bracelets", 
-    "Rings", 
-    "Bridal Sets", 
-    "Chokers", 
-    "Light Weight Items"
+    "Lockets", 
+    "Rose Gold and Auntiq", 
+    "Tops", 
+       "Malas",
+       "Chains"
 ];
 
 import { products as productList } from '../data/productData';

@@ -263,6 +263,7 @@ app.get('/api/health', (_req, res) => {
 // Live Google reviews (auto-updating)
 app.get('/api/google-reviews', async (_req, res) => {
     console.log('[GET] /api/google-reviews')
+  res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600')
   const now = Date.now()
   if (googleReviewCache.data && (now - googleReviewCache.ts) < GOOGLE_REVIEW_CACHE_MS) {
     return res.json(googleReviewCache.data)
@@ -330,7 +331,8 @@ app.get('/api/google-reviews', async (_req, res) => {
 app.get('/api/products', async (_req, res) => {
   console.log('[GET] /api/products')
   try {
-    const products = await Product.find().sort({ imageId: 1 })
+    res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600')
+    const products = await Product.find().sort({ imageId: 1 }).lean()
     res.json(products)
   } catch (err) {
     console.error('[GET] /api/products error:', err)
@@ -342,7 +344,8 @@ app.get('/api/products', async (_req, res) => {
 app.get('/api/products/:id', async (req, res) => {
   console.log(`[GET] /api/products/${req.params.id}`)
   try {
-    const product = await Product.findById(req.params.id)
+    res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600')
+    const product = await Product.findById(req.params.id).lean()
     if (!product) {
       console.warn(`[GET] /api/products/${req.params.id} not found`)
       return res.status(404).json({ message: 'Product not found' })
@@ -393,7 +396,7 @@ app.post('/api/admin/login', async (req, res) => {
 app.get('/api/admin/products', requireAdmin, async (_req, res) => {
   console.log('[GET] /api/admin/products')
   try {
-    const products = await Product.find().sort({ imageId: 1 })
+    const products = await Product.find().sort({ imageId: 1 }).lean()
     res.json(products)
   } catch (err) {
     console.error('[GET] /api/admin/products error:', err)
@@ -405,7 +408,7 @@ app.get('/api/admin/products', requireAdmin, async (_req, res) => {
 app.get('/api/admin/products/:id', requireAdmin, async (req, res) => {
   console.log(`[GET] /api/admin/products/${req.params.id}`)
   try {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id).lean()
     if (!product) {
       console.warn(`[GET] /api/admin/products/${req.params.id} not found`)
       return res.status(404).json({ message: 'Product not found' })

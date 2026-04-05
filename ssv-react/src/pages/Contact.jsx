@@ -105,11 +105,11 @@ export default function Contact() {
             <a href="tel:+919177396962" className={styles.callBtn}>
               📞 Contact Now
             </a>
-          </div>
+   </div>
         </motion.div>
 
         <motion.div className={styles.heroRight} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <img src="/slides/contact_hero.png" alt="SSV Jewellers luxury bridal collection display" loading="lazy" />
+          <img src="/images/neckalce/SSV-NECKALCES-019.jpg" alt="SSV Jewellers luxury bridal collection display" loading="eager" decoding="async" fetchPriority="high" />
           <div className={styles.socialIcons}>
             <a href="https://facebook.com/profile.php?id=61584739588200" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i className="bi bi-facebook" aria-hidden="true" />

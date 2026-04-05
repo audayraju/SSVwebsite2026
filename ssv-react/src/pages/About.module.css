@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
 
 :root {
-  --brass: #9b681e;
-  --brass-light: #f4dd62;
-  --navy: #1A2332;
-  --text: #4A5568;
-  --text-light: #718096;
-  --gold-gradient: linear-gradient(135deg, #d4b57a, #c5a47e, #d4b57a);
-  --shadow-premium: 0 20px 40px rgba(0,0,0,0.06);
+    --brass: #9b681e;
+    --brass-light: #f4dd62;
+    --navy: #1A2332;
+    --text: #4A5568;
+    --text-light: #718096;
+    --gold-gradient: linear-gradient(135deg, #d4b57a, #c5a47e, #d4b57a);
+    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
 /* ── HERO ── */
 .aboutHero {
     height: 70vh;
     min-height: 500px;
-    background: url('/slides/pictures/about_hero.png') no-repeat center center;
+    background: url('/images/aboutandbangles/about-page.background.jpeg') no-repeat center center;
     background-size: cover;
     position: relative;
     display: flex;
@@ -41,12 +41,12 @@
 .sinceBadge {
     display: inline-block;
     padding: 6px 16px;
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 30px;
     font-size: 0.8rem;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
 }
 
@@ -68,8 +68,9 @@
 .heroContent p {
     font-family: var(--font-body, 'Inter', sans-serif);
     font-size: 1.2rem;
-    opacity: 0.9;
+    color: rgba(255, 248, 240, 0.98);
     font-weight: 300;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* ── MAIN PANEL ── */
@@ -127,7 +128,7 @@
 .imageWrapper img {
     width: 100%;
     border-radius: 12px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
 }
 
 .imageCard {
@@ -137,7 +138,7 @@
     background: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     border-left: 5px solid var(--brass);
     max-width: 250px;
 }
@@ -189,7 +190,7 @@
 
 .specializationCard:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
 }
 
 .specIcon {
@@ -300,7 +301,8 @@
     margin: 0 auto;
 }
 
-.missionBox, .visionBox {
+.missionBox,
+.visionBox {
     background: #fff;
     padding: 50px;
     border-radius: 20px;
@@ -314,14 +316,16 @@
     margin-bottom: 25px;
 }
 
-.missionBox h3, .visionBox h3 {
+.missionBox h3,
+.visionBox h3 {
     font-family: var(--font-display, 'Cinzel', serif);
     font-size: 1.8rem;
     color: var(--navy);
     margin-bottom: 20px;
 }
 
-.missionBox p, .visionBox p {
+.missionBox p,
+.visionBox p {
     font-size: 1.05rem;
     line-height: 1.8;
     color: var(--text-light);
@@ -400,7 +404,8 @@
         padding: 50px 5%;
     }
 
-    .missionBox, .visionBox {
+    .missionBox,
+    .visionBox {
         padding: 30px 24px;
     }
 

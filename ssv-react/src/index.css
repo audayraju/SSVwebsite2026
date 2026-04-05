@@ -17,7 +17,7 @@ h3 {
 }
 
 p {
-  
+
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
@@ -1022,7 +1022,7 @@ section,
 }
 
 .site-footer {
-  background: #4f063a ;
+  background: #4f063a;
   color: #fff;
   margin: 0;
   border-radius: 0;
@@ -1164,6 +1164,7 @@ section,
   margin-bottom: 12px;
   font-family: 'Inter', system-ui, sans-serif;
 }
+
 .footer-list {
   list-style: none;
   padding: 0;
@@ -1195,16 +1196,21 @@ section,
 }
 
 .social-links-footer a {
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 1.35rem;
   transition: all 0.3s ease;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
 }
 
 .social-links-footer a:hover {
-  background: #dcb36b;
-  color: #000;
+  background: transparent;
+  color: #dcb36b;
   transform: translateY(-3px);
 }
 
@@ -1250,7 +1256,7 @@ section,
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .footer-bottom-bar {
     flex-direction: column;
     gap: 16px;

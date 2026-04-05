@@ -147,7 +147,7 @@
   line-height: 0.95;
   letter-spacing: 0.08em;
   color: #ffffff;
-  text-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   font-weight: 400;
   text-transform: uppercase;
 }
@@ -218,7 +218,7 @@
 
 .heroArrow {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   width: 50px;
   height: 50px;
@@ -245,7 +245,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -262,6 +262,20 @@
   background: #fff;
 }
 
+.categoriesSection .luxuryTitle {
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+}
+
+.categoryIntro {
+  margin: 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
 .categoryGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -274,12 +288,13 @@
   text-decoration: none;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  transition: transform 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .categoryCard:hover {
   transform: translateY(-10px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
 }
 
 .categoryImageWrap {
@@ -302,28 +317,63 @@
 .categoryOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(13, 10, 11, 0.88) 0%, rgba(13, 10, 11, 0.25) 58%, transparent 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 40px 20px;
+  padding: 26px 20px;
   color: #fff;
   text-align: center;
 }
 
+.categoryBadge {
+  align-self: flex-start;
+  margin-bottom: auto;
+  font-size: 0.68rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid rgba(231, 200, 115, 0.7);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 5px 9px;
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+
 .categoryOverlay h2 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
   margin-bottom: 8px;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em;
 }
 
 .categoryOverlay span {
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  opacity: 0.8;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+.categoryNote {
+  margin: 8px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  opacity: 0.85;
+  letter-spacing: 0.03em;
+}
+
+.categoryAction {
+  margin-top: 10px;
+  color: var(--gold-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: none;
 }
 
 /* ── PROMISE SECTION ── */
@@ -371,6 +421,14 @@
   padding: 40px 5%;
 }
 
+.topProductsGrid {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+}
+
 .collectionCarousel {
   position: relative;
   max-width: 1500px;
@@ -396,6 +454,7 @@
   .collectionSlide {
     padding: 0 10px;
   }
+
   .productCard {
     width: 75%;
     margin: 0 auto;
@@ -408,7 +467,7 @@
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 1/1.3;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
 }
 
@@ -433,7 +492,7 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 55%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -449,23 +508,23 @@
 .overlay h3 {
   color: #fff;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin-bottom: 8px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-transform: none;
+  letter-spacing: 0.4px;
 }
 
 .viewLink {
   color: #e7c873;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  font-weight: 600;
 }
 
 .collectionControl {
@@ -477,11 +536,12 @@
   background: #fff;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 5;
   font-size: 24px;
-  color: #c5a044; /* Gold secondary color for better contrast */
+  color: #c5a044;
+  /* Gold secondary color for better contrast */
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -489,17 +549,23 @@
 }
 
 @media (max-width: 768px) {
-    .collectionControl {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
-    }
-    .collectionPrev { left: 8px; }
-    .collectionNext { right: 8px; }
-    
-    .productsSection {
-        padding: 20px 10px;
-    }
+  .collectionControl {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .collectionPrev {
+    left: 8px;
+  }
+
+  .collectionNext {
+    right: 8px;
+  }
+
+  .productsSection {
+    padding: 20px 10px;
+  }
 }
 
 .collectionControl:hover {
@@ -507,8 +573,13 @@
   color: #fff;
 }
 
-.collectionPrev { left: 0; }
-.collectionNext { right: 0; }
+.collectionPrev {
+  left: 0;
+}
+
+.collectionNext {
+  right: 0;
+}
 
 /* ── STORY SECTION ── */
 .storySection {
@@ -528,7 +599,7 @@
 .storyImage {
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 20px 20px 60px rgba(0,0,0,0.1);
+  box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
 }
 
 .storyImage img {
@@ -632,7 +703,7 @@
 .outlineButtonLight {
   display: inline-block;
   padding: 16px 40px;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -657,20 +728,92 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .hero { height: auto; }
-  .categoryGrid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-  .promiseContainer { grid-template-columns: 1fr; gap: 20px; }
-  .storyContainer { grid-template-columns: 1fr; gap: 40px; }
-  .ctaActions { flex-direction: column; }
+  .hero {
+    height: auto;
+  }
+
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .categoryOverlay h2 {
+    font-size: 1.2rem;
+  }
+
+  .categoryOverlay span {
+    font-size: 0.78rem;
+  }
+
+  .promiseContainer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .storyContainer {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .ctaActions {
+    flex-direction: column;
+  }
+
+  .topProductsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
 }
 
 @media (max-width: 600px) {
-  .heroOverlay { padding: 0 20px; justify-content: center; text-align: center; }
-  .heroContent { justify-content: center; }
-  .heroBody { border-left: none; padding-left: 0; align-items: center; text-align: center; }
-  .heroLabel { letter-spacing: 4px; font-size: 0.8rem; }
-  .heroTitle { font-size: 2.2rem; }
-  .luxuryButton, .outlineButton, .outlineButtonLight { padding: 14px 30px; font-size: 0.8rem; width: 100%; text-align: center; }
-  .collectionCarousel { padding: 0 10px; }
-  .heroControls { left: 0; right: 0; justify-content: center; bottom: 40px; }
+  .heroOverlay {
+    padding: 0 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .heroContent {
+    justify-content: center;
+  }
+
+  .heroBody {
+    border-left: none;
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroLabel {
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+  }
+
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .luxuryButton,
+  .outlineButton,
+  .outlineButtonLight {
+    padding: 14px 30px;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .collectionCarousel {
+    padding: 0 10px;
+  }
+
+  .heroControls {
+    left: 0;
+    right: 0;
+    justify-content: center;
+    bottom: 40px;
+  }
+
+  .topProductsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }

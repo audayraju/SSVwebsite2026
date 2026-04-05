@@ -6,7 +6,7 @@ export const products = [
         name: 'Mazonite Tops',
         sku: 'SSV-TOPS-001',
         GMS: '10.730 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-001.jpg',
         description: `Speciality: Clean stud profile with a neat center highlight and smooth edge finishing. Weight: 10.730 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -15,7 +15,7 @@ export const products = [
         name: 'mazonite tops',
         sku: 'SSV-TOPS-002',
         GMS: '12.530 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-002.jpg',
         description: `Speciality: Subtle floral texture with a classic round top silhouette and polished surface. Weight: 12.530 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -24,7 +24,7 @@ export const products = [
         name: 'cz with ruby tops',
         sku: 'SSV-TOPS-003',
         GMS: '14.210gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-003.jpg',
         description: `Speciality: Contrast stone arrangement with a bright ruby-tone center and crisp surrounding accents. Weight: 14.210 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -33,7 +33,7 @@ export const products = [
         name: 'kammala buttalu',
         sku: 'SSV-TOPS-004',
         GMS: '14.210 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-004.jpg',
         description: `Speciality: Traditional kammala buttalu form with layered carving and a bold front view. Weight: 14.210 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -42,7 +42,7 @@ export const products = [
         name: 'cz kammla buttalu',
         sku: 'SSV-TOPS-005',
         GMS: '43.57 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-005.jpg',
         description: `Speciality: Wide-face buttalu layout with CZ detailing and heavy festive presence. Weight: 43.57 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -51,7 +51,7 @@ export const products = [
         name: 'Makana Kundhalu',
         sku: 'SSV-TOPS-006',
         GMS: '23.20 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-006.jpg',
         description: `Speciality: Makana pattern with rich handcrafted depth and standout earring-top styling. Weight: 23.20 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -60,7 +60,7 @@ export const products = [
         name: 'Uncut Tops',
         sku: 'SSV-TOPS-007',
         GMS: '10.630 gms',
-        category: 'TOPS',
+        category: 'Tops',
         image: '/images/tops/SSV-TOPS-007.jpg',
         description: `Speciality: Uncut-inspired top design with textured setting and sharp ornamental character. Weight: 10.630 gms. ${CRAFTSMANSHIP_NOTE}`
 
@@ -380,7 +380,7 @@ export const products = [
         name: 'Ramparivar Locket',
         sku: 'SSV-Locket-042',
         GMS: '23.960 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-042.jpg',
         description: `Speciality: Ramparivar devotional locket with detailed iconography and premium handcrafted depth. Weight: 23.960 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -389,7 +389,7 @@ export const products = [
         name: 'Navaratham Locket',
         sku: 'SSV-Locket-043',
         GMS: '14.140 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-043.jpg',
         description: `Speciality: Navaratham-inspired color layout with vibrant arrangement and elegant pendant form. Weight: 14.140 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -398,7 +398,7 @@ export const products = [
         name: 'Auntiq Locket',
         sku: 'SSV-Locket-044',
         GMS: '33.400 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-044.jpg',
         description: `Speciality: Antique-finish locket styling with bold texture and classic heritage appeal. Weight: 33.400 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -407,7 +407,7 @@ export const products = [
         name: 'CZS Locket',
         sku: 'SSV-Locket-045',
         GMS: '30.630 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-045.jpg',
         description: `Speciality: CZS locket model with strong centerpiece detailing and balanced contour work. Weight: 30.630 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -416,7 +416,7 @@ export const products = [
         name: 'Uncut Locket',
         sku: 'SSV-Locket-046',
         GMS: '11.380 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-046.jpg',
         description: `Speciality: Uncut style locket with textured setting and distinctive handcrafted personality. Weight: 11.380 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -434,7 +434,7 @@ export const products = [
         name: 'Rubi Locket',
         sku: 'SSV-Locket-048',
         GMS: '15.520 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-048.jpg',
         description: `Speciality: Rubi-tone locket with soft contrast accents and elegant pendant finishing. Weight: 15.520 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -443,7 +443,7 @@ export const products = [
         name: 'Mozonite Locket',
         sku: 'SSV-Locket-050',
         GMS: '16.590 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: '/images/lockets/SSV-Locket-050.jpg',
         description: `Speciality: Mozonite locket design with focused center pattern and smooth finishing touches. Weight: 16.590 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -501,8 +501,42 @@ export const products = [
         image: '/images/rose gold and antiq/SSV-RSA-056.jpg',
         description: `Speciality: Round set design with uniform motif rhythm and elegant symmetrical finish. Weight: 20.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
-
-
+    {
+        id: '57',
+        name: 'Locket With Pearl Mala',
+        sku: 'SSV-BEADS-057',
+        GMS: '110.02 gms',
+        category: 'Mala',
+        image: '/images/mala/SSV-BEADS-057.jpg',
+        description: `Speciality: Pearl mala design with a featured locket centerpiece and rich layered fall. Weight: 110.02 gms. ${CRAFTSMANSHIP_NOTE}`
+    },
+    {
+        id: '58',
+        name: 'Pink Beads Mala',
+        sku: 'SSV-BEADS-058',
+        GMS: '125.66 gms',
+        category: 'Mala',
+        image: '/images/mala/SSV-BEADS-058.jpg',
+        description: `Speciality: Pink beads mala with soft color rhythm and a grand festive drape. Weight: 125.66 gms. ${CRAFTSMANSHIP_NOTE}`
+    },
+    {
+        id: '59',
+        name: 'Locket With Emerald Beads Mala',
+        sku: 'SSV-BEADS-059',
+        GMS: '70.24 gms',
+        category: 'Mala',
+        image: '/images/mala/SSV-BEADS-059.jpg',
+        description: `Speciality: Emerald beads mala with a highlighted locket design and elegant bead flow. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
+    },
+    {
+        id: '60',
+        name: 'Locket With Emerald Beads Mala',
+        sku: 'SSV-BEADS-060',
+        GMS: '70.24 gms',
+        category: 'Vadanam',
+        image: '/images/SSV-VDN-001.jpg',
+        description: `Speciality: Emerald beads mala with a highlighted locket design and elegant bead flow. Weight:--. ${CRAFTSMANSHIP_NOTE}`
+    },
 ];
 
 export const getProductById = (id) => products.find(p => p.id === id);

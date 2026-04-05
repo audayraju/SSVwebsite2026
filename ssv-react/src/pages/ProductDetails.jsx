@@ -113,6 +113,9 @@ export default function ProductDetails() {
                                 src={product.image}
                                 alt={product.name}
                                 className={styles.mainImage}
+                                loading="eager"
+                                decoding="async"
+                                fetchPriority="high"
                                 onClick={toggleZoom}
                             />
                         </div>
@@ -179,6 +182,7 @@ export default function ProductDetails() {
                         src={product.image}
                         alt="Zoomed Product"
                         className={`${styles.zoomedImage} ${isInnerZoomed ? styles.zoomedImageActive : ''}`}
+                        decoding="async"
                         style={{ transformOrigin }}
                         onClick={handleImageClick}
                         onDoubleClick={handleDoubleTap}

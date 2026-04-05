@@ -9,8 +9,7 @@ import { FavoritesProvider } from './context/FavoritesContext'
 
 /* ── Lazy-loaded pages ── */
 const Home = lazy(() => import('./pages/Home'))
-// Temporarily import Products directly to debug render issues (can revert to lazy)
-import Products from './pages/Products'
+const Products = lazy(() => import('./pages/Products'))
 const ProductDetails = lazy(() => import('./pages/ProductDetails'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
