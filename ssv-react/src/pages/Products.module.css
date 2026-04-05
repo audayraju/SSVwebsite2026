@@ -247,6 +247,30 @@
     text-decoration: underline;
 }
 
+.loadMoreWrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+}
+
+.loadMoreBtn {
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background: #fff;
+    color: #1f1f1f;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.loadMoreBtn:hover {
+    border-color: var(--brass);
+    color: var(--brass);
+    transform: translateY(-1px);
+}
+
 /* ── NO RESULTS ── */
 .noResults {
     text-align: center;

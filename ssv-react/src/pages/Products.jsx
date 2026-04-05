@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Products.module.css';
 
+const PRODUCTS_PER_PAGE = 12;
+
 const CATEGORIES = [
     "All", 
     "Necklaces", 
@@ -28,6 +30,7 @@ export default function Products() {
 
     // Initialize category with URL param if it exists, otherwise "All"
     const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "All");
+    const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
     
     // Synchronize state if URL changes (e.g. clicking a link while already on the page)
     React.useEffect(() => {
@@ -35,6 +38,10 @@ export default function Products() {
             setSelectedCategory(categoryFromUrl);
         }
     }, [categoryFromUrl]);
+
+    React.useEffect(() => {
+        setVisibleCount(PRODUCTS_PER_PAGE);
+    }, [selectedCategory, searchTerm]);
 
     const filteredProducts = products.filter(p => {
         const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
@@ -52,6 +59,9 @@ export default function Products() {
         
         return matchesCategory && matchesSearch;
     });
+
+    const visibleProducts = filteredProducts.slice(0, visibleCount);
+    const hasMoreProducts = filteredProducts.length > visibleCount;
 
     return (
         <div className={styles.productsPage}>
@@ -87,8 +97,9 @@ export default function Products() {
                 </div>
 
                 {filteredProducts.length > 0 ? (
+                    <>
                     <div className={styles.productsGrid}>
-                        {filteredProducts.map((product) => (
+                        {visibleProducts.map((product, index) => (
                             <div key={product.id} className={styles.productCard}>
                                 <Link to={`/products/${product.id}`} className={styles.imageLink}>
                                     <div className={styles.imageContainer}>
@@ -96,6 +107,9 @@ export default function Products() {
                                             src={product.image}
                                             alt={product.name}
                                             className={styles.productImage}
+                                            loading={index < 4 ? 'eager' : 'lazy'}
+                                            decoding="async"
+                                            fetchPriority={index < 4 ? 'high' : 'low'}
                                         />
                                     </div>
                                 </Link>
@@ -115,6 +129,18 @@ export default function Products() {
                             </div>
                         ))}
                     </div>
+                    {hasMoreProducts && (
+                        <div className={styles.loadMoreWrap}>
+                            <button
+                                type="button"
+                                className={styles.loadMoreBtn}
+                                onClick={() => setVisibleCount(prev => prev + PRODUCTS_PER_PAGE)}
+                            >
+                                Load More
+                            </button>
+                        </div>
+                    )}
+                    </>
                 ) : (
                     <div className={styles.noResults}>
                         <h3>No matches found for "{searchTerm}"</h3>
