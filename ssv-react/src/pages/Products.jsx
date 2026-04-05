@@ -5,17 +5,24 @@ import styles from './Products.module.css';
 const PRODUCTS_PER_PAGE = 12;
 
 const CATEGORIES = [
-    "All", 
+    "All",
+    "Bangles",
+    "Bracelets",
+    "Chains",
+    "Lockets",
     "Mala",
-    "Necklaces", 
-    "Bangles", 
-    "Bracelets", 
-    "Lockets", 
-    "Rose Gold and Auntiq", 
-    "Tops", 
-       "Malas",
-       "Chains"
+    "Necklaces",
+    "Rose Gold and Auntiq",
+    "Tops",
+    "Vadanam"
 ];
+
+const normalizeCategory = (value = '') => {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === 'malas') return 'mala';
+    if (normalized === 'locket') return 'lockets';
+    return normalized;
+};
 
 import { products as productList } from '../data/productData';
 
@@ -24,7 +31,7 @@ const products = productList;
 export default function Products() {
     const location = useLocation();
     const navigate = useNavigate();
-    
+
     // Extract category and search query from URL
     const searchParams = new URLSearchParams(location.search);
     const categoryFromUrl = searchParams.get('category');
@@ -33,7 +40,7 @@ export default function Products() {
     // Initialize category with URL param if it exists, otherwise "All"
     const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "All");
     const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
-    
+
     // Synchronize state if URL changes (e.g. clicking a link while already on the page)
     React.useEffect(() => {
         if (categoryFromUrl) {
@@ -46,19 +53,21 @@ export default function Products() {
     }, [selectedCategory, searchTerm]);
 
     const filteredProducts = products.filter(p => {
-        const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
-        
+        const normalizedSelectedCategory = normalizeCategory(selectedCategory);
+        const normalizedProductCategory = normalizeCategory(p.category);
+        const matchesCategory = selectedCategory === "All" || normalizedProductCategory === normalizedSelectedCategory;
+
         if (!searchTerm) return matchesCategory;
 
         const searchTokens = searchTerm.toLowerCase().split(/\s+/).filter(Boolean);
-        
+
         const matchesSearch = searchTokens.every(token => {
             const matchName = p.name.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token));
             const matchCat = p.category.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token));
             const matchDesc = p.description ? p.description.toLowerCase().split(/[\s-]+/).some(word => word.startsWith(token)) : false;
             return matchName || matchCat || matchDesc;
         });
-        
+
         return matchesCategory && matchesSearch;
     });
 
@@ -82,8 +91,8 @@ export default function Products() {
                 <div className={styles.filterSection}>
                     <div className={styles.categoryFilter}>
                         {CATEGORIES.map(cat => (
-                            <button 
-                                key={cat} 
+                            <button
+                                key={cat}
                                 className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
                                 onClick={() => {
                                     setSelectedCategory(cat);
@@ -100,48 +109,48 @@ export default function Products() {
 
                 {filteredProducts.length > 0 ? (
                     <>
-                    <div className={styles.productsGrid}>
-                        {visibleProducts.map((product, index) => (
-                            <div key={product.id} className={styles.productCard}>
-                                <Link to={`/products/${product.id}`} className={styles.imageLink}>
-                                    <div className={styles.imageContainer}>
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className={styles.productImage}
-                                            loading={index < 4 ? 'eager' : 'lazy'}
-                                            decoding="async"
-                                            fetchPriority={index < 4 ? 'high' : 'low'}
-                                        />
-                                    </div>
-                                </Link>
-                                <div className={styles.productInfo}>
-                                    <div className={styles.infoTop}>
-                                        <span className={styles.productCategory}>{product.category}</span>
-                                        <span className={styles.productSku}>{product.sku}</span>
-                                    </div>
-                                    <h3 className={styles.productName}>{product.name}</h3>
-                                    <div className={styles.infoBottom}>
-                                        <p className={styles.productPrice}>{product.price || product.GMS || 'Contact for price'}</p>
-                                        <Link to={`/products/${product.id}`} className={styles.enquireLink}>
-                                            Enquire
-                                        </Link>
+                        <div className={styles.productsGrid}>
+                            {visibleProducts.map((product, index) => (
+                                <div key={product.id} className={styles.productCard}>
+                                    <Link to={`/products/${product.id}`} className={styles.imageLink}>
+                                        <div className={styles.imageContainer}>
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                className={styles.productImage}
+                                                loading={index < 4 ? 'eager' : 'lazy'}
+                                                decoding="async"
+                                                fetchPriority={index < 4 ? 'high' : 'low'}
+                                            />
+                                        </div>
+                                    </Link>
+                                    <div className={styles.productInfo}>
+                                        <div className={styles.infoTop}>
+                                            <span className={styles.productCategory}>{product.category}</span>
+                                            <span className={styles.productSku}>{product.sku}</span>
+                                        </div>
+                                        <h3 className={styles.productName}>{product.name}</h3>
+                                        <div className={styles.infoBottom}>
+                                            <p className={styles.productPrice}>{product.price || product.GMS || 'Contact for price'}</p>
+                                            <Link to={`/products/${product.id}`} className={styles.enquireLink}>
+                                                Enquire
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                    {hasMoreProducts && (
-                        <div className={styles.loadMoreWrap}>
-                            <button
-                                type="button"
-                                className={styles.loadMoreBtn}
-                                onClick={() => setVisibleCount(prev => prev + PRODUCTS_PER_PAGE)}
-                            >
-                                Load More
-                            </button>
+                            ))}
                         </div>
-                    )}
+                        {hasMoreProducts && (
+                            <div className={styles.loadMoreWrap}>
+                                <button
+                                    type="button"
+                                    className={styles.loadMoreBtn}
+                                    onClick={() => setVisibleCount(prev => prev + PRODUCTS_PER_PAGE)}
+                                >
+                                    Load More
+                                </button>
+                            </div>
+                        )}
                     </>
                 ) : (
                     <div className={styles.noResults}>

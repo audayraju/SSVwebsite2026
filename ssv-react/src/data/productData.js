@@ -530,12 +530,21 @@ export const products = [
     },
     {
         id: '60',
-        name: 'Locket With Emerald Beads Mala',
-        sku: 'SSV-BEADS-060',
+        name: 'Vadanam Classic',
+        sku: 'SSV-VDN-060',
         GMS: '70.24 gms',
         category: 'Vadanam',
         image: '/images/SSV-VDN-001.jpg',
-        description: `Speciality: Emerald beads mala with a highlighted locket design and elegant bead flow. Weight:--. ${CRAFTSMANSHIP_NOTE}`
+        description: `Speciality: Traditional vadanam design with highlighted center detailing and balanced waist-belt composition. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
+    },
+    {
+        id: '61',
+        name: 'Vadanam Grand Pattern',
+        sku: 'SSV-VDN-061',
+        GMS: '70.24 gms',
+        category: 'Vadanam',
+        image: '/images/SSV-VDN-002.jpg',
+        description: `Speciality: Grand vadanam pattern with ornate side motifs and a rich handcrafted finish. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
     },
 ];
 

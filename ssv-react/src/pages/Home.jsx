@@ -86,7 +86,58 @@ const TRENDING_SILVER_COLLECTION_PRODUCTS = TRENDING_SILVER_COLLECTION_IDS
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0)
+  const [goldMobileIndex, setGoldMobileIndex] = useState(0)
+  const [silverMobileIndex, setSilverMobileIndex] = useState(0)
+  const [isBridalImageOpen, setIsBridalImageOpen] = useState(false)
+  const [isBridalInnerZoomed, setIsBridalInnerZoomed] = useState(false)
+  const [bridalTransformOrigin, setBridalTransformOrigin] = useState('50% 50%')
   const timerRef = useRef(null)
+
+  const closeBridalModal = () => {
+    setIsBridalImageOpen(false)
+    setIsBridalInnerZoomed(false)
+    setBridalTransformOrigin('50% 50%')
+  }
+
+  const handleBridalImageClick = (event) => {
+    event.stopPropagation()
+  }
+
+  const handleBridalDoubleTap = (event) => {
+    event.stopPropagation()
+    setIsBridalInnerZoomed(current => !current)
+
+    if (!isBridalInnerZoomed) {
+      const x = (event.clientX / window.innerWidth) * 100
+      const y = (event.clientY / window.innerHeight) * 100
+      setBridalTransformOrigin(`${x}% ${y}%`)
+    } else {
+      setBridalTransformOrigin('50% 50%')
+    }
+  }
+
+  const handleBridalMouseMove = (event) => {
+    if (!isBridalInnerZoomed) return
+    const x = (event.clientX / window.innerWidth) * 100
+    const y = (event.clientY / window.innerHeight) * 100
+    setBridalTransformOrigin(`${x}% ${y}%`)
+  }
+
+  const handleBridalTouchMove = (event) => {
+    if (!isBridalInnerZoomed || event.touches.length === 0) return
+    const touch = event.touches[0]
+    const x = (touch.clientX / window.innerWidth) * 100
+    const y = (touch.clientY / window.innerHeight) * 100
+    setBridalTransformOrigin(`${x}% ${y}%`)
+  }
+
+  const goPrev = (length, setter) => {
+    setter(current => (current - 1 + length) % length)
+  }
+
+  const goNext = (length, setter) => {
+    setter(current => (current + 1) % length)
+  }
 
   /* Auto-advance Hero Carousel */
   useEffect(() => {
@@ -95,6 +146,64 @@ export default function Home() {
     }, 3000)
     return () => clearInterval(timerRef.current)
   }, [])
+
+  /* Auto-advance Mobile Gold/Silver Carousels */
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const mobileMedia = window.matchMedia('(max-width: 600px)')
+    let mobileAutoTimer = null
+
+    const startOrStopAutoSlide = () => {
+      if (mobileAutoTimer) {
+        clearInterval(mobileAutoTimer)
+        mobileAutoTimer = null
+      }
+
+      if (!mobileMedia.matches) return
+
+      mobileAutoTimer = setInterval(() => {
+        setGoldMobileIndex(current => (TOP_GOLD_COLLECTION_PRODUCTS.length ? (current + 1) % TOP_GOLD_COLLECTION_PRODUCTS.length : 0))
+        setSilverMobileIndex(current => (TRENDING_SILVER_COLLECTION_PRODUCTS.length ? (current + 1) % TRENDING_SILVER_COLLECTION_PRODUCTS.length : 0))
+      }, 3500)
+    }
+
+    startOrStopAutoSlide()
+
+    if (mobileMedia.addEventListener) {
+      mobileMedia.addEventListener('change', startOrStopAutoSlide)
+    } else {
+      mobileMedia.addListener(startOrStopAutoSlide)
+    }
+
+    return () => {
+      if (mobileAutoTimer) clearInterval(mobileAutoTimer)
+
+      if (mobileMedia.removeEventListener) {
+        mobileMedia.removeEventListener('change', startOrStopAutoSlide)
+      } else {
+        mobileMedia.removeListener(startOrStopAutoSlide)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isBridalImageOpen) return
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const onEsc = (event) => {
+      if (event.key === 'Escape') closeBridalModal()
+    }
+
+    window.addEventListener('keydown', onEsc)
+
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onEsc)
+    }
+  }, [isBridalImageOpen])
 
   const currentSlide = SLIDES[activeSlide]
 
@@ -192,6 +301,53 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <div className={styles.mobileProductsCarousel}>
+          <button
+            type="button"
+            className={styles.mobileNavBtn}
+            aria-label="Previous gold product"
+            onClick={() => goPrev(TOP_GOLD_COLLECTION_PRODUCTS.length, setGoldMobileIndex)}
+          >
+            ‹
+          </button>
+
+          <div className={styles.mobileProductsViewport}>
+            <div
+              className={styles.mobileProductsTrack}
+              style={{ transform: `translateX(-${goldMobileIndex * 100}%)` }}
+            >
+              {TOP_GOLD_COLLECTION_PRODUCTS.map((product, index) => (
+                <div key={product.id} className={styles.mobileProductSlide}>
+                  <div className={styles.productCard}>
+                    <Link to={`/products/${product.id}`} className={styles.productCardLink}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        loading={index === goldMobileIndex ? 'eager' : 'lazy'}
+                        decoding="async"
+                        fetchPriority={index === goldMobileIndex ? 'high' : 'low'}
+                      />
+                      <div className={styles.overlay}>
+                        <h3>{product.name}</h3>
+                        <span className={styles.viewLink}>View Details</span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={styles.mobileNavBtn}
+            aria-label="Next gold product"
+            onClick={() => goNext(TOP_GOLD_COLLECTION_PRODUCTS.length, setGoldMobileIndex)}
+          >
+            ›
+          </button>
+        </div>
       </section>
 
       {/* ── Trending Silver Collection ── */}
@@ -223,13 +379,71 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <div className={styles.mobileProductsCarousel}>
+          <button
+            type="button"
+            className={styles.mobileNavBtn}
+            aria-label="Previous silver product"
+            onClick={() => goPrev(TRENDING_SILVER_COLLECTION_PRODUCTS.length, setSilverMobileIndex)}
+          >
+            ‹
+          </button>
+
+          <div className={styles.mobileProductsViewport}>
+            <div
+              className={styles.mobileProductsTrack}
+              style={{ transform: `translateX(-${silverMobileIndex * 100}%)` }}
+            >
+              {TRENDING_SILVER_COLLECTION_PRODUCTS.map((product, index) => (
+                <div key={product.id} className={styles.mobileProductSlide}>
+                  <div className={styles.productCard}>
+                    <Link to={`/products/${product.id}`} className={styles.productCardLink}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        loading={index === silverMobileIndex ? 'eager' : 'lazy'}
+                        decoding="async"
+                        fetchPriority={index === silverMobileIndex ? 'high' : 'low'}
+                      />
+                      <div className={styles.overlay}>
+                        <h3>{product.name}</h3>
+                        <span className={styles.viewLink}>View Details</span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={styles.mobileNavBtn}
+            aria-label="Next silver product"
+            onClick={() => goNext(TRENDING_SILVER_COLLECTION_PRODUCTS.length, setSilverMobileIndex)}
+          >
+            ›
+          </button>
+        </div>
       </section>
 
       {/* ── BRAND STORY ── */}
       <section className={styles.storySection}>
         <div className={styles.storyContainer}>
           <div className={styles.storyImage}>
-            <img src="/images/bangles/bridal%20set.jpeg" alt="SSV Jewellers bridal jewellery set" loading="lazy" decoding="async" />
+            <button
+              type="button"
+              className={styles.storyImageButton}
+              onClick={() => {
+                setIsBridalImageOpen(true)
+                setIsBridalInnerZoomed(false)
+                setBridalTransformOrigin('50% 50%')
+              }}
+              aria-label="Open bridal image in fullscreen"
+            >
+              <img src="/images/bangles/bridal%20set.jpeg" alt="SSV Jewellers bridal jewellery set" loading="lazy" decoding="async" />
+            </button>
           </div>
           <div className={styles.storyContent}>
             <div className={styles.luxuryHeader} style={{ justifyContent: 'flex-start' }}>
@@ -246,6 +460,39 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {isBridalImageOpen && (
+        <div
+          className={styles.bridalImageModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Bridal image fullscreen preview"
+          onClick={closeBridalModal}
+          onMouseMove={handleBridalMouseMove}
+          onTouchMove={handleBridalTouchMove}
+        >
+          <button
+            type="button"
+            className={styles.bridalImageClose}
+            onClick={closeBridalModal}
+            aria-label="Close bridal image preview"
+          >
+            ×
+          </button>
+          <div className={styles.bridalImageWrap} onClick={(event) => event.stopPropagation()}>
+            <img
+              src="/images/bangles/bridal%20set.jpeg"
+              alt="SSV Jewellers bridal jewellery set"
+              className={`${styles.bridalImageFull} ${isBridalInnerZoomed ? styles.bridalImageFullActive : ''}`}
+              loading="eager"
+              decoding="async"
+              style={{ transformOrigin: bridalTransformOrigin }}
+              onClick={handleBridalImageClick}
+              onDoubleClick={handleBridalDoubleTap}
+            />
+          </div>
+        </div>
+      )}
 
       {/* ── CTA BANNER ── */}
       <section className={styles.ctaBanner}>
