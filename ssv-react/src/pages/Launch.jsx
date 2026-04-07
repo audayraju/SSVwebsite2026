@@ -252,6 +252,9 @@ const Launch = () => {
           <h2>Be Part of Our Success Story</h2>
           <p>Experience the excellence of SSV Jewellers - Where Quality Meets Affordability</p>
           <div className={styles.closingButtons}>
+            <Link to="/" className={styles.homeButton}>
+              Back to Home
+            </Link>
             <Link to="/contact" className={styles.contactButton}>
               Get in Touch
             </Link>

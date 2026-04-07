@@ -538,6 +538,17 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
+.homeButton {
+  background: #d4af37;
+  color: #1a0033;
+}
+
+.homeButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+  background: #fff;
+}
+
 .whatsappButton {
   background: #25d366;
   color: #fff;
