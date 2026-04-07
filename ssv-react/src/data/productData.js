@@ -534,7 +534,7 @@ export const products = [
         sku: 'SSV-VDN-060',
         GMS: '70.24 gms',
         category: 'Vadanam',
-        image: '/images/SSV-VDN-001.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455638/ssv-jewellers/aboutandbangles/wuwp1my8bstzhikaaioz.jpg',
         description: `Speciality: Traditional vadanam design with highlighted center detailing and balanced waist-belt composition. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -543,7 +543,7 @@ export const products = [
         sku: 'SSV-VDN-061',
         GMS: '70.24 gms',
         category: 'Vadanam',
-        image: '/images/SSV-VDN-002.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455641/ssv-jewellers/aboutandbangles/vvawg4adnwdincl07zu8.jpg',
         description: `Speciality: Grand vadanam pattern with ornate side motifs and a rich handcrafted finish. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
     },
 ];
