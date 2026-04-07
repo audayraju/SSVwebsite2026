@@ -1,5 +1,4 @@
 {
-  "buildCommand": "npm install --cwd ssv-react && npm run build --cwd ssv-react",
   "outputDirectory": "ssv-react/dist",
   "routes": [
     {

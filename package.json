@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build": "cd ssv-react && npm install && npm run build"
+  },
   "dependencies": {
     "mongoose": "^9.3.2"
   }
