@@ -1,0 +1,15 @@
+{
+  "buildCommand": "cd ssv-react && npm run build",
+  "outputDirectory": "ssv-react/dist",
+  "framework": "vite",
+  "env": {
+    "VITE_API_BASE_URL": "@vite_api_base_url"
+  },
+  "envPrefix": "VITE_",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
