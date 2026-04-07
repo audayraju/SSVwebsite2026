@@ -1,7 +1,6 @@
 {
-  "buildCommand": "cd ssv-react && npm ci && npm run build",
+  "buildCommand": "npm install --cwd ssv-react && npm run build --cwd ssv-react",
   "outputDirectory": "ssv-react/dist",
-  "framework": "vite",
   "routes": [
     {
       "src": "/(.*)",
