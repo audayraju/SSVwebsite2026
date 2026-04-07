@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Products.module.css';
 
@@ -31,6 +31,7 @@ const products = productList;
 export default function Products() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     // Extract category and search query from URL
     const searchParams = new URLSearchParams(location.search);
@@ -39,7 +40,15 @@ export default function Products() {
 
     // Initialize category with URL param if it exists, otherwise "All"
     const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "All");
-    const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
+
+    // Handle window resize for mobile detection
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Synchronize state if URL changes (e.g. clicking a link while already on the page)
     React.useEffect(() => {
@@ -47,10 +56,6 @@ export default function Products() {
             setSelectedCategory(categoryFromUrl);
         }
     }, [categoryFromUrl]);
-
-    React.useEffect(() => {
-        setVisibleCount(PRODUCTS_PER_PAGE);
-    }, [selectedCategory, searchTerm]);
 
     const filteredProducts = products.filter(p => {
         const normalizedSelectedCategory = normalizeCategory(selectedCategory);
@@ -71,8 +76,17 @@ export default function Products() {
         return matchesCategory && matchesSearch;
     });
 
-    const visibleProducts = filteredProducts.slice(0, visibleCount);
-    const hasMoreProducts = filteredProducts.length > visibleCount;
+    // Show all filtered products (removed pagination since Load More button is gone)
+    const visibleProducts = filteredProducts;
+
+    // Group products by category for mobile collections view
+    const productsByCategory = {};
+    products.forEach(product => {
+        if (!productsByCategory[product.category]) {
+            productsByCategory[product.category] = [];
+        }
+        productsByCategory[product.category].push(product);
+    });
 
     return (
         <div className={styles.productsPage}>
@@ -140,17 +154,6 @@ export default function Products() {
                                 </div>
                             ))}
                         </div>
-                        {hasMoreProducts && (
-                            <div className={styles.loadMoreWrap}>
-                                <button
-                                    type="button"
-                                    className={styles.loadMoreBtn}
-                                    onClick={() => setVisibleCount(prev => prev + PRODUCTS_PER_PAGE)}
-                                >
-                                    Load More
-                                </button>
-                            </div>
-                        )}
                     </>
                 ) : (
                     <div className={styles.noResults}>

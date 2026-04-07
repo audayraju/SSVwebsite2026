@@ -7,25 +7,32 @@ import styles from './Contact.module.css'
 
 const FALLBACK_REVIEWS = [
   {
-    name: 'Shiva Nandu',
+    name: 'Suvarna Vuba',
     rating: 5,
-    when: '2 days ago',
-    meta: '1 review · 1 photo',
-    text: 'Nice collections gold and silver 😍💖',
+    when: '2 weeks ago',
+    meta: '1 review',
+    text: 'Beautiful collection with trendy designs. The quality is good and pricing is reasonable. Loved shopping here.',
   },
   {
-    name: 'Anusha K',
+    name: 'Sri Ram B',
     rating: 5,
-    when: '5 days ago',
-    meta: '3 reviews',
-    text: 'Excellent designs and friendly staff. Great shopping experience at SSV Jewellers.',
+    when: '2 weeks ago',
+    meta: 'Local Guide · 6 reviews',
+    text: 'Good collection with reasonable prices',
   },
   {
-    name: 'Ramesh Kumar',
+    name: 'Chandu Yaminedu',
     rating: 5,
-    when: '14 Mar 2026',
-    meta: '2 reviews · 2 photos',
-    text: 'Reasonable pricing, authentic quality, and very good service. Highly recommended.',
+    when: '2 weeks ago',
+    meta: '4 reviews · 2 photos',
+    text: 'Absolutely loved shopping here! The designs are elegant and unique, and the staff made the whole experience so comfortable. They patiently showed many options and gave honest suggestions. I\'m really happy with my purchase and will definitely visit again and highly recommend',
+  },
+  {
+    name: 'Akhil Yadav',
+    rating: 5,
+    when: '2 weeks ago',
+    meta: '4 reviews',
+    text: 'I recently visited this jewellery store and had a great experience. Compared to other shops in the market, their prices are truly the best. It\'s hard to find such beautiful pieces at such affordable rates elsewhere.',
   },
 ]
 
@@ -105,7 +112,7 @@ export default function Contact() {
             <a href="tel:+919177396962" className={styles.callBtn}>
               📞 Contact Now
             </a>
-   </div>
+          </div>
         </motion.div>
 
         <motion.div className={styles.heroRight} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>

@@ -16,7 +16,6 @@ const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Services = lazy(() => import('./pages/Services'))
 const Policies = lazy(() => import('./pages/Policies'))
-const Launch = lazy(() => import('./pages/Launch'))
 
 export default function App() {
   return (
@@ -30,7 +29,6 @@ export default function App() {
                 {/* ── Public routes with shared layout ── */}
                 <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/launch" element={<Launch />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:id" element={<ProductDetails />} />
                 <Route path="/about" element={<About />} />

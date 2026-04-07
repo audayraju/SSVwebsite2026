@@ -13,7 +13,7 @@ const MobileBottomNav = ({ onSearchClick, isSearchOpen }) => {
             </NavLink>
             <NavLink to="/products" className={({ isActive }) => `${styles.navItem} ${isActive && !location.search.includes('search') ? styles.active : ''}`}>
                 <i className="bi bi-gem"></i>
-                <span>Collection</span>
+                <span>Collections</span>
             </NavLink>
             <button onClick={onSearchClick} className={`${styles.navItem} ${isSearchOpen ? styles.active : ''}`} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
                 <i className="bi bi-search"></i>

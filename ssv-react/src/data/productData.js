@@ -362,7 +362,7 @@ export const products = [
         name: 'Peacock Locket',
         sku: 'SSV-Locket-040',
         GMS: '29.000 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455686/ssv-jewellers/lockets/mp8tnlodmp9krnislmvt.jpg',
         description: `Speciality: Peacock motif locket with artistic feather pattern and rich sculpted look. Weight: 29.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -371,7 +371,7 @@ export const products = [
         name: 'Temple Ganesh Locket',
         sku: 'SSV-Locket-041',
         GMS: '31.090 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455690/ssv-jewellers/lockets/nl2ygk8zjx3fhwahngcn.jpg',
         description: `Speciality: Ganesh-inspired temple locket with devotional symbolism and intricate relief work. Weight: 31.090 gms. ${CRAFTSMANSHIP_NOTE}`
     },
@@ -425,7 +425,7 @@ export const products = [
         name: 'Temple Locket',
         sku: 'SSV-Locket-047',
         GMS: '19.620 gms',
-        category: 'Locket',
+        category: 'Lockets',
         image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455696/ssv-jewellers/lockets/odzmvbbtgcxudq9ikjdn.jpg',
         description: `Speciality: Temple theme locket with ornamental depth and iconic cultural styling. Weight: 19.620 gms. ${CRAFTSMANSHIP_NOTE}`
     },

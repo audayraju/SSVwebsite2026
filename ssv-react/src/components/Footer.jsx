@@ -31,9 +31,9 @@ export default function Footer() {
             <ul className="footer-list">
               <li><Link to="/products?category=Necklaces">Necklace Collection</Link></li>
               <li><Link to="/products?category=Bangles">Bangles Collection</Link></li>
-              <li><Link to="/products?category=Haram">Haram Collection</Link></li>
-              <li><Link to="/products?category=Chokers">Chokers Collection</Link></li>
-              <li><Link to="/products?category=CZ">CZ Collection</Link></li>
+              <li><Link to="/products?category=Bracelets">Bracelets Collection</Link></li>
+              <li><Link to="/products?category=Malas">Malas Collection</Link></li>
+              <li><Link to="/products?category=Tops">Tops Collection</Link></li>
             </ul>
           </div>
 
