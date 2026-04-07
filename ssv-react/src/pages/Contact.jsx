@@ -109,7 +109,7 @@ export default function Contact() {
         </motion.div>
 
         <motion.div className={styles.heroRight} variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <img src="/images/neckalce/SSV-NECKALCES-019.jpg" alt="SSV Jewellers luxury bridal collection display" loading="eager" decoding="async" fetchPriority="high" />
+          <img src="https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455765/ssv-jewellers/neckalce/qckhevfrprkfmhj8qb0s.jpg" alt="SSV Jewellers luxury bridal collection display" loading="eager" decoding="async" fetchPriority="high" />
           <div className={styles.socialIcons}>
             <a href="https://facebook.com/profile.php?id=61584739588200" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i className="bi bi-facebook" aria-hidden="true" />

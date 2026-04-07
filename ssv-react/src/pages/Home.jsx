@@ -384,7 +384,7 @@ export default function Home() {
               }}
               aria-label="Open bridal image in fullscreen"
             >
-              <img src="/images/bangles/bridal%20set.jpeg" alt="SSV Jewellers bridal jewellery set" loading="lazy" decoding="async" />
+              <img src="https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg" alt="SSV Jewellers bridal jewellery set" loading="lazy" decoding="async" />
             </button>
           </div>
           <div className={styles.storyContent}>
@@ -423,7 +423,7 @@ export default function Home() {
           </button>
           <div className={styles.bridalImageWrap} onClick={(event) => event.stopPropagation()}>
             <img
-              src="/images/bangles/bridal%20set.jpeg"
+              src="https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg"
               alt="SSV Jewellers bridal jewellery set"
               className={`${styles.bridalImageFull} ${isBridalInnerZoomed ? styles.bridalImageFullActive : ''}`}
               loading="eager"
