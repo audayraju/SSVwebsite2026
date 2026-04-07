@@ -135,8 +135,8 @@ const Launch = () => {
             </motion.div>
           )}
 
-          {/* Launch Button - Active only before launch time */}
-          {!isLaunched && (
+          {/* Launch Button - Active only AFTER launch time */}
+          {isLaunched && (
             <motion.button
               className={styles.launchButton}
               onClick={() => {
@@ -151,10 +151,10 @@ const Launch = () => {
             </motion.button>
           )}
 
-          {/* Launched Message - Shows after launch time */}
-          {isLaunched && (
-            <motion.div className={styles.launchedMessage} variants={fadeUp}>
-              <p>🎉 Site is now live! Browse our collection.</p>
+          {/* Coming Soon Message - Shows before launch time */}
+          {!isLaunched && (
+            <motion.div className={styles.comingSoonBanner} variants={fadeUp}>
+              <p>⏳ Launching at 8:00 PM Today</p>
             </motion.div>
           )}
 
