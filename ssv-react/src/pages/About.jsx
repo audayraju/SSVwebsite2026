@@ -63,7 +63,7 @@ export default function About() {
             </motion.div>
             <motion.div className={styles.storyImage} variants={fadeUp}>
               <div className={styles.imageWrapper}>
-                <img src="/images/aboutandbangles/about-page.background.jpeg" alt="Exquisite craftsmanship at SSV Jewellers" loading="lazy" decoding="async" />
+                <img src="https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455634/ssv-jewellers/aboutandbangles/czetg67dx1zmeuwydulq.jpg" alt="Exquisite craftsmanship at SSV Jewellers" loading="lazy" decoding="async" />
                 <div className={styles.imageCard}>
                   <h3>Master Craftsmen</h3>
                   <p>Hand-finishing every piece to perfection</p>

@@ -14,7 +14,7 @@
 .aboutHero {
     height: 70vh;
     min-height: 500px;
-    background: url('/images/aboutandbangles/about-page.background.jpeg') no-repeat center center;
+    background: url('https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455634/ssv-jewellers/aboutandbangles/czetg67dx1zmeuwydulq.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
     display: flex;
