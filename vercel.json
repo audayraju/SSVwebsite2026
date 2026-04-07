@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ssv-react && npm run build",
+  "buildCommand": "cd ssv-react && npm ci && npm run build",
   "outputDirectory": "ssv-react/dist",
   "framework": "vite",
   "routes": [
