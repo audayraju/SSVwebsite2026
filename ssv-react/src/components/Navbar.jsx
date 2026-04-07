@@ -181,6 +181,7 @@ export default function Navbar() {
 
           <div className={styles['nav-links']}>
             <a href="/" onClick={handleHomeClick} className={location.pathname === '/' ? styles.active : ''}>Home</a>
+            <NavLink onClick={handleNavClick} to="/launch" className={({ isActive }) => isActive ? styles.active : ''}>Launch</NavLink>
             <NavLink onClick={handleNavClick} to="/products" className={({ isActive }) => isActive ? styles.active : ''}>Products</NavLink>
             <NavLink onClick={handleNavClick} to="/contact" className={({ isActive }) => isActive ? styles.active : ''}>Contact</NavLink>
 
