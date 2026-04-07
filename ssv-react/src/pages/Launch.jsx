@@ -1,13 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Launch.module.css';
 import { products } from '../data/productData';
+import { NavbarContext } from '../context/NavbarContext';
 
 const Launch = () => {
+  const navigate = useNavigate();
+  const { hideNavbar } = useContext(NavbarContext);
   const [joinEmail, setJoinEmail] = useState('');
   const [joinMessage, setJoinMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [isLaunched, setIsLaunched] = useState(false);
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      // Launch time: 8:00 PM (20:00) today
+      const now = new Date();
+      const launchTime = new Date();
+      launchTime.setHours(20, 0, 0, 0); // 8 PM
+
+      // If past 8 PM, set launch time to tomorrow
+      if (now > launchTime) {
+        launchTime.setDate(launchTime.getDate() + 1);
+        setIsLaunched(false);
+      } else {
+        setIsLaunched(false);
+      }
+
+      const diff = launchTime - now;
+
+      if (diff > 0) {
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setCountdown({ hours, minutes, seconds });
+      } else {
+        setIsLaunched(true);
+        setCountdown({ hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
@@ -74,11 +112,42 @@ const Launch = () => {
             WHOLESALE & MANUFACTURING
           </motion.p>
 
-          {/* Launch Date Badge */}
-          <motion.div className={styles.launchBadge} variants={fadeUp}>
-            <span className={styles.launchLabel}>LAUNCHED</span>
-            <span className={styles.launchDate}>07/04/26</span>
-          </motion.div>
+          {/* Countdown Timer */}
+          {!isLaunched && (
+            <motion.div className={styles.countdownContainer} variants={fadeUp}>
+              <p className={styles.countdownLabel}>Launch In</p>
+              <div className={styles.countdownTimer}>
+                <div className={styles.timeUnit}>
+                  <span className={styles.timeValue}>{String(countdown.hours).padStart(2, '0')}</span>
+                  <span className={styles.timeLabel}>Hours</span>
+                </div>
+                <span className={styles.timeSeparator}>:</span>
+                <div className={styles.timeUnit}>
+                  <span className={styles.timeValue}>{String(countdown.minutes).padStart(2, '0')}</span>
+                  <span className={styles.timeLabel}>Minutes</span>
+                </div>
+                <span className={styles.timeSeparator}>:</span>
+                <div className={styles.timeUnit}>
+                  <span className={styles.timeValue}>{String(countdown.seconds).padStart(2, '0')}</span>
+                  <span className={styles.timeLabel}>Seconds</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Launch Button */}
+          <motion.button
+            className={styles.launchButton}
+            onClick={() => {
+              hideNavbar();
+              navigate('/');
+            }}
+            variants={fadeUp}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            LAUNCH
+          </motion.button>
 
           {/* Special Details */}
           <motion.div className={styles.specialDetails} variants={fadeUp}>
@@ -114,29 +183,41 @@ const Launch = () => {
           {/* Join Section */}
           <motion.div className={styles.joinSection} variants={fadeUp}>
             <h3>Join Our Launch Program</h3>
-            <form onSubmit={handleJoinSubmit} className={styles.joinForm}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={joinEmail}
-                onChange={(e) => setJoinEmail(e.target.value)}
-                required
-                className={styles.emailInput}
-              />
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className={styles.joinButton}
-              >
-                {isSubmitting ? 'Joining...' : 'Join Now'}
-              </button>
-            </form>
-            {joinMessage && (
-              <p className={styles.joinMessage}>{joinMessage}</p>
+            {!isLaunched && countdown.hours === 0 && countdown.minutes === 0 && countdown.seconds === 0 ? (
+              <div className={styles.comingSoonMessage}>
+                <p>🎉 Launch happening very soon! Refreshing in a moment...</p>
+              </div>
+            ) : !isLaunched ? (
+              <div className={styles.comingSoonMessage}>
+                <p>💫 Coming at 8:00 PM Today - Registration Opens Soon!</p>
+              </div>
+            ) : (
+              <>
+                <form onSubmit={handleJoinSubmit} className={styles.joinForm}>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={joinEmail}
+                    onChange={(e) => setJoinEmail(e.target.value)}
+                    required
+                    className={styles.emailInput}
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className={styles.joinButton}
+                  >
+                    {isSubmitting ? 'Joining...' : 'Join Now'}
+                  </button>
+                </form>
+                {joinMessage && (
+                  <p className={styles.joinMessage}>{joinMessage}</p>
+                )}
+                <p className={styles.joinSubtext}>
+                  Be among the first to experience our exclusive collection and special pricing!
+                </p>
+              </>
             )}
-            <p className={styles.joinSubtext}>
-              Be among the first to experience our exclusive collection and special pricing!
-            </p>
           </motion.div>
 
           {/* CTA Buttons */}

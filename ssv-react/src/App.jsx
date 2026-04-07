@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import FloatingButtons from './components/FloatingButtons'
 import PageLoader from './components/PageLoader'
 import { FavoritesProvider } from './context/FavoritesContext'
+import { NavbarProvider } from './context/NavbarContext'
 
 /* ── Lazy-loaded pages ── */
 const Home = lazy(() => import('./pages/Home'))
@@ -21,12 +22,13 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <FavoritesProvider>
-          <ScrollToTop />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* ── Public routes with shared layout ── */}
-              <Route element={<PublicLayout />}>
+        <NavbarProvider>
+          <FavoritesProvider>
+            <ScrollToTop />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* ── Public routes with shared layout ── */}
+                <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/launch" element={<Launch />} />
                 <Route path="/products" element={<Products />} />
@@ -41,7 +43,8 @@ export default function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
-        </FavoritesProvider>
+          </FavoritesProvider>
+        </NavbarProvider>
       </BrowserRouter>
     </HelmetProvider>
   )

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useRef } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import MobileBottomNav from './MobileBottomNav';
+import { NavbarContext } from '../context/NavbarContext';
 
 export default function Navbar() {
   const [moreOpen, setMoreOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function Navbar() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { isNavbarVisible, showNavbar } = useContext(NavbarContext);
   const suggestions = ['our products', 'rings', 'necklaces', 'earrings', 'bracelets', 'wedding sets'];
 
   const announcementItems = [
@@ -81,6 +83,28 @@ export default function Navbar() {
     }
   }, [location.search]);
 
+  // Add event listeners to show navbar on user interaction
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (!isNavbarVisible) {
+        showNavbar();
+      }
+    };
+
+    // Add listeners for various user interactions
+    document.addEventListener('scroll', handleUserInteraction);
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+    document.addEventListener('keydown', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('scroll', handleUserInteraction);
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, [isNavbarVisible, showNavbar]);
+
   function handleSearchChange(e) {
     const newVal = e.target.value;
     setSearch(newVal);
@@ -141,6 +165,10 @@ export default function Navbar() {
     navigate('/');
   }
 
+  // Don't render navbar if it's hidden
+  if (!isNavbarVisible) {
+    return null;
+  }
 
   return (
     <div className={`${styles.navbarWrapper} ${styles.themeModern}`}>

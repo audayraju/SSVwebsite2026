@@ -105,6 +105,112 @@
   font-weight: bold;
 }
 
+/* ── COUNTDOWN TIMER ── */
+.countdownContainer {
+  background: rgba(212, 175, 55, 0.2);
+  border: 2px solid #d4af37;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  backdrop-filter: blur(10px);
+}
+
+.countdownLabel {
+  color: #d4af37;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.countdownTimer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.timeUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  min-width: 80px;
+}
+
+.timeValue {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #d4af37;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
+}
+
+.timeLabel {
+  font-size: 0.8rem;
+  color: #ddd;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeSeparator {
+  color: #d4af37;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0.5rem;
+}
+
+.comingSoonMessage {
+  background: rgba(212, 175, 55, 0.15);
+  border: 2px dashed #d4af37;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.comingSoonMessage p {
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* ── LAUNCH BUTTON ── */
+.launchButton {
+  background: linear-gradient(135deg, #d4af37 0%, #f0d976 100%);
+  color: #1a0033;
+  border: none;
+  padding: 1.2rem 3rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  margin: 2rem 0;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.launchButton:hover {
+  background: linear-gradient(135deg, #f0d976 0%, #d4af37 100%);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+}
+
+.launchButton:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
 .specialDetails {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -579,6 +685,29 @@
     gap: 0.5rem;
   }
 
+  .countdownContainer {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .countdownTimer {
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .timeUnit {
+    min-width: 65px;
+    padding: 0.8rem 1rem;
+  }
+
+  .timeValue {
+    font-size: 1.8rem;
+  }
+
+  .timeSeparator {
+    font-size: 1.5rem;
+  }
+
   .specialDetails {
     padding: 2rem 1.5rem;
   }
@@ -657,6 +786,29 @@
 
   .joinSection h3 {
     font-size: 1.5rem;
+  }
+
+  .countdownLabel {
+    font-size: 1rem;
+  }
+
+  .countdownTimer {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .timeUnit {
+    min-width: 60px;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .timeValue {
+    font-size: 1.5rem;
+  }
+
+  .timeSeparator {
+    font-size: 1.2rem;
+    margin: 0 0.2rem;
   }
 
   .sectionTitle {
