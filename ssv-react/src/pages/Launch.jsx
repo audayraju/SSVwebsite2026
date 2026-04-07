@@ -135,19 +135,28 @@ const Launch = () => {
             </motion.div>
           )}
 
-          {/* Launch Button */}
-          <motion.button
-            className={styles.launchButton}
-            onClick={() => {
-              hideNavbar();
-              navigate('/');
-            }}
-            variants={fadeUp}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            LAUNCH
-          </motion.button>
+          {/* Launch Button - Active only before launch time */}
+          {!isLaunched && (
+            <motion.button
+              className={styles.launchButton}
+              onClick={() => {
+                hideNavbar();
+                navigate('/');
+              }}
+              variants={fadeUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              LAUNCH
+            </motion.button>
+          )}
+
+          {/* Launched Message - Shows after launch time */}
+          {isLaunched && (
+            <motion.div className={styles.launchedMessage} variants={fadeUp}>
+              <p>🎉 Site is now live! Browse our collection.</p>
+            </motion.div>
+          )}
 
           {/* Special Details */}
           <motion.div className={styles.specialDetails} variants={fadeUp}>

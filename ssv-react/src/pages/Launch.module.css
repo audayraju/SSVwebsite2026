@@ -211,6 +211,25 @@
   box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
+/* ── LAUNCHED MESSAGE ── */
+.launchedMessage {
+  background: rgba(77, 175, 124, 0.2);
+  border: 2px solid #4daf7c;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.launchedMessage p {
+  color: #4daf7c;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
 .specialDetails {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
