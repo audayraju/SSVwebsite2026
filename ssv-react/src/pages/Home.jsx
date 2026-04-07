@@ -34,36 +34,7 @@ const SLIDES = [
   },
 ]
 
-/* ── SHOP BY CATEGORY ── */
-const MAIN_CATEGORIES = [
-  {
-    title: 'Gold Jewellery',
-    link: '/products?category=Gold',
-    img: '/picture/section-one.jpeg',
-    desc: '916 Hallmark Purity',
-    badge: 'BIS Hallmark',
-    note: 'Bridal & Festive Collection',
-    cta: 'Explore Gold →',
-  },
-  {
-    title: 'Diamond Collection',
-    link: '/products?category=Diamonds',
-    img: '/picture/section-twoo.jpeg',
-    desc: 'Certified Brilliance',
-    badge: 'Certified Stones',
-    note: 'Elegant Signature Designs',
-    cta: 'Explore Diamonds →',
-  },
-  {
-    title: '92.5 Silver Jewellery',
-    link: '/products?category=Silver',
-    img: '/picture/section-three.jpeg',
-    desc: 'Handcrafted Artistry',
-    badge: 'Trending Picks',
-    note: 'Temple & Daily Wear Styles',
-    cta: 'Explore Silver →',
-  },
-]
+
 
 
 
@@ -220,35 +191,6 @@ export default function Home() {
           <div className={styles.heroSlide}>
             <img src={currentSlide.img} alt={currentSlide.alt} className={styles.heroImage} loading="eager" decoding="async" fetchPriority="high" />
           </div>
-        </div>
-      </section>
-
-      {/* ── SHOP BY CATEGORY ── */}
-      <section className={styles.categoriesSection}>
-        <div className={styles.luxuryHeaderVertical}>
-          <span className={styles.luxuryTitle}>Shop By Category</span>
-          <p className={styles.categoryIntro}>Curated collections with authentic craftsmanship and standout styling.</p>
-          <div className={styles.luxuryDivider}>
-            <span className={styles.luxuryLine}></span>
-            <span className={styles.luxuryStar}>✦</span>
-            <span className={styles.luxuryLine}></span>
-          </div>
-        </div>
-        <div className={styles.categoryGrid}>
-          {MAIN_CATEGORIES.map((cat, i) => (
-            <Link to={cat.link} key={i} className={styles.categoryCard}>
-              <div className={styles.categoryImageWrap}>
-                <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" />
-                <div className={styles.categoryOverlay}>
-                  <span className={styles.categoryBadge}>{cat.badge}</span>
-                  <h2>{cat.title}</h2>
-                  <span>{cat.desc}</span>
-                  <p className={styles.categoryNote}>{cat.note}</p>
-                  <span className={styles.categoryAction}>{cat.cta}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
 

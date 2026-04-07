@@ -7,7 +7,7 @@ export const products = [
         sku: 'SSV-TOPS-001',
         GMS: '10.730 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455798/ssv-jewellers/tops/pu1f1bmtijiduzc1yh2h.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455798/ssv-jewellers/tops/pu1f1bmtijiduzc1yh2h.jpg',
         description: `Speciality: Clean stud profile with a neat center highlight and smooth edge finishing. Weight: 10.730 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -16,7 +16,7 @@ export const products = [
         sku: 'SSV-TOPS-002',
         GMS: '12.530 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455797/ssv-jewellers/tops/fntq4hsbqklnikhydlhh.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455797/ssv-jewellers/tops/fntq4hsbqklnikhydlhh.jpg',
         description: `Speciality: Subtle floral texture with a classic round top silhouette and polished surface. Weight: 12.530 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -25,7 +25,7 @@ export const products = [
         sku: 'SSV-TOPS-003',
         GMS: '14.210gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455797/ssv-jewellers/tops/mxxpy9l0a6ccy7kx6oct.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455797/ssv-jewellers/tops/mxxpy9l0a6ccy7kx6oct.jpg',
         description: `Speciality: Contrast stone arrangement with a bright ruby-tone center and crisp surrounding accents. Weight: 14.210 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -34,7 +34,7 @@ export const products = [
         sku: 'SSV-TOPS-004',
         GMS: '14.210 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455796/ssv-jewellers/tops/s8pciobnaruvcfmxuako.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455796/ssv-jewellers/tops/s8pciobnaruvcfmxuako.jpg',
         description: `Speciality: Traditional kammala buttalu form with layered carving and a bold front view. Weight: 14.210 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -43,7 +43,7 @@ export const products = [
         sku: 'SSV-TOPS-005',
         GMS: '43.57 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455802/ssv-jewellers/tops/bxck8hdsdindn8bwkzve.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455802/ssv-jewellers/tops/bxck8hdsdindn8bwkzve.jpg',
         description: `Speciality: Wide-face buttalu layout with CZ detailing and heavy festive presence. Weight: 43.57 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -52,7 +52,7 @@ export const products = [
         sku: 'SSV-TOPS-006',
         GMS: '23.20 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455794/ssv-jewellers/tops/ztj8cjtjsj1kdqu5hmr8.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455794/ssv-jewellers/tops/ztj8cjtjsj1kdqu5hmr8.jpg',
         description: `Speciality: Makana pattern with rich handcrafted depth and standout earring-top styling. Weight: 23.20 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -61,7 +61,7 @@ export const products = [
         sku: 'SSV-TOPS-007',
         GMS: '10.630 gms',
         category: 'Tops',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455793/ssv-jewellers/tops/kedjcb9v8abewcg5dovp.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455793/ssv-jewellers/tops/kedjcb9v8abewcg5dovp.jpg',
         description: `Speciality: Uncut-inspired top design with textured setting and sharp ornamental character. Weight: 10.630 gms. ${CRAFTSMANSHIP_NOTE}`
 
     },
@@ -71,7 +71,7 @@ export const products = [
         sku: 'SSV-NECKALCES-008',
         GMS: '18.730 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455746/ssv-jewellers/neckalce/vln1ix7m5is1en2cdwiz.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455746/ssv-jewellers/neckalce/vln1ix7m5is1en2cdwiz.jpg',
         description: `Speciality: Slim kanli pattern with elegant links and a clean neckline finish. Weight: 18.730 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -80,7 +80,7 @@ export const products = [
         sku: 'SSV-NECKALCES-009',
         GMS: '30.000 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455748/ssv-jewellers/neckalce/a9rnqqdta1dlaavuo0zh.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455748/ssv-jewellers/neckalce/a9rnqqdta1dlaavuo0zh.jpg',
         description: `Speciality: Temple-inspired motifs with heritage detailing and balanced drape. Weight: 30.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
 
@@ -90,7 +90,7 @@ export const products = [
         sku: 'SSV-NECKALCES-010',
         GMS: '17.630 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455739/ssv-jewellers/neckalce/aqkoeicp67gbzfxlhil0.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455739/ssv-jewellers/neckalce/aqkoeicp67gbzfxlhil0.jpg',
         description: `Speciality: Pathkam centerpiece style with compact structure and refined symmetry. Weight: 17.630 gms. ${CRAFTSMANSHIP_NOTE}`
     },
 
@@ -101,7 +101,7 @@ export const products = [
         sku: 'SSV-NECKALCES-011',
         GMS: '17.780 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455749/ssv-jewellers/neckalce/nfmwpxilo0zzynqgzo6s.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455749/ssv-jewellers/neckalce/nfmwpxilo0zzynqgzo6s.jpg',
         description: `Speciality: Kanti format with a bold front pattern and graceful neckline coverage. Weight: 17.780 gms. ${CRAFTSMANSHIP_NOTE}`
     },
 
@@ -111,7 +111,7 @@ export const products = [
         sku: 'SSV-NECKALCES-012',
         GMS: '68.980 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455747/ssv-jewellers/neckalce/lfnxhupzmpgzkrr3qpie.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455747/ssv-jewellers/neckalce/lfnxhupzmpgzkrr3qpie.jpg',
         description: `Speciality: Patchi work look with dense motif placement and rich visual texture. Weight: 68.980 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -120,7 +120,7 @@ export const products = [
         sku: 'SSV-NECKALCES-013',
         GMS: '44.500 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455752/ssv-jewellers/neckalce/z1cfsxc1jfwmsmfuy4gl.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455752/ssv-jewellers/neckalce/z1cfsxc1jfwmsmfuy4gl.jpg',
         description: `Speciality: Chandra theme arrangement with crescent-inspired accents and layered charm. Weight: 44.500 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -129,7 +129,7 @@ export const products = [
         sku: 'SSV-NECKALCES-014',
         GMS: '92.680 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455749/ssv-jewellers/neckalce/p1qbfldvjbx0egq0zzjn.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455749/ssv-jewellers/neckalce/p1qbfldvjbx0egq0zzjn.jpg',
         description: `Speciality: Botta mala sequence with repeated round motifs for a grand statement profile. Weight: 92.680 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -138,7 +138,7 @@ export const products = [
         sku: 'SSV-NECKALCES-015',
         GMS: '83.710 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455753/ssv-jewellers/neckalce/li6qrez6evenjmoknxxg.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455753/ssv-jewellers/neckalce/li6qrez6evenjmoknxxg.jpg',
         description: `Speciality: Unad choker composition with compact neck fit and ornate front detailing. Weight: 83.710 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -147,7 +147,7 @@ export const products = [
         sku: 'SSV-NECKALCES-016',
         GMS: '28.830 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455752/ssv-jewellers/neckalce/lwlsjl048fpyahe1ngkm.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455752/ssv-jewellers/neckalce/lwlsjl048fpyahe1ngkm.jpg',
         description: `Speciality: CZ-focused necklace pattern with bright highlights and sleek finishing lines. Weight: 28.830 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -156,7 +156,7 @@ export const products = [
         sku: 'SSV-NECKALCES-017',
         GMS: '35.770 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455751/ssv-jewellers/neckalce/yr6zcynppjdzo6ujjsnm.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455751/ssv-jewellers/neckalce/yr6zcynppjdzo6ujjsnm.jpg',
         description: `Speciality: Kundhan-style setting with heritage character and premium handcrafted presence. Weight: 35.770 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -165,7 +165,7 @@ export const products = [
         sku: 'SSV-NECKALCES-018',
         GMS: '141.210 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455762/ssv-jewellers/neckalce/uczaf91geisnv4wm44sw.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455762/ssv-jewellers/neckalce/uczaf91geisnv4wm44sw.jpg',
         description: `Speciality: Dhaslaratharam model with strong volume, layered sections, and ceremonial appeal. Weight: 141.210 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -174,7 +174,7 @@ export const products = [
         sku: 'SSV-NECKALCES-019',
         GMS: '80.040 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455765/ssv-jewellers/neckalce/qckhevfrprkfmhj8qb0s.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455765/ssv-jewellers/neckalce/qckhevfrprkfmhj8qb0s.jpg',
         description: `Speciality: Ramparivaar concept necklace with devotional artistry and rich central detailing. Weight: 80.040 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -183,7 +183,7 @@ export const products = [
         sku: 'SSV-NECKALCES-020',
         GMS: '77.253 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455764/ssv-jewellers/neckalce/cmaszjalekewvmrdwknv.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455764/ssv-jewellers/neckalce/cmaszjalekewvmrdwknv.jpg',
         description: `Speciality: Buttapusalu styling with clustered drop elements and distinctive festive richness. Weight: 77.253 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -192,7 +192,7 @@ export const products = [
         sku: 'SSV-NECKALCES-021',
         GMS: '83.620 gms',
         category: 'Necklaces',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455766/ssv-jewellers/neckalce/qakcst2prxks9y0i8jmx.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455766/ssv-jewellers/neckalce/qakcst2prxks9y0i8jmx.jpg',
         description: `Speciality: Unat pattern build with broad front spread and intricate ornamental finish. Weight: 83.620 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -201,7 +201,7 @@ export const products = [
         sku: 'SSV-BANGLES-022',
         GMS: '38.500 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455648/ssv-jewellers/bangles/ce7iyf7tgysnlawykb1y.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455648/ssv-jewellers/bangles/ce7iyf7tgysnlawykb1y.jpg',
         description: `Speciality: CZ bangle set with bright line detailing and clean circular balance. Weight: 38.500 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -210,7 +210,7 @@ export const products = [
         sku: 'SSV-BANGLES-023',
         GMS: '42.220 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455655/ssv-jewellers/bangles/ahymz5bmwtgqt91xpkaj.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455655/ssv-jewellers/bangles/ahymz5bmwtgqt91xpkaj.jpg',
         description: `Speciality: Pakthi design language with strong pattern depth and classic bangle presence. Weight: 42.220 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -219,7 +219,7 @@ export const products = [
         sku: 'SSV-BANGLES-024',
         GMS: '31.630 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455654/ssv-jewellers/bangles/q0hz5wek4ysfg7cc59oz.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455654/ssv-jewellers/bangles/q0hz5wek4ysfg7cc59oz.jpg',
         description: `Speciality: Stone-rich bangle styling with angular highlights and modern ornamental finish. Weight: 31.630 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -228,7 +228,7 @@ export const products = [
         sku: 'SSV-BANGLES-025',
         GMS: '37.470 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455656/ssv-jewellers/bangles/c5vn1pk8ucgbdg3vftam.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455656/ssv-jewellers/bangles/c5vn1pk8ucgbdg3vftam.jpg',
         description: `Speciality: Nakshi kada profile with bold engraving and robust handcrafted character. Weight: 37.470 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -237,7 +237,7 @@ export const products = [
         sku: 'SSV-BANGLES-026',
         GMS: '24.100 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455656/ssv-jewellers/bangles/qz4ucbylog7bre3hbijm.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455656/ssv-jewellers/bangles/qz4ucbylog7bre3hbijm.jpg',
         description: `Speciality: Big bangle look with CZ lines and a sleek, statement-oriented outline. Weight: 24.100 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -246,7 +246,7 @@ export const products = [
         sku: 'SSV-BANGLES-027',
         GMS: '64.070 gms',
         category: 'Bangles',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455652/ssv-jewellers/bangles/cjbgogv8nqzrzk09ondu.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455652/ssv-jewellers/bangles/cjbgogv8nqzrzk09ondu.jpg',
         description: `Speciality: Single bangle concept with high-impact width and standout detailing across the band. Weight: 64.070 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -255,7 +255,7 @@ export const products = [
         sku: 'SSV-BRACLETS-028',
         GMS: '6.630 gms',
         category: 'Bracelets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455666/ssv-jewellers/braclets/gizmcfmhewthayqtddry.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/gizmcfmhewthayqtddry.jpg',
         description: `Speciality: Compact CZ bracelet form with refined links and neat clasp finishing. Weight: 6.630 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -264,7 +264,7 @@ export const products = [
         sku: 'SSV-BRACLETS-029',
         GMS: '8.770 gms',
         category: 'Bracelets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455666/ssv-jewellers/braclets/cirqgnv2er9aml0unqau.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/cirqgnv2er9aml0unqau.jpg',
         description: `Speciality: Stone-line bracelet style with elegant spacing and polished visual rhythm. Weight: 8.770 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -273,7 +273,7 @@ export const products = [
         sku: 'SSV-BRACLETS-030',
         GMS: '7.890 gms',
         category: 'Bracelets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455669/ssv-jewellers/braclets/gvcm0afzwo94zxcxgqy3.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455669/ssv-jewellers/braclets/gvcm0afzwo94zxcxgqy3.jpg',
         description: `Speciality: Traditional nakshi bracelet with hand-finished texture and graceful motif flow. Weight: 7.890 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -282,7 +282,7 @@ export const products = [
         sku: 'SSV-BRACLETS-031',
         GMS: '7.990 gms',
         category: 'Bracelets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455664/ssv-jewellers/braclets/tzqiyklhvs2cz8uzxhln.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455664/ssv-jewellers/braclets/tzqiyklhvs2cz8uzxhln.jpg',
         description: `Speciality: Ruby-tone bracelet arrangement with soft contrast highlights and elegant edge work. Weight: 7.990 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -291,7 +291,7 @@ export const products = [
         sku: 'SSV-BRACLETS-032',
         GMS: '8.010 gms',
         category: 'Bracelets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455666/ssv-jewellers/braclets/vtycjuttjs0jkqbeywfb.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/vtycjuttjs0jkqbeywfb.jpg',
         description: `Speciality: CZ bracelet layout with bright stone sequence and clean, contemporary finishing. Weight: 8.010 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -300,7 +300,7 @@ export const products = [
         sku: 'SSV-LWC-033',
         GMS: '13.140 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455710/ssv-jewellers/lockets%20with%20chain/agfu13np3rl7lcsa1uto.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455710/ssv-jewellers/lockets%20with%20chain/agfu13np3rl7lcsa1uto.jpg',
         description: `Speciality: Mozonite locket-chain pairing with balanced proportions and strong centerpiece identity. Weight: 13.140 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -309,7 +309,7 @@ export const products = [
         sku: 'SSV-LWC-034',
         GMS: '18.000 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455712/ssv-jewellers/lockets%20with%20chain/bvu4xny6q9e6y27orl2x.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455712/ssv-jewellers/lockets%20with%20chain/bvu4xny6q9e6y27orl2x.jpg',
         description: `Speciality: Raze style locket-chain set with bold pendant profile and refined chain flow. Weight: 18.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -318,7 +318,7 @@ export const products = [
         sku: 'SSV-LWC-035',
         GMS: '7.030 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455721/ssv-jewellers/lockets%20with%20chain/wokuqvverptre8wwax83.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455721/ssv-jewellers/lockets%20with%20chain/wokuqvverptre8wwax83.jpg',
         description: `Speciality: Stone-style locket-chain design with compact pendant geometry and neat detailing. Weight: 7.030 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -327,7 +327,7 @@ export const products = [
         sku: 'SSV-LWC-036',
         GMS: '13.180 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455720/ssv-jewellers/lockets%20with%20chain/zdwpymx7ak2yf4rsvcro.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455720/ssv-jewellers/lockets%20with%20chain/zdwpymx7ak2yf4rsvcro.jpg',
         description: `Speciality: CZ locket-chain composition featuring bright accents and a modern pendant balance. Weight: 13.180 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -336,7 +336,7 @@ export const products = [
         sku: 'SSV-LWC-037',
         GMS: '9.330 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455719/ssv-jewellers/lockets%20with%20chain/cmezuwaqfth5aknchinn.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455719/ssv-jewellers/lockets%20with%20chain/cmezuwaqfth5aknchinn.jpg',
         description: `Speciality: CZ locket-chain variant with slim structure and crisp ornamental finish. Weight: 9.330 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -345,7 +345,7 @@ export const products = [
         sku: 'SSV-LWC-038',
         GMS: '11.200 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455720/ssv-jewellers/lockets%20with%20chain/mn4g4mc2al3spurye9nz.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455720/ssv-jewellers/lockets%20with%20chain/mn4g4mc2al3spurye9nz.jpg',
         description: `Speciality: CZ locket-chain pattern with bright central focus and flowing side elements. Weight: 11.200 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -354,7 +354,7 @@ export const products = [
         sku: 'SSV-LWC-039',
         GMS: '8.190 gms',
         category: 'Chains',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455708/ssv-jewellers/lockets%20with%20chain/kz5jnbjh5atiwfomvznl.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455708/ssv-jewellers/lockets%20with%20chain/kz5jnbjh5atiwfomvznl.jpg',
         description: `Speciality: CZ locket-chain style with minimalist shape and precise detailing throughout. Weight: 8.190 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -363,7 +363,7 @@ export const products = [
         sku: 'SSV-Locket-040',
         GMS: '29.000 gms',
         category: 'Locket',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455686/ssv-jewellers/lockets/mp8tnlodmp9krnislmvt.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455686/ssv-jewellers/lockets/mp8tnlodmp9krnislmvt.jpg',
         description: `Speciality: Peacock motif locket with artistic feather pattern and rich sculpted look. Weight: 29.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -372,7 +372,7 @@ export const products = [
         sku: 'SSV-Locket-041',
         GMS: '31.090 gms',
         category: 'Locket',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455690/ssv-jewellers/lockets/nl2ygk8zjx3fhwahngcn.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/nl2ygk8zjx3fhwahngcn.jpg',
         description: `Speciality: Ganesh-inspired temple locket with devotional symbolism and intricate relief work. Weight: 31.090 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -381,7 +381,7 @@ export const products = [
         sku: 'SSV-Locket-042',
         GMS: '23.960 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455690/ssv-jewellers/lockets/jyzdg6cbneettnmsdej9.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/jyzdg6cbneettnmsdej9.jpg',
         description: `Speciality: Ramparivar devotional locket with detailed iconography and premium handcrafted depth. Weight: 23.960 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -390,7 +390,7 @@ export const products = [
         sku: 'SSV-Locket-043',
         GMS: '14.140 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455692/ssv-jewellers/lockets/zzjrep7l78aeay7naark.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455692/ssv-jewellers/lockets/zzjrep7l78aeay7naark.jpg',
         description: `Speciality: Navaratham-inspired color layout with vibrant arrangement and elegant pendant form. Weight: 14.140 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -399,7 +399,7 @@ export const products = [
         sku: 'SSV-Locket-044',
         GMS: '33.400 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455693/ssv-jewellers/lockets/pdkqpnd6k7sqhu4jf2ij.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455693/ssv-jewellers/lockets/pdkqpnd6k7sqhu4jf2ij.jpg',
         description: `Speciality: Antique-finish locket styling with bold texture and classic heritage appeal. Weight: 33.400 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -408,7 +408,7 @@ export const products = [
         sku: 'SSV-Locket-045',
         GMS: '30.630 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455701/ssv-jewellers/lockets/ymixkxqdmrsmzno4xqjh.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455701/ssv-jewellers/lockets/ymixkxqdmrsmzno4xqjh.jpg',
         description: `Speciality: CZS locket model with strong centerpiece detailing and balanced contour work. Weight: 30.630 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -417,7 +417,7 @@ export const products = [
         sku: 'SSV-Locket-046',
         GMS: '11.380 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455697/ssv-jewellers/lockets/cpvsscnsdzlv6axcvsru.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455697/ssv-jewellers/lockets/cpvsscnsdzlv6axcvsru.jpg',
         description: `Speciality: Uncut style locket with textured setting and distinctive handcrafted personality. Weight: 11.380 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -426,7 +426,7 @@ export const products = [
         sku: 'SSV-Locket-047',
         GMS: '19.620 gms',
         category: 'Locket',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455696/ssv-jewellers/lockets/odzmvbbtgcxudq9ikjdn.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455696/ssv-jewellers/lockets/odzmvbbtgcxudq9ikjdn.jpg',
         description: `Speciality: Temple theme locket with ornamental depth and iconic cultural styling. Weight: 19.620 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -435,7 +435,7 @@ export const products = [
         sku: 'SSV-Locket-048',
         GMS: '15.520 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455686/ssv-jewellers/lockets/vcfiksilk3xym7lukv8s.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455686/ssv-jewellers/lockets/vcfiksilk3xym7lukv8s.jpg',
         description: `Speciality: Rubi-tone locket with soft contrast accents and elegant pendant finishing. Weight: 15.520 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -444,7 +444,7 @@ export const products = [
         sku: 'SSV-Locket-050',
         GMS: '16.590 gms',
         category: 'Lockets',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455690/ssv-jewellers/lockets/bz7oguhxzh0dfil3wtuf.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/bz7oguhxzh0dfil3wtuf.jpg',
         description: `Speciality: Mozonite locket design with focused center pattern and smooth finishing touches. Weight: 16.590 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -453,7 +453,7 @@ export const products = [
         sku: 'SSV-RSA-051',
         GMS: '25.340 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455779/ssv-jewellers/rose%20gold%20and%20antiq/xssyy8moviw2xqo3rjip.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455779/ssv-jewellers/rose%20gold%20and%20antiq/xssyy8moviw2xqo3rjip.jpg',
         description: `Speciality: Uncut necklace pattern with rich texture layering and standout neckline presence. Weight: 25.340 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -462,7 +462,7 @@ export const products = [
         sku: 'SSV-RSA-052',
         GMS: '15.07 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/in2dpzoa9isp1btokbho.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/in2dpzoa9isp1btokbho.jpg',
         description: `Speciality: Kanti simple design with neat structure, subtle patterning, and graceful finish. Weight: 15.07 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -471,7 +471,7 @@ export const products = [
         sku: 'SSV-RSA-053',
         GMS: '99.540 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/yob3w0kpg9v9an4it3em.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/yob3w0kpg9v9an4it3em.jpg',
         description: `Speciality: Corel set composition with uncut styling, layered arrangement, and grand visual impact. Weight: 99.540 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -480,7 +480,7 @@ export const products = [
         sku: 'SSV-RSA-054',
         GMS: '72.000 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455778/ssv-jewellers/rose%20gold%20and%20antiq/bimczhu7nva1m6mnvvfi.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455778/ssv-jewellers/rose%20gold%20and%20antiq/bimczhu7nva1m6mnvvfi.jpg',
         description: `Speciality: Antique-inspired necklace pattern with broad motif spread and rich handcrafted texture. Weight: 72.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -489,7 +489,7 @@ export const products = [
         sku: 'SSV-RSA-055',
         GMS: '74.600 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455781/ssv-jewellers/rose%20gold%20and%20antiq/qm0msg9i2pztfrajvwzn.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455781/ssv-jewellers/rose%20gold%20and%20antiq/qm0msg9i2pztfrajvwzn.jpg',
         description: `Speciality: Heavy antique-style necklace with pronounced detailing and strong statement profile. Weight: 74.600 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -498,7 +498,7 @@ export const products = [
         sku: 'SSV-RSA-056',
         GMS: '20.000 gms',
         category: 'Rose Gold and Auntiq',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455775/ssv-jewellers/rose%20gold%20and%20antiq/jaynpo8dntxnhhwsff8j.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455775/ssv-jewellers/rose%20gold%20and%20antiq/jaynpo8dntxnhhwsff8j.jpg',
         description: `Speciality: Round set design with uniform motif rhythm and elegant symmetrical finish. Weight: 20.000 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -507,7 +507,7 @@ export const products = [
         sku: 'SSV-BEADS-057',
         GMS: '110.02 gms',
         category: 'Mala',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455729/ssv-jewellers/mala/cu7lbcpjpe8bxklami3b.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455729/ssv-jewellers/mala/cu7lbcpjpe8bxklami3b.jpg',
         description: `Speciality: Pearl mala design with a featured locket centerpiece and rich layered fall. Weight: 110.02 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -516,7 +516,7 @@ export const products = [
         sku: 'SSV-BEADS-058',
         GMS: '125.66 gms',
         category: 'Mala',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455729/ssv-jewellers/mala/er41meluts5g9ckxqytp.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455729/ssv-jewellers/mala/er41meluts5g9ckxqytp.jpg',
         description: `Speciality: Pink beads mala with soft color rhythm and a grand festive drape. Weight: 125.66 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {
@@ -525,7 +525,7 @@ export const products = [
         sku: 'SSV-BEADS-059',
         GMS: '70.24 gms',
         category: 'Mala',
-        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/f_auto,q_75,w_800,dpr_auto,c_limit/v1775455726/ssv-jewellers/mala/cybwfbejwpwcs8zq4h2y.jpg',
+        image: 'https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455726/ssv-jewellers/mala/cybwfbejwpwcs8zq4h2y.jpg',
         description: `Speciality: Emerald beads mala with a highlighted locket design and elegant bead flow. Weight: 70.24 gms. ${CRAFTSMANSHIP_NOTE}`
     },
     {

@@ -16,18 +16,6 @@ const Contact = lazy(() => import('./pages/Contact'))
 const Services = lazy(() => import('./pages/Services'))
 const Policies = lazy(() => import('./pages/Policies'))
 
-/* ── Admin pages ── */
-const AdminLogin = lazy(() => import('./admin/AdminLogin'))
-const AdminDashboard = lazy(() => import('./admin/AdminDashboard'))
-const UploadProduct = lazy(() => import('./admin/UploadProduct'))
-const ProductList = lazy(() => import('./admin/ProductList'))
-
-/* ── Simple admin auth guard ── */
-function RequireAdmin({ children }) {
-  const token = sessionStorage.getItem('ssv_admin_token')
-  return token ? children : <Navigate to="/admin" replace />
-}
-
 export default function App() {
   return (
     <HelmetProvider>
@@ -46,18 +34,6 @@ export default function App() {
                 <Route path="/services" element={<Services />} />
                 <Route path="/policies" element={<Policies />} />
               </Route>
-
-              {/* ── Admin routes ── */}
-              <Route path="/admin" element={<AdminLogin />} />
-              <Route path="/admin/dashboard" element={
-                <RequireAdmin><AdminDashboard /></RequireAdmin>
-              } />
-              <Route path="/admin/upload" element={
-                <RequireAdmin><UploadProduct /></RequireAdmin>
-              } />
-              <Route path="/admin/products" element={
-                <RequireAdmin><ProductList /></RequireAdmin>
-              } />
 
               {/* ── Fallback ── */}
               <Route path="*" element={<Navigate to="/" replace />} />

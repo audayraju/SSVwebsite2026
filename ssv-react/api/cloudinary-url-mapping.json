@@ -1,0 +1,83 @@
+{
+  "aboutandbangles": {
+    "/images/aboutandbangles/about-page.background.jpeg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455634/ssv-jewellers/aboutandbangles/czetg67dx1zmeuwydulq.jpg",
+    "/images/aboutandbangles/SSV-VDN-001.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455638/ssv-jewellers/aboutandbangles/wuwp1my8bstzhikaaioz.jpg",
+    "/images/aboutandbangles/bridal-set.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455638/ssv-jewellers/aboutandbangles/zqaiichtjltcebkyrrrh.jpg",
+    "/images/aboutandbangles/SSV-VDN-002.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455641/ssv-jewellers/aboutandbangles/vvawg4adnwdincl07zu8.jpg"
+  },
+  "bangles": {
+    "/images/bangles/bridal set.jpeg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg",
+    "/images/bangles/SSV-BANGLES-022.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455648/ssv-jewellers/bangles/ce7iyf7tgysnlawykb1y.jpg",
+    "/images/bangles/SSV-BANGLES-027.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455652/ssv-jewellers/bangles/cjbgogv8nqzrzk09ondu.jpg",
+    "/images/bangles/SSV-BANGLES-024.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455654/ssv-jewellers/bangles/q0hz5wek4ysfg7cc59oz.jpg",
+    "/images/bangles/SSV-BANGLES-023.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455655/ssv-jewellers/bangles/ahymz5bmwtgqt91xpkaj.jpg",
+    "/images/bangles/SSV-BANGLES-025.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455656/ssv-jewellers/bangles/c5vn1pk8ucgbdg3vftam.jpg",
+    "/images/bangles/SSV-BANGLES-026.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455656/ssv-jewellers/bangles/qz4ucbylog7bre3hbijm.jpg"
+  },
+  "braclets": {
+    "/images/braclets/SSV-BRACLETS-031.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455664/ssv-jewellers/braclets/tzqiyklhvs2cz8uzxhln.jpg",
+    "/images/braclets/SSV-BRACLETS-032.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/vtycjuttjs0jkqbeywfb.jpg",
+    "/images/braclets/SSV-BRACLETS-028.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/gizmcfmhewthayqtddry.jpg",
+    "/images/braclets/SSV-BRACLETS-029.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455666/ssv-jewellers/braclets/cirqgnv2er9aml0unqau.jpg",
+    "/images/braclets/SSV-BRACLETS-030.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455669/ssv-jewellers/braclets/gvcm0afzwo94zxcxgqy3.jpg"
+  },
+  "lockets": {
+    "/images/lockets/SSV-Locket-040.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455686/ssv-jewellers/lockets/mp8tnlodmp9krnislmvt.jpg",
+    "/images/lockets/SSV-Locket-048.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455686/ssv-jewellers/lockets/vcfiksilk3xym7lukv8s.jpg",
+    "/images/lockets/SSV-Locket-050.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/bz7oguhxzh0dfil3wtuf.jpg",
+    "/images/lockets/SSV-Locket-042.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/jyzdg6cbneettnmsdej9.jpg",
+    "/images/lockets/SSV-Locket-041.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455690/ssv-jewellers/lockets/nl2ygk8zjx3fhwahngcn.jpg",
+    "/images/lockets/SSV-Locket-043.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455692/ssv-jewellers/lockets/zzjrep7l78aeay7naark.jpg",
+    "/images/lockets/SSV-Locket-044.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455693/ssv-jewellers/lockets/pdkqpnd6k7sqhu4jf2ij.jpg",
+    "/images/lockets/SSV-Locket-047.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455696/ssv-jewellers/lockets/odzmvbbtgcxudq9ikjdn.jpg",
+    "/images/lockets/SSV-Locket-046.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455697/ssv-jewellers/lockets/cpvsscnsdzlv6axcvsru.jpg",
+    "/images/lockets/SSV-Locket-045.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455701/ssv-jewellers/lockets/ymixkxqdmrsmzno4xqjh.jpg"
+  },
+  "lockets with chain": {
+    "/images/lockets with chain/SSV-LWC-039.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455708/ssv-jewellers/lockets%20with%20chain/kz5jnbjh5atiwfomvznl.jpg",
+    "/images/lockets with chain/SSV-LWC-033.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455710/ssv-jewellers/lockets%20with%20chain/agfu13np3rl7lcsa1uto.jpg",
+    "/images/lockets with chain/SSV-LWC-034.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455712/ssv-jewellers/lockets%20with%20chain/bvu4xny6q9e6y27orl2x.jpg",
+    "/images/lockets with chain/SSV-LWC-037.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455719/ssv-jewellers/lockets%20with%20chain/cmezuwaqfth5aknchinn.jpg",
+    "/images/lockets with chain/SSV-LWC-038.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455720/ssv-jewellers/lockets%20with%20chain/mn4g4mc2al3spurye9nz.jpg",
+    "/images/lockets with chain/SSV-LWC-036.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455720/ssv-jewellers/lockets%20with%20chain/zdwpymx7ak2yf4rsvcro.jpg",
+    "/images/lockets with chain/SSV-LWC-035.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455721/ssv-jewellers/lockets%20with%20chain/wokuqvverptre8wwax83.jpg"
+  },
+  "mala": {
+    "/images/mala/SSV-BEADS-059.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455726/ssv-jewellers/mala/cybwfbejwpwcs8zq4h2y.jpg",
+    "/images/mala/SSV-BEADS-058.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455729/ssv-jewellers/mala/er41meluts5g9ckxqytp.jpg",
+    "/images/mala/SSV-BEADS-057.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455729/ssv-jewellers/mala/cu7lbcpjpe8bxklami3b.jpg"
+  },
+  "neckalce": {
+    "/images/neckalce/SSV-NECKALCES-010.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455739/ssv-jewellers/neckalce/aqkoeicp67gbzfxlhil0.jpg",
+    "/images/neckalce/SSV-NECKALCES-008.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455746/ssv-jewellers/neckalce/vln1ix7m5is1en2cdwiz.jpg",
+    "/images/neckalce/SSV-NECKALCES-012.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455747/ssv-jewellers/neckalce/lfnxhupzmpgzkrr3qpie.jpg",
+    "/images/neckalce/SSV-NECKALCES-009.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455748/ssv-jewellers/neckalce/a9rnqqdta1dlaavuo0zh.jpg",
+    "/images/neckalce/SSV-NECKALCES-014.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455749/ssv-jewellers/neckalce/p1qbfldvjbx0egq0zzjn.jpg",
+    "/images/neckalce/SSV-NECKALCES-011.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455749/ssv-jewellers/neckalce/nfmwpxilo0zzynqgzo6s.jpg",
+    "/images/neckalce/SSV-NECKALCES-017.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455751/ssv-jewellers/neckalce/yr6zcynppjdzo6ujjsnm.jpg",
+    "/images/neckalce/SSV-NECKALCES-013.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455752/ssv-jewellers/neckalce/z1cfsxc1jfwmsmfuy4gl.jpg",
+    "/images/neckalce/SSV-NECKALCES-016.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455752/ssv-jewellers/neckalce/lwlsjl048fpyahe1ngkm.jpg",
+    "/images/neckalce/SSV-NECKALCES-015.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455753/ssv-jewellers/neckalce/li6qrez6evenjmoknxxg.jpg",
+    "/images/neckalce/SSV-NECKALCES-018.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455762/ssv-jewellers/neckalce/uczaf91geisnv4wm44sw.jpg",
+    "/images/neckalce/SSV-NECKALCES-020.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455764/ssv-jewellers/neckalce/cmaszjalekewvmrdwknv.jpg",
+    "/images/neckalce/SSV-NECKALCES-019.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455765/ssv-jewellers/neckalce/qckhevfrprkfmhj8qb0s.jpg",
+    "/images/neckalce/SSV-NECKALCES-021.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455766/ssv-jewellers/neckalce/qakcst2prxks9y0i8jmx.jpg"
+  },
+  "rose gold and antiq": {
+    "/images/rose gold and antiq/SSV-RSA-056.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455775/ssv-jewellers/rose%20gold%20and%20antiq/jaynpo8dntxnhhwsff8j.jpg",
+    "/images/rose gold and antiq/SSV-RSA-054.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455778/ssv-jewellers/rose%20gold%20and%20antiq/bimczhu7nva1m6mnvvfi.jpg",
+    "/images/rose gold and antiq/SSV-RSA-051.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455779/ssv-jewellers/rose%20gold%20and%20antiq/xssyy8moviw2xqo3rjip.jpg",
+    "/images/rose gold and antiq/SSV-RSA-055.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455781/ssv-jewellers/rose%20gold%20and%20antiq/qm0msg9i2pztfrajvwzn.jpg",
+    "/images/rose gold and antiq/SSV-RSA-053.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/yob3w0kpg9v9an4it3em.jpg",
+    "/images/rose gold and antiq/SSV-RSA-052.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455782/ssv-jewellers/rose%20gold%20and%20antiq/in2dpzoa9isp1btokbho.jpg"
+  },
+  "tops": {
+    "/images/tops/SSV-TOPS-007.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455793/ssv-jewellers/tops/kedjcb9v8abewcg5dovp.jpg",
+    "/images/tops/SSV-TOPS-006.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455794/ssv-jewellers/tops/ztj8cjtjsj1kdqu5hmr8.jpg",
+    "/images/tops/SSV-TOPS-004.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455796/ssv-jewellers/tops/s8pciobnaruvcfmxuako.jpg",
+    "/images/tops/SSV-TOPS-003.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455797/ssv-jewellers/tops/mxxpy9l0a6ccy7kx6oct.jpg",
+    "/images/tops/SSV-TOPS-002.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455797/ssv-jewellers/tops/fntq4hsbqklnikhydlhh.jpg",
+    "/images/tops/SSV-TOPS-001.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455798/ssv-jewellers/tops/pu1f1bmtijiduzc1yh2h.jpg",
+    "/images/tops/SSV-TOPS-005.jpg": "https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455802/ssv-jewellers/tops/bxck8hdsdindn8bwkzve.jpg"
+  }
+}
