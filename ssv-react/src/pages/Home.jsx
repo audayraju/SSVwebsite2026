@@ -41,6 +41,33 @@ const SLIDES = [
 
 
 
+const PROMISES = [
+  {
+    id: 1,
+    icon: '💍',
+    title: 'Hallmarked Gold',
+    desc: 'Every piece is BIS hallmarked for guaranteed purity and authenticity.',
+  },
+  {
+    id: 2,
+    icon: '✨',
+    title: 'Master Craftsmanship',
+    desc: 'Handcrafted by skilled artisans with generations of jewellery-making expertise.',
+  },
+  {
+    id: 3,
+    icon: '🚚',
+    title: 'Free Insurance Shipping',
+    desc: 'Completely insured delivery with tracking to ensure your jewellery arrives safely.',
+  },
+  {
+    id: 4,
+    icon: '🔄',
+    title: 'Lifetime Exchange',
+    desc: 'Lifetime exchange policy with value retention on all gold purchases.',
+  },
+]
+
 const TOP_GOLD_COLLECTION_IDS = ['19', '15', '60', '4', '20']
 const TOP_GOLD_COLLECTION_PRODUCTS = TOP_GOLD_COLLECTION_IDS
   .map(id => productList.find(p => p.id === id))
