@@ -55,12 +55,6 @@ const PROMISES = [
     desc: 'Handcrafted by skilled artisans with generations of jewellery-making expertise.',
   },
   {
-    id: 3,
-    icon: '🚚',
-    title: 'Free Insurance Shipping',
-    desc: 'Completely insured delivery with tracking to ensure your jewellery arrives safely.',
-  },
-  {
     id: 4,
     icon: '🔄',
     title: 'Lifetime Exchange',
