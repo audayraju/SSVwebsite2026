@@ -838,6 +838,15 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   transition: background 0.2s ease, color 0.2s ease;
+
+  /* Normalize appearance across browsers and ensure consistent sizing */
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+  min-width: 34px;
+  min-height: 34px;
+  outline: none;
 }
 
 .mobileNavBtn:hover {
@@ -1325,5 +1334,11 @@
     width: 32px;
     height: 32px;
     font-size: 22px;
+    min-width: 32px;
+    min-height: 32px;
+    box-sizing: border-box;
+    padding: 0;
+    -webkit-appearance: none;
+    appearance: none;
   }
 }
