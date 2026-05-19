@@ -57,9 +57,9 @@ export default function About() {
           <div className={styles.storyGrid}>
             <motion.div className={styles.storyText} variants={fadeUp}>
               <h2 className={styles.sectionTitle}>Our Story</h2>
-              <p>Welcome to SSV Jewellery, a trusted destination for elegant and timeless jewellery. Established in 2017, our store has been dedicated to offering high-quality gold, silver, and diamond jewellery crafted with precision and care.</p>
+              <p>Welcome to SSV Jewellers, a trusted destination for elegant and timeless jewellery. Established in 2017, our store has been dedicated to offering high-quality gold, silver, and diamond jewellery crafted with precision and care.</p>
               <p>From traditional designs to modern styles, we bring a beautiful collection that suits every occasion—weddings, celebrations, and everyday elegance. Our goal is to provide jewellery that not only enhances beauty but also becomes a cherished memory for our customers.</p>
-              <p>At SSV Jewellery, we believe that jewellery is more than an accessory; it is a symbol of love, tradition, and personal expression. Every piece in our collection is carefully selected to ensure the finest craftsmanship and lasting value.</p>
+              <p>At SSV Jewellers, we believe that jewellery is more than an accessory; it is a symbol of love, tradition, and personal expression. Every piece in our collection is carefully selected to ensure the finest craftsmanship and lasting value.</p>
             </motion.div>
             <motion.div className={styles.storyImage} variants={fadeUp}>
               <div className={styles.imageWrapper}>

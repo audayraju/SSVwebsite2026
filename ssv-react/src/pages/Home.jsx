@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
@@ -11,6 +11,7 @@ const SLIDES = [
 
   {
     img: '/picture/carousel-images/SSV Thumnail-03.jpg.jpeg',
+    
     alt: 'Modern Silver Artistry',
     label: 'Pure Silver Art',
     title: 'Elegant Silver Collection',
@@ -18,7 +19,7 @@ const SLIDES = [
     link: '/products?category=Silver',
   },
   {
-    img: '/picture/carousel-images/SSV Thumnail 4.jpg.jpeg',
+   img: '/picture/carousel-images/ssvraj-thumbnail01.jpeg',
     alt: 'Diamond Boutique',
     label: 'Certified Brilliance',
     title: 'Diamond Boutique',
@@ -26,7 +27,7 @@ const SLIDES = [
     link: '/products?category=Diamonds',
   },
   {
-    img: '/picture/carousel-images/SSV Thumnail-04.jpg.jpeg',
+    img: '/picture/carousel-images/ssvraj-thumbnail02.jpeg',
     alt: 'Luxury Gold Collection',
     label: 'Sri Shakthi Vinayaka',
     title: 'Luxury Gold Collection',
@@ -80,12 +81,7 @@ export default function Home() {
   const [isBridalImageOpen, setIsBridalImageOpen] = useState(false)
   const [isBridalInnerZoomed, setIsBridalInnerZoomed] = useState(false)
   const [bridalTransformOrigin, setBridalTransformOrigin] = useState('50% 50%')
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [launchCountdown, setLaunchCountdown] = useState(null)
-  const [isLaunchSectionVisible, setIsLaunchSectionVisible] = useState(true)
   const timerRef = useRef(null)
-  const launchCountdownRef = useRef(null)
-  const launchBlastHideRef = useRef(null)
 
   const closeBridalModal = () => {
     setIsBridalImageOpen(false)
@@ -133,54 +129,7 @@ export default function Home() {
     setter(current => (current + 1) % length)
   }
 
-  const confettiPieces = useMemo(() => {
-    const pieces = []
-    for (let i = 0; i < CONFETTI_COUNT; i++) {
-      const baseX = Math.random() * window.innerWidth
-      const isWide = Math.random() > 0.5
-      const direction = Math.random()
-      pieces.push({
-        id: i,
-        left: baseX,
-        initialX: baseX,
-        delay: (Math.random() * 0.5) * (Math.random() > 0.7 ? 0.8 : 1),
-        duration: 1.5 + Math.random() * 1.2,
-        color: ['#FFD700', '#FFA500', '#FF69B4', '#87CEEB', '#98FB98', '#FF1493'][Math.floor(Math.random() * 6)],
-        angle: (direction < 0.33 ? 20 + Math.random() * 40 : direction < 0.66 ? 90 + Math.random() * 30 : 140 + Math.random() * 40) * (Math.PI / 180),
-        width: isWide ? (8 + Math.random() * 8) : (3 + Math.random() * 3),
-        height: isWide ? (3 + Math.random() * 3) : (8 + Math.random() * 8),
-      })
-    }
-    return pieces
-  }, [showConfetti])
-
-  const handleLaunchClick = () => {
-    if (launchCountdown !== null || showConfetti) return
-
-    setLaunchCountdown(5)
-
-    launchCountdownRef.current = setInterval(() => {
-      setLaunchCountdown((current) => {
-        if (current === null) return null
-
-        if (current <= 1) {
-          clearInterval(launchCountdownRef.current)
-          launchCountdownRef.current = null
-
-          setShowConfetti(true)
-
-          launchBlastHideRef.current = setTimeout(() => {
-            setShowConfetti(false)
-            setIsLaunchSectionVisible(false)
-          }, 3000)
-
-          return null
-        }
-
-        return current - 1
-      })
-    }, 1000)
-  }
+ 
 
   /* Auto-advance Hero Carousel */
   useEffect(() => {
@@ -248,13 +197,6 @@ export default function Home() {
     }
   }, [isBridalImageOpen])
 
-  useEffect(() => {
-    return () => {
-      if (launchCountdownRef.current) clearInterval(launchCountdownRef.current)
-      if (launchBlastHideRef.current) clearTimeout(launchBlastHideRef.current)
-    }
-  }, [])
-
   const currentSlide = SLIDES[activeSlide]
 
   return (
@@ -264,79 +206,6 @@ export default function Home() {
         <meta name="description" content="Discover exquisite handcrafted jewellery at SSV Jewellers. Gold collection from 8% wastage only." />
       </Helmet>
 
-      {isLaunchSectionVisible && (
-        <>
-          {/* ── LAUNCH CELEBRATION SECTION (LUXURY HERO) ── */}
-          <section className={styles.launchSection}>
-            <div className={styles.launchContainer}>
-              <motion.div
-                className={styles.launchContent}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={inViewViewport}
-              >
-                <p className={styles.launchLabel}>
-                  <span className={styles.labelArrow} aria-hidden="true">⟵</span>
-                  <span>Grand Opening</span>
-                  <span className={styles.labelArrow} aria-hidden="true">⟶</span>
-                </p>
-                <h2 className={styles.launchTitle}>
-                  <span className={styles.titleSparkle} aria-hidden="true">✦</span>
-                  <span className={styles.titleText}>SSV Jewellers</span>
-                  <span className={styles.titleSparkle} aria-hidden="true">✦</span>
-                </h2>
-                <p className={styles.launchSubtitle}>
-                  Celebrate the launch of our handcrafted gold and sterling silver jewellery collection.
-                </p>
-                <button
-                  onClick={handleLaunchClick}
-                  className={`${styles.launchButton} ${launchCountdown !== null ? styles.launchButtonRound : ''}`}
-                  aria-label={launchCountdown !== null ? `Countdown ${launchCountdown}` : 'Explore our jewellery collection'}
-                  disabled={launchCountdown !== null || showConfetti}
-                >
-                  {launchCountdown !== null ? launchCountdown : 'Explore Collection →'}
-                </button>
-              </motion.div>
-
-              {showConfetti && (
-                <div className={styles.confettiContainer}>
-                  {confettiPieces.map((piece) => {
-                    const velocityX = Math.cos(piece.angle) * 250
-                    const velocityY = Math.sin(piece.angle) * 350
-                    const finalX = piece.initialX + velocityX
-                    const finalY = window.innerHeight + 100
-                    return (
-                      <motion.div
-                        key={piece.id}
-                        className={styles.confettiPiece}
-                        style={{
-                          left: `${piece.left}px`,
-                          backgroundColor: piece.color,
-                          width: `${piece.width}px`,
-                          height: `${piece.height}px`,
-                        }}
-                        initial={{ x: 0, y: -30, opacity: 1, rotate: 0 }}
-                        animate={{
-                          x: velocityX * 1.5,
-                          y: finalY,
-                          opacity: 0,
-                          rotate: piece.id % 2 === 0 ? 720 : -720,
-                        }}
-                        transition={{
-                          duration: piece.duration,
-                          delay: piece.delay,
-                          ease: 'easeInOut',
-                        }}
-                      />
-                    )
-                  })}
-                </div>
-              )}
-            </div>
-          </section>
-        </>
-      )}
 
       {/* ── HERO SECTION ── */}
       <section className={styles.hero} aria-label="Featured Collection">
