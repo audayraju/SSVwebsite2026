@@ -11,7 +11,7 @@ const SLIDES = [
 
   {
     img: '/picture/carousel-images/SSV Thumnail-03.jpg.jpeg',
-    
+
     alt: 'Modern Silver Artistry',
     label: 'Pure Silver Art',
     title: 'Elegant Silver Collection',
@@ -19,7 +19,7 @@ const SLIDES = [
     link: '/products?category=Silver',
   },
   {
-   img: '/picture/carousel-images/ssvraj-thumbnail01.jpeg',
+    img: '/picture/carousel-images/ssvraj-thumbnail01.jpeg',
     alt: 'Diamond Boutique',
     label: 'Certified Brilliance',
     title: 'Diamond Boutique',
@@ -129,7 +129,7 @@ export default function Home() {
     setter(current => (current + 1) % length)
   }
 
- 
+
 
   /* Auto-advance Hero Carousel */
   useEffect(() => {
@@ -295,6 +295,8 @@ export default function Home() {
         </div>
       </section>
 
+
+     
       {/* ── Trending Silver Collection ── */}
       <section className={styles.productsSection} aria-label="Trending 92.5 Silver Jewellery">
         <div className={styles.sectionHeader}>
@@ -372,6 +374,14 @@ export default function Home() {
           </button>
         </div>
       </section>
+       <img
+        className={styles.collectionBannerImage}
+        src="/picture/carousel-images/ssvRajthumbnail.JPG"
+        alt="Elegant silver jewellery display"
+        loading="lazy"
+        decoding="async"
+      />
+
 
       {/* ── THE SSV PROMISE ── */}
       <section className={styles.promiseSection}>

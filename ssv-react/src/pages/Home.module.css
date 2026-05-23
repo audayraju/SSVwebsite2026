@@ -795,6 +795,19 @@
   gap: 30px;
 }
 
+.collectionBannerImage {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 550px;
+  height: auto;
+  margin: 24px auto;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+  object-fit: cover;
+  
+}
+
 .mobileProductsCarousel {
   display: none;
 }
@@ -1055,8 +1068,8 @@
 }
 
 .bridalImageWrap {
-  width: 100%;
-  max-width: 1200px;
+  width: 60%;
+  max-width: 800px;
   max-height: 100%;
   display: flex;
   align-items: center;
@@ -1064,8 +1077,8 @@
 }
 
 .bridalImageFull {
-  max-width: 90%;
-  max-height: 92vh;
+  max-width: 40%;
+  max-height: 20vh;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
