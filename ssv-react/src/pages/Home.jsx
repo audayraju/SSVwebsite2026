@@ -81,12 +81,18 @@ export default function Home() {
   const [isBridalImageOpen, setIsBridalImageOpen] = useState(false)
   const [isBridalInnerZoomed, setIsBridalInnerZoomed] = useState(false)
   const [bridalTransformOrigin, setBridalTransformOrigin] = useState('50% 50%')
+  const [bridalModalSrc, setBridalModalSrc] = useState('https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg')
   const timerRef = useRef(null)
+
+  // WhatsApp contact - replace the placeholder number with your business number (international format, no +)
+  const WHATSAPP_NUMBER = '9177396962'
+  const whatsappMessage = encodeURIComponent("Hey, I'm interested in the Trending Bridal Royal Setup at SSV Jewellers. Please share details.")
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`
 
   const closeBridalModal = () => {
     setIsBridalImageOpen(false)
     setIsBridalInnerZoomed(false)
-    setBridalTransformOrigin('50% 50%')
+    setBridalTransformOrigin('30% 30%')
   }
 
   const handleBridalImageClick = (event) => {
@@ -296,7 +302,7 @@ export default function Home() {
       </section>
 
 
-     
+
       {/* ── Trending Silver Collection ── */}
       <section className={styles.productsSection} aria-label="Trending 92.5 Silver Jewellery">
         <div className={styles.sectionHeader}>
@@ -374,14 +380,54 @@ export default function Home() {
           </button>
         </div>
       </section>
-       <img
-        className={styles.collectionBannerImage}
-        src="/picture/carousel-images/ssvRajthumbnail.JPG"
-        alt="Elegant silver jewellery display"
-        loading="lazy"
-        decoding="async"
-      />
 
+      {/* ── LUXURY BRIDAL SHOWCASE ── */}
+      <section className={styles.storySection} aria-label="Luxury Bridal Showcase">
+        <div className={styles.storyContainer}>
+          <div className={styles.storyImage}>
+            <button
+              type="button"
+              className={styles.storyImageButton}
+              onClick={() => {
+                setBridalModalSrc('/picture/carousel-images/ssvRajthumbnail.JPG')
+                setIsBridalImageOpen(true)
+                setIsBridalInnerZoomed(false)
+                setBridalTransformOrigin('50% 50%')
+              }}
+              aria-label="Open bridal image in fullscreen"
+            >
+              <img
+                className={styles.collectionBannerImage}
+                src="/picture/carousel-images/ssvRajthumbnail.JPG"
+                alt="Elegant silver jewellery display"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          </div>
+
+          <div className={styles.storyContent}>
+            <div className={styles.luxuryHeader} style={{ justifyContent: 'flex-start' }}>
+              <span className={styles.luxuryTitle} style={{ padding: 0 }}>Trending</span>
+              <span className={styles.luxuryLine} style={{ maxWidth: '60px' }}></span>
+            </div>
+
+            <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+              <h2>Trending Bridal Royal Setup ✨</h2>
+              <p>
+                Inspired by celebrity wedding looks, this exclusive bridal jewellery setup is specially crafted by SSV Jewellers.
+              </p>
+              <p>
+                A complete royal collection designed for grand bridal shoots, weddings &amp; traditional occasions. 👑💎
+              </p>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 12 }}>
+                
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={styles.whatsappButton} aria-label="Contact on WhatsApp">Book Your Royal Setup</a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       {/* ── THE SSV PROMISE ── */}
       <section className={styles.promiseSection}>
@@ -411,6 +457,7 @@ export default function Home() {
               type="button"
               className={styles.storyImageButton}
               onClick={() => {
+                setBridalModalSrc('https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg')
                 setIsBridalImageOpen(true)
                 setIsBridalInnerZoomed(false)
                 setBridalTransformOrigin('50% 50%')
@@ -456,7 +503,7 @@ export default function Home() {
           </button>
           <div className={styles.bridalImageWrap} onClick={(event) => event.stopPropagation()}>
             <img
-              src="https://res.cloudinary.com/dm4gxqwq4/image/upload/v1775455642/ssv-jewellers/bangles/rivzdw0rioyavbn4iovk.jpg"
+              src={bridalModalSrc}
               alt="SSV Jewellers bridal jewellery set"
               className={`${styles.bridalImageFull} ${isBridalInnerZoomed ? styles.bridalImageFullActive : ''}`}
               loading="eager"
